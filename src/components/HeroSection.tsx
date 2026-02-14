@@ -159,7 +159,8 @@ const HeroSection: React.FC = () => {
     departDate: '',
     returnDate: '',
     passengers: 1,
-    class: 'economy'
+    class: 'economy',
+    cabinClass: 'economy'
   });
 
   const [showFromDropdown, setShowFromDropdown] = useState(false);
@@ -299,18 +300,39 @@ const HeroSection: React.FC = () => {
                 </button>
               </div>
 
-              {/* Trip Type */}
+              {/* Trip Type & Cabin Class */}
               {activeTab === 'flight' && (
-                <div className="flex items-center space-x-6 mb-6">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input type="radio" name="tripType" value="oneway" checked={tripType === 'oneway'} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                    <span className="text-gray-700 font-medium">{t('hero.oneWay')}</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input type="radio" name="tripType" value="roundtrip" checked={tripType === 'roundtrip'} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
-                    <span className="text-gray-700 font-medium">{t('hero.roundTrip')}</span>
-                  </label>
-                  
+                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                  <div className="flex items-center space-x-6">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input type="radio" name="tripType" value="oneway" checked={tripType === 'oneway'} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+                      <span className="text-gray-700 font-medium">{t('hero.oneWay')}</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input type="radio" name="tripType" value="roundtrip" checked={tripType === 'roundtrip'} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+                      <span className="text-gray-700 font-medium">{t('hero.roundTrip')}</span>
+                    </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {[
+                      { value: 'economy', label: 'Economy' },
+                      { value: 'premium', label: 'Premium' },
+                      { value: 'business', label: 'Business' },
+                      { value: 'first', label: 'First' },
+                    ].map((cabin) => (
+                      <button
+                        key={cabin.value}
+                        onClick={() => handleInputChange('cabinClass', cabin.value)}
+                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 ${
+                          formData.cabinClass === cabin.value
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {cabin.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
