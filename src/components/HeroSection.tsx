@@ -171,11 +171,21 @@ const HeroSection: React.FC = () => {
   const [hasSearched, setHasSearched] = useState(false);
   const [sortBy, setSortBy] = useState<'cheapest' | 'fastest' | 'more'>('cheapest');
   const [openFilters, setOpenFilters] = useState<Record<string, boolean>>({ airports: true });
+
+  // Flight passenger state (hotel-style)
+  const [flightAdults, setFlightAdults] = useState(1);
+  const [flightChildren, setFlightChildren] = useState<{ age: number }[]>([]);
+  const [showPassengerDropdown, setShowPassengerDropdown] = useState(false);
+  const [selectedAirline, setSelectedAirline] = useState('');
+  const [showAirlineDropdown, setShowAirlineDropdown] = useState(false);
+  const [airlineFilter, setAirlineFilter] = useState('');
   const [expandedDetails, setExpandedDetails] = useState<Record<number, boolean>>({});
 
   const fromRef = useRef<HTMLDivElement>(null);
   const toRef = useRef<HTMLDivElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const passengerRef = useRef<HTMLDivElement>(null);
+  const airlineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -184,6 +194,12 @@ const HeroSection: React.FC = () => {
       }
       if (toRef.current && !toRef.current.contains(event.target as Node)) {
         setShowToDropdown(false);
+      }
+      if (passengerRef.current && !passengerRef.current.contains(event.target as Node)) {
+        setShowPassengerDropdown(false);
+      }
+      if (airlineRef.current && !airlineRef.current.contains(event.target as Node)) {
+        setShowAirlineDropdown(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -412,15 +428,70 @@ const HeroSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* Passengers */}
-                <div className="lg:col-span-2">
+                {/* Passengers (Hotel-style) */}
+                <div className="lg:col-span-2" ref={passengerRef}>
                   <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><Users className="w-5 h-5" /></div>
-                    <select value={formData.passengers} onChange={(e) => handleInputChange('passengers', parseInt(e.target.value))}
-                      className="w-full pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-medium appearance-none">
-                      {[1, 2, 3, 4, 5, 6].map(num => (<option key={num} value={num}>{num} Sərnişin / Ekonom</option>))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"><ChevronDown className="w-5 h-5" /></div>
+                    <button onClick={() => setShowPassengerDropdown(!showPassengerDropdown)}
+                      className="w-full flex items-center justify-between pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-lg font-medium hover:border-blue-300 transition-colors relative">
+                      <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <span className="text-sm">{flightAdults} Böyük{flightChildren.length > 0 ? `, ${flightChildren.length} Uşaq` : ''}</span>
+                      <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showPassengerDropdown ? 'rotate-180' : ''}`} />
+                    </button>
+                    {showPassengerDropdown && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 p-4 min-w-[280px]">
+                        {/* Adults */}
+                        <div className="flex items-center justify-between mb-4">
+                          <div>
+                            <span className="font-medium text-gray-900">Böyük (Adults)</span>
+                            <p className="text-xs text-gray-500">12+ yaş</p>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <button onClick={() => setFlightAdults(Math.max(1, flightAdults - 1))}
+                              className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-bold transition-colors">−</button>
+                            <span className="w-6 text-center font-bold text-gray-900">{flightAdults}</span>
+                            <button onClick={() => setFlightAdults(Math.min(6, flightAdults + 1))}
+                              className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-bold transition-colors">+</button>
+                          </div>
+                        </div>
+                        {/* Children */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <span className="font-medium text-gray-900">Uşaq (Children)</span>
+                            <p className="text-xs text-gray-500">0-11 yaş</p>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <button onClick={() => { if (flightChildren.length > 0) setFlightChildren(flightChildren.slice(0, -1)); }}
+                              className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-bold transition-colors">−</button>
+                            <span className="w-6 text-center font-bold text-gray-900">{flightChildren.length}</span>
+                            <button onClick={() => { if (flightChildren.length < 4) setFlightChildren([...flightChildren, { age: 1 }]); }}
+                              className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-bold transition-colors">+</button>
+                          </div>
+                        </div>
+                        {/* Children Ages */}
+                        {flightChildren.length > 0 && (
+                          <div className="border-t border-gray-100 pt-3 mt-2 space-y-2">
+                            <p className="text-xs font-semibold text-gray-500 uppercase">Uşaq Yaşları</p>
+                            <div className="grid grid-cols-2 gap-2">
+                              {flightChildren.map((child, idx) => (
+                                <div key={idx} className="flex items-center space-x-2">
+                                  <span className="text-xs text-gray-500 w-16">{idx + 1}. Uşaq:</span>
+                                  <select value={child.age} onChange={(e) => { const updated = [...flightChildren]; updated[idx] = { age: parseInt(e.target.value) }; setFlightChildren(updated); }}
+                                    className="flex-1 px-2 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    {Array.from({ length: 12 }, (_, i) => (
+                                      <option key={i} value={i}>{i} yaş</option>
+                                    ))}
+                                  </select>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        <button onClick={() => setShowPassengerDropdown(false)}
+                          className="w-full mt-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                          Təsdiq et
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -434,6 +505,40 @@ const HeroSection: React.FC = () => {
                       <><span className="lg:inline">{t('hero.findCheapTicket')}</span><ArrowRight className="w-5 h-5 ml-2" /></>
                     )}
                   </button>
+                </div>
+              </div>
+
+              {/* Row 2: Airlines (Optional) */}
+              <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+                <div className="lg:col-span-4" ref={airlineRef}>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Aviaşirkət / Airlines (Optional)</label>
+                  <div className="relative">
+                    <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                    <input
+                      type="text"
+                      value={airlineFilter}
+                      placeholder="Aviaşirkət seçin (istəyə bağlı)"
+                      onChange={(e) => { setAirlineFilter(e.target.value); setShowAirlineDropdown(true); if (!e.target.value) setSelectedAirline(''); }}
+                      onFocus={() => setShowAirlineDropdown(true)}
+                      className="w-full pl-10 pr-10 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
+                    />
+                    <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${showAirlineDropdown ? 'rotate-180' : ''}`} />
+                    {showAirlineDropdown && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto">
+                        <button onClick={() => { setSelectedAirline(''); setAirlineFilter(''); setShowAirlineDropdown(false); }}
+                          className="w-full text-left px-4 py-3 hover:bg-gray-50 text-gray-500 text-sm border-b border-gray-100">
+                          Hamısı (Bütün aviaşirkətlər)
+                        </button>
+                        {airlineData.filter(a => a.name.toLowerCase().includes(airlineFilter.toLowerCase())).map(airline => (
+                          <button key={airline.name} onClick={() => { setSelectedAirline(airline.name); setAirlineFilter(airline.name); setShowAirlineDropdown(false); }}
+                            className={`w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors text-sm border-b border-gray-50 flex items-center space-x-3 ${selectedAirline === airline.name ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-900'}`}>
+                            <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: airline.color }} />
+                            <span>{airline.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
