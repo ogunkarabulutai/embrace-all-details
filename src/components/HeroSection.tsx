@@ -326,13 +326,13 @@ const HeroSection: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_1fr_1fr] gap-3 items-end">
                 {/* From */}
                 <div ref={fromRef}>
-                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Haradan / From</label>
                   <div className="relative">
+                    <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Haradan / From</label>
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"><MapPin className="w-5 h-5" /></div>
                     <input data-testid="input-from" type="text" placeholder={t('hero.from')} value={formData.from}
                       onChange={(e) => { handleInputChange('from', e.target.value); setFromFilter(e.target.value); setShowFromDropdown(true); }}
                       onFocus={() => { setShowFromDropdown(true); setFromFilter(formData.from); }}
-                      className="w-full pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
+                      className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
                     />
                     {showFromDropdown && (
                       <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-64 overflow-y-auto">
@@ -370,13 +370,13 @@ const HeroSection: React.FC = () => {
 
                 {/* To */}
                 <div ref={toRef}>
-                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Haraya / To</label>
                   <div className="relative">
+                    <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Haraya / To</label>
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"><MapPin className="w-5 h-5" /></div>
                     <input data-testid="input-to" type="text" placeholder={t('hero.to')} value={formData.to}
                       onChange={(e) => { handleInputChange('to', e.target.value); setToFilter(e.target.value); setShowToDropdown(true); }}
                       onFocus={() => { setShowToDropdown(true); setToFilter(formData.to); }}
-                      className="w-full pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
+                      className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
                     />
                     {showToDropdown && (
                       <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-64 overflow-y-auto">
@@ -403,12 +403,12 @@ const HeroSection: React.FC = () => {
 
                 {/* Departure Date */}
                 <div>
-                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">{t('hero.departDate')}</label>
                   <div className="relative">
+                    <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">{t('hero.departDate')}</label>
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><Calendar className="w-5 h-5" /></div>
                     <input data-testid="input-depart-date" type="date" value={formData.departDate}
                       onChange={(e) => handleInputChange('departDate', e.target.value)}
-                      className="w-full pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer"
+                      className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer"
                     />
                   </div>
                 </div>
@@ -417,17 +417,16 @@ const HeroSection: React.FC = () => {
                 <div>
                   {tripType === 'roundtrip' ? (
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">{t('hero.addReturn')}</label>
                       <div className="relative">
+                        <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">{t('hero.addReturn')}</label>
                         <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><Calendar className="w-5 h-5" /></div>
                         <input type="date" value={formData.returnDate} onChange={(e) => handleInputChange('returnDate', e.target.value)}
-                          className="w-full pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
+                          className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
                       </div>
                     </div>
                   ) : (
                     <div>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">&nbsp;</label>
-                      <button onClick={() => setTripType('roundtrip')} className="w-full py-4 flex items-center justify-center space-x-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-600 hover:bg-gray-100 transition-colors duration-200 font-medium">
+                      <button onClick={() => setTripType('roundtrip')} className="w-full pt-7 pb-2 flex items-center justify-center space-x-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-600 hover:bg-gray-100 transition-colors duration-200 font-medium">
                         <span>+</span><span>Qayıdış əlavə et</span>
                       </button>
                     </div>
@@ -439,10 +438,10 @@ const HeroSection: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-4 items-end">
                 {/* Guests */}
                 <div className="lg:col-span-3" ref={passengerRef}>
-                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Qonaqlar / Guests</label>
                   <div className="relative">
                     <button onClick={() => setShowPassengerDropdown(!showPassengerDropdown)}
-                      className="w-full flex items-center justify-between pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-base font-medium hover:border-blue-300 transition-colors relative">
+                      className="w-full flex items-center justify-between pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-base font-medium hover:border-blue-300 transition-colors relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide pointer-events-none">Qonaqlar / Guests</label>
                       <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <span className="text-sm">{flightAdults} Böyük{flightChildren.length > 0 ? `, ${flightChildren.length} Uşaq` : ''}</span>
                       <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showPassengerDropdown ? 'rotate-180' : ''}`} />
@@ -504,8 +503,8 @@ const HeroSection: React.FC = () => {
 
                 {/* Airlines (Optional) */}
                 <div className="lg:col-span-4" ref={airlineRef}>
-                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Aviaşirkət / Airlines (Optional)</label>
                   <div className="relative">
+                    <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Aviaşirkət / Airlines</label>
                     <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
                     <input
                       type="text"
@@ -513,7 +512,7 @@ const HeroSection: React.FC = () => {
                       placeholder="Aviaşirkət seçin (istəyə bağlı)"
                       onChange={(e) => { setAirlineFilter(e.target.value); setShowAirlineDropdown(true); if (!e.target.value) setSelectedAirline(''); }}
                       onFocus={() => setShowAirlineDropdown(true)}
-                      className="w-full pl-10 pr-10 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
+                      className="w-full pl-10 pr-10 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
                     />
                     <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${showAirlineDropdown ? 'rotate-180' : ''}`} />
                     {showAirlineDropdown && (
