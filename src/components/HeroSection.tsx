@@ -192,6 +192,8 @@ const HeroSection: React.FC = () => {
   const [showAirlineDropdown, setShowAirlineDropdown] = useState(false);
   const [airlineFilter, setAirlineFilter] = useState('');
   const [expandedDetails, setExpandedDetails] = useState<Record<number, boolean>>({});
+  const [departTimeRange, setDepartTimeRange] = useState<[number, number]>([0, 1439]); // minutes from midnight
+  const [arriveTimeRange, setArriveTimeRange] = useState<[number, number]>([0, 1439]);
 
   const fromRef = useRef<HTMLDivElement>(null);
   const toRef = useRef<HTMLDivElement>(null);
@@ -261,7 +263,24 @@ const HeroSection: React.FC = () => {
     setExpandedDetails(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const sortedResults = [...searchResults].sort((a, b) => {
+  const timeToMinutes = (t: string) => {
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m;
+  };
+  const minutesToTime = (m: number) => {
+    const h = Math.floor(m / 60);
+    const min = m % 60;
+    return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+  };
+
+  const filteredByTime = searchResults.filter((r) => {
+    const dep = timeToMinutes(r.departTime);
+    const arr = timeToMinutes(r.arriveTime);
+    return dep >= departTimeRange[0] && dep <= departTimeRange[1] &&
+           arr >= arriveTimeRange[0] && arr <= arriveTimeRange[1];
+  });
+
+  const sortedResults = [...filteredByTime].sort((a, b) => {
     if (sortBy === 'cheapest') return a.price - b.price;
     if (sortBy === 'fastest') {
       const aDur = parseInt(a.duration);
@@ -655,7 +674,57 @@ const HeroSection: React.FC = () => {
 
                     <FilterSection icon={<Luggage className="w-4 h-4" />} label="Baqaj" isOpen={!!openFilters.baggage} onToggle={() => toggleFilter('baggage')} />
                     <FilterSection icon={<CreditCard className="w-4 h-4" />} label="Bilet qiyməti" isOpen={!!openFilters.price} onToggle={() => toggleFilter('price')} />
-                    <FilterSection icon={<Clock className="w-4 h-4" />} label="Uçuş / eniş saatları" isOpen={!!openFilters.times} onToggle={() => toggleFilter('times')} />
+                    <FilterSection icon={<Clock className="w-4 h-4" />} label="Uçuş / eniş saatları" isOpen={!!openFilters.times} onToggle={() => toggleFilter('times')}>
+                      <div className="pl-2 pr-1 space-y-4">
+                        {/* Route label */}
+                        <div className="flex items-center space-x-2 border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-700">
+                          <Plane className="w-3.5 h-3.5 text-gray-400" />
+                          <span className="font-medium">{formData.from || 'Haradan'} → {formData.to || 'Haraya'}</span>
+                        </div>
+
+                        {/* Departure slider */}
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Kalkış</div>
+                          <div className="flex justify-between text-xs font-semibold text-yellow-600 mb-1">
+                            <span>{minutesToTime(departTimeRange[0])}</span>
+                            <span>{minutesToTime(departTimeRange[1])}</span>
+                          </div>
+                          <input
+                            type="range" min={0} max={1439} step={15}
+                            value={departTimeRange[0]}
+                            onChange={(e) => setDepartTimeRange([Math.min(Number(e.target.value), departTimeRange[1]), departTimeRange[1]])}
+                            className="w-full accent-yellow-400 h-1.5"
+                          />
+                          <input
+                            type="range" min={0} max={1439} step={15}
+                            value={departTimeRange[1]}
+                            onChange={(e) => setDepartTimeRange([departTimeRange[0], Math.max(Number(e.target.value), departTimeRange[0])])}
+                            className="w-full accent-yellow-400 h-1.5 -mt-1.5"
+                          />
+                        </div>
+
+                        {/* Arrival slider */}
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Eniş</div>
+                          <div className="flex justify-between text-xs font-semibold text-yellow-600 mb-1">
+                            <span>{minutesToTime(arriveTimeRange[0])}</span>
+                            <span>{minutesToTime(arriveTimeRange[1])}</span>
+                          </div>
+                          <input
+                            type="range" min={0} max={1439} step={15}
+                            value={arriveTimeRange[0]}
+                            onChange={(e) => setArriveTimeRange([Math.min(Number(e.target.value), arriveTimeRange[1]), arriveTimeRange[1]])}
+                            className="w-full accent-yellow-400 h-1.5"
+                          />
+                          <input
+                            type="range" min={0} max={1439} step={15}
+                            value={arriveTimeRange[1]}
+                            onChange={(e) => setArriveTimeRange([arriveTimeRange[0], Math.max(Number(e.target.value), arriveTimeRange[0])])}
+                            className="w-full accent-yellow-400 h-1.5 -mt-1.5"
+                          />
+                        </div>
+                      </div>
+                    </FilterSection>
                     <FilterSection icon={<Timer className="w-4 h-4" />} label="Uçuş müddəti" isOpen={!!openFilters.duration} onToggle={() => toggleFilter('duration')} />
 
                     <FilterSection icon={<Plane className="w-4 h-4" />} label="Aviaşirkətlər" isOpen={!!openFilters.airlines} onToggle={() => toggleFilter('airlines')}>
