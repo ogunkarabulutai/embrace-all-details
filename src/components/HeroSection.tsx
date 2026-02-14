@@ -358,7 +358,7 @@ const HeroSection: React.FC = () => {
                 </div>
 
                 {/* Swap */}
-                <div className="lg:col-span-1 flex items-center justify-center pb-1">
+                <div className="lg:col-span-1 flex items-end justify-center pb-3">
                   <button data-testid="swap-button" onClick={() => {
                     const tempName = formData.from; const tempCode = formData.fromCode;
                     setFormData(prev => ({ ...prev, from: prev.to, fromCode: prev.toCode, to: tempName, toCode: tempCode }));
