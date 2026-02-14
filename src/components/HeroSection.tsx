@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Plane, Building, Camera, MapPin, Calendar, Users, ChevronDown, ChevronLeft, ChevronRight, Clock, X, Heart, Bell, Filter, Luggage, CreditCard, Timer, SlidersHorizontal } from 'lucide-react';
 import BookingModal from './BookingModal';
 import DateRangePicker from './DateRangePicker';
+import HotelSearchForm from './HotelSearchForm';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface MockCity {
@@ -304,7 +305,14 @@ const HeroSection: React.FC = () => {
                 </div>
               )}
 
-              {/* Form Fields */}
+              {/* Hotel Tab */}
+              {activeTab === 'hotel' && (
+                <HotelSearchForm />
+              )}
+
+              {/* Flight Form Fields */}
+              {activeTab !== 'hotel' && (
+              <>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 {/* From */}
                 <div className="lg:col-span-2" ref={fromRef}>
@@ -442,6 +450,8 @@ const HeroSection: React.FC = () => {
                   <span className="text-gray-600 text-sm">{t('hero.listHotels')}</span>
                 </label>
               </div>
+              </>
+              )}
             </div>
           </div>
         </div>
