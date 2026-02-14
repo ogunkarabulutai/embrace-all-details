@@ -118,6 +118,7 @@ const HotelSearchForm: React.FC = () => {
   const [countryFilter, setCountryFilter] = useState('');
   const [cityFilter, setCityFilter] = useState('');
   const [hotelFilter, setHotelFilter] = useState('');
+  const [freeCancellation, setFreeCancellation] = useState(false);
   
   // Dropdown visibility
   const [showCountry, setShowCountry] = useState(false);
@@ -455,6 +456,21 @@ const HotelSearchForm: React.FC = () => {
             <span>Axtar</span>
           </button>
         </div>
+      </div>
+
+      {/* Row 3: Free Cancellation */}
+      <div className="flex items-center space-x-3">
+        <label className="flex items-center space-x-2 cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={freeCancellation}
+            onChange={(e) => setFreeCancellation(e.target.checked)}
+            className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+          />
+          <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
+            🔄 Pulsuz Ləğv (Free Cancellation)
+          </span>
+        </label>
       </div>
     </div>
   );
