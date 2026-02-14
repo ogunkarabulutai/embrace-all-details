@@ -17,9 +17,12 @@ interface SearchResult {
   id: number;
   from: string;
   fromCode: string;
+  fromAirport: string;
   to: string;
   toCode: string;
+  toAirport: string;
   airline: string;
+  flightCode: string;
   departTime: string;
   arriveTime: string;
   duration: string;
@@ -33,6 +36,7 @@ interface SearchResult {
   isDirect: boolean;
   isBusinessClass?: boolean;
   isSponsored?: boolean;
+  cabinClass: string;
 }
 
 const mockCities: MockCity[] = [
@@ -89,13 +93,19 @@ const generateMockResults = (fromCode: string, toCode: string, departDate: strin
     const bagWeight = isDirect ? 40 : 30;
     const basePrice = isDirect ? 15000 + Math.floor(Math.random() * 270000) : 5000 + Math.floor(Math.random() * 50000);
 
+    const flightCodePrefix = airline.name.substring(0, 2).toUpperCase();
+    const flightCodeNum = 100 + Math.floor(Math.random() * 900);
+
     results.push({
       id: i + 1,
       from: mockCities.find(c => c.code === fromCode)?.name || fromCode,
       fromCode,
+      fromAirport: mockCities.find(c => c.code === fromCode)?.airport || fromCode,
       to: mockCities.find(c => c.code === toCode)?.name || toCode,
       toCode,
+      toAirport: mockCities.find(c => c.code === toCode)?.airport || toCode,
       airline: airline.name,
+      flightCode: `${flightCodePrefix}-${flightCodeNum}`,
       departTime: `${String(departHour).padStart(2, '0')}:${String(departMinute).padStart(2, '0')}`,
       arriveTime: `${String(arriveHour).padStart(2, '0')}:${String(arriveMinute).padStart(2, '0')}`,
       duration: `${durationHours}sa ${durationMinutes}dk`,
@@ -109,6 +119,7 @@ const generateMockResults = (fromCode: string, toCode: string, departDate: strin
       isDirect,
       isBusinessClass: i === 1,
       isSponsored: i === 0,
+      cabinClass: i === 1 ? 'business' : 'economy',
     });
   }
 
@@ -700,129 +711,166 @@ const HeroSection: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Column Headers */}
-                <div className="hidden md:grid grid-cols-12 gap-2 px-5 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
-                  <div className="col-span-3">Aviaşirkət</div>
-                  <div className="col-span-2">Uçuş Detalı</div>
-                  <div className="col-span-3">Uçuş</div>
-                  <div className="col-span-2 text-right">Qiymət</div>
-                  <div className="col-span-2"></div>
-                </div>
+                {/* Flight Cards - Grouped by airline */}
+                <div className="space-y-5">
+                  {(() => {
+                    // Group results by airline
+                    const grouped = sortedResults.reduce<Record<string, SearchResult[]>>((acc, r) => {
+                      if (!acc[r.airline]) acc[r.airline] = [];
+                      acc[r.airline].push(r);
+                      return acc;
+                    }, {});
 
-                {/* Flight Cards */}
-                <div className="space-y-3">
-                  {sortedResults.map((result) => (
-                    <div key={result.id} data-testid={`flight-result-${result.id}`} className="relative">
-                      {/* Direct flight banner */}
-                      {result.isDirect && (
-                        <div className="flex items-center">
-                          <div className="bg-blue-600 text-white text-xs font-semibold px-4 py-1.5 rounded-t-lg flex items-center space-x-1.5">
-                            <Plane className="w-3.5 h-3.5" />
-                            <span>Birbaşa uçun, vaxt qazanın!</span>
-                          </div>
-                          {result.isBusinessClass && (
-                            <div className="bg-gray-800 text-white text-xs font-semibold px-3 py-1.5 rounded-t-lg ml-0 flex items-center space-x-1">
-                              <Plane className="w-3 h-3" />
-                              <span>Business Class</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
+                    return Object.entries(grouped).map(([airline, flights]) => {
+                      const airlineInfo = airlineData.find(a => a.name === airline);
+                      const airlineColor = airlineInfo?.color || '#333';
+                      const airlinePrefix = airline.substring(0, 2).toUpperCase();
+                      // Sort flights by depart time
+                      const sortedFlights = [...flights].sort((a, b) => a.departTime.localeCompare(b.departTime));
+                      const dateLabel = formData.departDate
+                        ? new Date(formData.departDate).toLocaleDateString('az-AZ', { weekday: 'short', day: 'numeric', month: 'short' })
+                        : 'Feb 15';
 
-                      <div className={`bg-white rounded-xl border overflow-hidden hover:shadow-md transition-shadow ${result.isDirect ? 'border-blue-200 rounded-tl-none' : 'border-gray-200'} ${result.isSponsored ? 'border-blue-300 shadow-sm' : ''}`}>
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-0 items-center">
-                          {/* Airline + Route */}
-                          <div className="col-span-3 p-5 border-r border-gray-100">
-                            <div className="flex items-center space-x-2 mb-2">
-                              <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: airlineData.find(a => a.name === result.airline)?.color || '#333' }}>
-                                <Plane className="w-3.5 h-3.5 text-white" />
+                      return (
+                        <div key={airline} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                          {/* Airline Header Bar */}
+                          <div className="flex items-center justify-between px-5 py-3" style={{ backgroundColor: airlineColor }}>
+                            <div className="flex items-center space-x-3">
+                              <div className="w-8 h-8 rounded bg-white/20 flex items-center justify-center text-white text-xs font-bold">
+                                {airlinePrefix}
                               </div>
-                              <span className="text-sm font-semibold text-gray-900">{result.airline}</span>
+                              <span className="text-white font-semibold text-sm">{airline}</span>
                             </div>
-                            <div className="text-xs text-gray-500 font-medium">
-                              {result.fromCode}
-                              {result.stopCodes.length > 0 && result.stopCodes.map((sc, i) => (
-                                <span key={i}> &rsaquo; {sc}</span>
-                              ))}
-                              <span> &rsaquo; {result.toCode}</span>
-                            </div>
-                            <div className={`text-xs font-semibold mt-1 ${result.isDirect ? 'text-green-600' : 'text-red-500'}`}>
-                              {result.isDirect ? 'Birbaşa Uçuş' : `${result.stops} Ötürmə`}
-                            </div>
+                            <span className="text-white/80 text-xs">1 saat bilet kəsilməsi üçün</span>
                           </div>
 
-                          {/* Baggage */}
-                          <div className="col-span-2 p-5 border-r border-gray-100">
-                            <div className="flex items-center space-x-1.5 text-sm text-gray-600">
-                              <Luggage className="w-4 h-4 text-gray-400" />
-                              <span className="font-medium">{result.baggage}</span>
-                            </div>
-                          </div>
-
-                          {/* Times */}
-                          <div className="col-span-3 p-5 border-r border-gray-100">
-                            <div className="flex items-center justify-center space-x-1 relative">
-                              <Plane className="w-4 h-4 text-gray-300 absolute -top-4 left-1/2 -translate-x-1/2" />
+                          {/* Route Info */}
+                          <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
+                            <div>
+                              <div className="text-base font-bold text-gray-900">{dateLabel}</div>
+                              <div className="text-xs text-gray-500">{sortedFlights[0]?.fromCode} → {sortedFlights[0]?.toCode}</div>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <span className="text-xl font-bold text-gray-900">{result.departTime}</span>
-                              <span className="text-gray-400">&rarr;</span>
-                              <span className="text-xl font-bold text-gray-900">{result.arriveTime}</span>
-                            </div>
-                            <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
-                              <Clock className="w-3 h-3" />
-                              <span>{result.duration}</span>
+                              <span className="text-xs font-medium px-3 py-1 rounded-full border" style={{ borderColor: airlineColor, color: airlineColor }}>
+                                {airline}
+                              </span>
+                              <div className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: airlineColor }}>
+                                {airlinePrefix}
+                              </div>
                             </div>
                           </div>
 
-                          {/* Price */}
-                          <div className="col-span-2 p-5 text-right">
-                            <div className="text-2xl font-bold text-gray-900">${formatPrice(result.price)}</div>
-                          </div>
+                          {/* Flight Rows */}
+                          <div className="divide-y divide-gray-100">
+                            {sortedFlights.map((result) => (
+                              <div key={result.id} data-testid={`flight-result-${result.id}`}>
+                                {/* Compact Flight Row */}
+                                <div
+                                  className="flex items-center justify-between px-5 py-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                                  onClick={() => toggleDetail(result.id)}
+                                >
+                                  <div className="flex items-center space-x-4">
+                                    <div className={`w-3 h-3 rounded-full ${expandedDetails[result.id] ? 'bg-yellow-400' : 'bg-gray-300'}`} />
+                                    <div>
+                                      <div className="flex items-center space-x-2">
+                                        <span className="text-lg font-bold text-gray-900">{result.departTime}</span>
+                                        <span className="text-gray-400">—</span>
+                                        <span className="text-lg font-bold text-gray-900">{result.arriveTime}</span>
+                                      </div>
+                                      <div className="text-xs text-gray-500">{result.duration}</div>
+                                    </div>
+                                  </div>
 
-                          {/* Select Button */}
-                          <div className="col-span-2 p-5 flex items-center justify-center">
-                            <button data-testid={`select-flight-${result.id}`}
-                              onClick={() => navigate('/checkout', { state: { flight: result } })}
-                              className="bg-green-500 hover:bg-green-600 text-white font-bold text-sm px-6 py-3 rounded-lg transition-all duration-200 hover:shadow-lg flex items-center space-x-1">
-                              <span>Seç</span>
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
+                                  <div className="flex items-center space-x-3">
+                                    <span className="text-sm text-gray-600">
+                                      {result.isDirect ? 'Birbaşa uçuş' : `${result.stops} Ötürmə`}
+                                    </span>
+                                    <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
+                                      {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
+                                    </span>
+                                  </div>
+
+                                  <div className="text-sm font-semibold text-gray-700">{result.flightCode}</div>
+
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
+                                    className={`w-10 h-10 rounded-lg border-2 flex items-center justify-center transition-all ${
+                                      expandedDetails[result.id]
+                                        ? 'border-yellow-400 bg-yellow-50'
+                                        : 'border-gray-300 hover:border-gray-400'
+                                    }`}
+                                  >
+                                    <ChevronDown className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${expandedDetails[result.id] ? 'rotate-180' : ''}`} />
+                                  </button>
+                                </div>
+
+                                {/* Expanded Detail */}
+                                {expandedDetails[result.id] && (
+                                  <div className="bg-gray-50 border-t border-gray-100">
+                                    <div className="mx-5 my-4 bg-white rounded-xl border border-gray-200 p-5">
+                                      {/* Flight code header */}
+                                      <div className="flex items-center space-x-2 mb-3">
+                                        <div className="w-7 h-7 rounded flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: airlineColor }}>
+                                          {airlinePrefix}
+                                        </div>
+                                        <span className="text-sm font-semibold text-gray-900">Flight {result.flightCode}</span>
+                                      </div>
+
+                                      <span className="text-xs font-medium text-green-600 mb-4 block">
+                                        {result.cabinClass === 'business' ? 'Business class' : result.cabinClass === 'first' ? 'First class' : result.cabinClass === 'premium' ? 'Premium class' : 'Economy class'}
+                                      </span>
+
+                                      {/* Timeline */}
+                                      <div className="relative pl-5 space-y-0">
+                                        {/* Departure */}
+                                        <div className="flex items-start space-x-4 relative">
+                                          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
+                                          <div className="pb-6">
+                                            <div className="text-base font-bold text-gray-900">{result.departTime}  {result.from}</div>
+                                            <div className="text-xs text-gray-500">{dateLabel}</div>
+                                            <div className="text-xs text-gray-500">{result.fromAirport}, {result.fromCode}</div>
+                                          </div>
+                                        </div>
+
+                                        {/* Duration line */}
+                                        <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
+
+                                        {/* Duration text */}
+                                        <div className="pl-2 pb-6">
+                                          <span className="text-xs text-gray-500">{result.duration}</span>
+                                        </div>
+
+                                        {/* Arrival */}
+                                        <div className="flex items-start space-x-4 relative">
+                                          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
+                                          <div>
+                                            <div className="text-base font-bold text-gray-900">{result.arriveTime}  {result.to}</div>
+                                            <div className="text-xs text-gray-500">{dateLabel}</div>
+                                            <div className="text-xs text-gray-500">{result.toAirport}, {result.toCode}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      {/* Divider + Choose */}
+                                      <div className="border-t border-gray-200 mt-5 pt-4 flex justify-end">
+                                        <button
+                                          data-testid={`select-flight-${result.id}`}
+                                          onClick={() => navigate('/checkout', { state: { flight: result } })}
+                                          className="px-8 py-2.5 rounded-lg border-2 border-yellow-400 text-gray-900 font-semibold text-sm hover:bg-yellow-50 transition-colors"
+                                        >
+                                          Seç
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
                           </div>
                         </div>
-
-                        {/* Detail Toggle + Sponsor */}
-                        <div className="flex items-center justify-between px-5 pb-3 pt-0">
-                          <button onClick={() => toggleDetail(result.id)} className="text-blue-600 text-xs font-medium hover:underline flex items-center space-x-1">
-                            <span>Ətraflı</span>
-                            <ChevronDown className={`w-3 h-3 transition-transform ${expandedDetails[result.id] ? 'rotate-180' : ''}`} />
-                          </button>
-                          {result.isSponsored && (
-                            <span className="text-[10px] text-gray-400 italic">*Sponsorlu Reklam</span>
-                          )}
-                        </div>
-
-                        {/* Expanded Detail */}
-                        {expandedDetails[result.id] && (
-                          <div className="px-5 pb-4 bg-gray-50 border-t border-gray-100">
-                            <div className="py-3 space-y-2">
-                              <div className="flex items-center space-x-4 text-xs text-gray-600">
-                                <span className="font-semibold">{result.departTime}</span>
-                                <span>{formData.from} ({result.fromCode})</span>
-                              </div>
-                              <div className="ml-3 pl-4 border-l-2 border-dashed border-gray-300 py-2 text-xs text-gray-500">
-                                Uçuş müddəti: {result.duration} &middot; {result.airline} &middot; Baqaj: {result.baggage}
-                              </div>
-                              <div className="flex items-center space-x-4 text-xs text-gray-600">
-                                <span className="font-semibold">{result.arriveTime}</span>
-                                <span>{formData.to} ({result.toCode})</span>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    });
+                  })()}
                 </div>
               </div>
             </div>
