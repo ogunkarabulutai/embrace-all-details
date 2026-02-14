@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, Users, ChevronDown, Building, MapPin, Search, Moon, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useNavigate } from 'react-router-dom';
 
 interface Child {
   age: number;
@@ -102,6 +103,7 @@ const countriesData: CountryData[] = [
 
 const HotelSearchForm: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   
   // State
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -451,6 +453,21 @@ const HotelSearchForm: React.FC = () => {
         <div className="lg:col-span-2 flex items-end">
           <button
             disabled={!selectedCountry || !checkIn || !checkOut || nights < 1}
+            onClick={() => {
+              const params = new URLSearchParams({
+                country: selectedCountry,
+                city: selectedCity,
+                district: selectedDistrict,
+                hotel: selectedHotel,
+                checkIn,
+                checkOut,
+                nights: String(nights),
+                adults: String(adults),
+                children: String(children.length),
+                freeCancellation: String(freeCancellation),
+              });
+              navigate(`/hotel-results?${params.toString()}`);
+            }}
             className="w-full py-4 bg-green-500 hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2">
             <Search className="w-5 h-5" />
             <span>Axtar</span>

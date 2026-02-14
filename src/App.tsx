@@ -14,6 +14,7 @@ import Services from './components/Services';
 import AboutUs from './components/AboutUs';
 import Policies from './components/Policies';
 import Checkout from './pages/Checkout';
+import HotelSearchResults from './pages/HotelSearchResults';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -57,6 +58,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/policies" element={<Policies />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/hotel-results" element={<HotelSearchResults />} />
           </Routes>
           
           <Footer />
