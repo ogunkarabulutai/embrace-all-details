@@ -323,9 +323,9 @@ const HeroSection: React.FC = () => {
               {activeTab !== 'hotel' && (
               <>
               {/* Row 1: From, Swap, To, Dates */}
-              <div className="grid grid-cols-1 lg:grid-cols-11 gap-4 items-end">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_1fr_1fr] gap-3 items-end">
                 {/* From */}
-                <div className="lg:col-span-3" ref={fromRef}>
+                <div ref={fromRef}>
                   <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Haradan / From</label>
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"><MapPin className="w-5 h-5" /></div>
@@ -358,7 +358,7 @@ const HeroSection: React.FC = () => {
                 </div>
 
                 {/* Swap */}
-                <div className="lg:col-span-1 flex items-end justify-center pb-3">
+                <div className="flex items-end justify-center pb-3">
                   <button data-testid="swap-button" onClick={() => {
                     const tempName = formData.from; const tempCode = formData.fromCode;
                     setFormData(prev => ({ ...prev, from: prev.to, fromCode: prev.toCode, to: tempName, toCode: tempCode }));
@@ -369,7 +369,7 @@ const HeroSection: React.FC = () => {
                 </div>
 
                 {/* To */}
-                <div className="lg:col-span-3" ref={toRef}>
+                <div ref={toRef}>
                   <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Haraya / To</label>
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"><MapPin className="w-5 h-5" /></div>
@@ -402,7 +402,7 @@ const HeroSection: React.FC = () => {
                 </div>
 
                 {/* Departure Date */}
-                <div className="lg:col-span-2">
+                <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">{t('hero.departDate')}</label>
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><Calendar className="w-5 h-5" /></div>
@@ -414,7 +414,7 @@ const HeroSection: React.FC = () => {
                 </div>
 
                 {/* Return Date */}
-                <div className="lg:col-span-2">
+                <div>
                   {tripType === 'roundtrip' ? (
                     <div>
                       <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">{t('hero.addReturn')}</label>
