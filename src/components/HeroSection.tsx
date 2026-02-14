@@ -619,7 +619,7 @@ const HeroSection: React.FC = () => {
       </section>
 
       {/* ===================== SEARCH RESULTS ===================== */}
-      {hasSearched && sortedResults.length > 0 && (
+      {hasSearched && searchResults.length > 0 && (
         <section ref={resultsRef} data-testid="search-results" className="bg-[#f0f3f8] dark:bg-gray-800 py-0">
           {/* Date Navigation Bar */}
           <div className="bg-white border-b border-gray-200 sticky top-0 z-30">
@@ -782,7 +782,13 @@ const HeroSection: React.FC = () => {
 
                 {/* Flight Cards - Grouped by airline */}
                 <div className="space-y-5">
-                  {(() => {
+                  {sortedResults.length === 0 ? (
+                    <div className="bg-white rounded-xl border border-gray-200 p-10 text-center">
+                      <Clock className="w-10 h-10 text-gray-300 mx-auto mb-3" />
+                      <p className="text-gray-500 font-medium">Seçilən saat aralığında uçuş tapılmadı</p>
+                      <p className="text-xs text-gray-400 mt-1">Filtr aralığını genişləndərək yenidən yoxlayın</p>
+                    </div>
+                  ) : (() => {
                     // Group results by airline
                     const grouped = sortedResults.reduce<Record<string, SearchResult[]>>((acc, r) => {
                       if (!acc[r.airline]) acc[r.airline] = [];
@@ -794,7 +800,6 @@ const HeroSection: React.FC = () => {
                       const airlineInfo = airlineData.find(a => a.name === airline);
                       const airlineColor = airlineInfo?.color || '#333';
                       const airlinePrefix = airline.substring(0, 2).toUpperCase();
-                      // Sort flights by depart time
                       const sortedFlights = [...flights].sort((a, b) => a.departTime.localeCompare(b.departTime));
                       const dateLabel = formData.departDate
                         ? new Date(formData.departDate).toLocaleDateString('az-AZ', { weekday: 'short', day: 'numeric', month: 'short' })
@@ -833,7 +838,6 @@ const HeroSection: React.FC = () => {
                           <div className="divide-y divide-gray-100">
                             {sortedFlights.map((result) => (
                               <div key={result.id} data-testid={`flight-result-${result.id}`}>
-                                {/* Compact Flight Row */}
                                 <div
                                   className="flex items-center justify-between px-5 py-4 hover:bg-gray-50 cursor-pointer transition-colors"
                                   onClick={() => toggleDetail(result.id)}
@@ -872,11 +876,9 @@ const HeroSection: React.FC = () => {
                                   </button>
                                 </div>
 
-                                {/* Expanded Detail */}
                                 {expandedDetails[result.id] && (
                                   <div className="bg-gray-50 border-t border-gray-100">
                                     <div className="mx-5 my-4 bg-white rounded-xl border border-gray-200 p-5">
-                                      {/* Flight code header */}
                                       <div className="flex items-center space-x-2 mb-3">
                                         <div className="w-7 h-7 rounded flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: airlineColor }}>
                                           {airlinePrefix}
@@ -888,9 +890,7 @@ const HeroSection: React.FC = () => {
                                         {result.cabinClass === 'business' ? 'Business class' : result.cabinClass === 'first' ? 'First class' : result.cabinClass === 'premium' ? 'Premium class' : 'Economy class'}
                                       </span>
 
-                                      {/* Timeline */}
                                       <div className="relative pl-5 space-y-0">
-                                        {/* Departure */}
                                         <div className="flex items-start space-x-4 relative">
                                           <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
                                           <div className="pb-6">
@@ -900,15 +900,12 @@ const HeroSection: React.FC = () => {
                                           </div>
                                         </div>
 
-                                        {/* Duration line */}
                                         <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
 
-                                        {/* Duration text */}
                                         <div className="pl-2 pb-6">
                                           <span className="text-xs text-gray-500">{result.duration}</span>
                                         </div>
 
-                                        {/* Arrival */}
                                         <div className="flex items-start space-x-4 relative">
                                           <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
                                           <div>
@@ -919,7 +916,6 @@ const HeroSection: React.FC = () => {
                                         </div>
                                       </div>
 
-                                      {/* Divider + Choose */}
                                       <div className="border-t border-gray-200 mt-5 pt-4 flex justify-end">
                                         <button
                                           data-testid={`select-flight-${result.id}`}
