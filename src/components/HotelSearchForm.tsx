@@ -114,6 +114,11 @@ const HotelSearchForm: React.FC = () => {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState<Child[]>([]);
   
+  // Filter/search text
+  const [countryFilter, setCountryFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
+  const [hotelFilter, setHotelFilter] = useState('');
+  
   // Dropdown visibility
   const [showCountry, setShowCountry] = useState(false);
   const [showCity, setShowCity] = useState(false);
@@ -162,14 +167,28 @@ const HotelSearchForm: React.FC = () => {
   // Get available cities based on selected country
   const availableCities = selectedCountry
     ? countriesData.find(c => c.name === selectedCountry)?.cities || []
-    : [];
+    : countriesData.flatMap(c => c.cities);
 
   // Get current city data
   const currentCity = availableCities.find(c => c.name === selectedCity);
 
-  // Get available hotels
-  const availableHotels = currentCity?.hotels || [];
+  // Get available hotels - search across all if no city selected
+  const availableHotels = selectedCity
+    ? (currentCity?.hotels || [])
+    : countriesData.flatMap(c => c.cities.flatMap(ci => ci.hotels));
   const availableDistricts = currentCity?.districts || [];
+
+  // Filtered lists based on search text
+  const filteredCountries = countriesData.filter(c =>
+    c.name.toLowerCase().includes(countryFilter.toLowerCase())
+  );
+  const filteredCities = availableCities.filter(city =>
+    city.name.toLowerCase().includes(cityFilter.toLowerCase()) ||
+    city.districts.some(d => d.toLowerCase().includes(cityFilter.toLowerCase()))
+  );
+  const filteredHotels = availableHotels.filter(h =>
+    h.toLowerCase().includes(hotelFilter.toLowerCase())
+  );
 
   // Add/remove children
   const addChild = () => {
@@ -191,16 +210,21 @@ const HotelSearchForm: React.FC = () => {
   // Reset downstream when country changes
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
+    setCountryFilter(country);
     setSelectedCity('');
+    setCityFilter('');
     setSelectedDistrict('');
     setSelectedHotel('');
+    setHotelFilter('');
     setShowCountry(false);
   };
 
   const handleCityChange = (city: string, district?: string) => {
     setSelectedCity(city);
+    setCityFilter(district ? `${city} - ${district}` : city);
     setSelectedDistrict(district || '');
     setSelectedHotel('');
+    setHotelFilter('');
     setShowCity(false);
   };
 
@@ -213,19 +237,21 @@ const HotelSearchForm: React.FC = () => {
         {/* Country */}
         <div ref={countryRef} className="relative">
           <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Ülkə / Country</label>
-          <button
-            onClick={() => setShowCountry(!showCountry)}
-            className="w-full flex items-center justify-between pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-lg font-medium hover:border-blue-300 transition-colors relative"
-          >
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <span className={selectedCountry ? 'text-gray-900' : 'text-gray-500'}>
-              {selectedCountry || 'Ülkə seçin'}
-            </span>
-            <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${showCountry ? 'rotate-180' : ''}`} />
-          </button>
+          <div className="relative">
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+            <input
+              type="text"
+              value={countryFilter}
+              placeholder="Ülkə yazın və ya seçin"
+              onChange={(e) => { setCountryFilter(e.target.value); setShowCountry(true); if (!e.target.value) { setSelectedCountry(''); setSelectedCity(''); setCityFilter(''); setSelectedHotel(''); setHotelFilter(''); } }}
+              onFocus={() => setShowCountry(true)}
+              className="w-full pl-10 pr-10 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-medium"
+            />
+            <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${showCountry ? 'rotate-180' : ''}`} />
+          </div>
           {showCountry && (
             <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-64 overflow-y-auto">
-              {countriesData.map(country => (
+              {filteredCountries.map(country => (
                 <button key={country.name} onClick={() => handleCountryChange(country.name)}
                   className={`w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors flex items-center space-x-3 border-b border-gray-50 last:border-b-0 ${selectedCountry === country.name ? 'bg-blue-50 text-blue-700' : 'text-gray-900'}`}>
                   <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" />
@@ -233,6 +259,7 @@ const HotelSearchForm: React.FC = () => {
                   <span className="text-xs text-gray-400 ml-auto">{country.cities.length} şəhər</span>
                 </button>
               ))}
+              {filteredCountries.length === 0 && <div className="px-4 py-4 text-center text-gray-500 text-sm">Nəticə tapılmadı</div>}
             </div>
           )}
         </div>
@@ -240,20 +267,21 @@ const HotelSearchForm: React.FC = () => {
         {/* City + District */}
         <div ref={cityRef} className="relative">
           <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Şəhər / City</label>
-          <button
-            onClick={() => selectedCountry && setShowCity(!showCity)}
-            disabled={!selectedCountry}
-            className={`w-full flex items-center justify-between pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-lg font-medium transition-colors relative ${!selectedCountry ? 'opacity-50 cursor-not-allowed' : 'hover:border-blue-300'}`}
-          >
-            <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <span className={selectedCity ? 'text-gray-900' : 'text-gray-500'}>
-              {selectedCity ? `${selectedCity}${selectedDistrict ? ` - ${selectedDistrict}` : ''}` : 'Şəhər seçin'}
-            </span>
-            <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${showCity ? 'rotate-180' : ''}`} />
-          </button>
+          <div className="relative">
+            <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+            <input
+              type="text"
+              value={cityFilter}
+              placeholder="Şəhər və ya ilçə yazın"
+              onChange={(e) => { setCityFilter(e.target.value); setShowCity(true); if (!e.target.value) { setSelectedCity(''); setSelectedDistrict(''); } }}
+              onFocus={() => setShowCity(true)}
+              className="w-full pl-10 pr-10 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-medium"
+            />
+            <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${showCity ? 'rotate-180' : ''}`} />
+          </div>
           {showCity && (
             <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-72 overflow-y-auto">
-              {availableCities.map(city => (
+              {filteredCities.map(city => (
                 <div key={city.name}>
                   <button
                     onClick={() => handleCityChange(city.name)}
@@ -261,7 +289,7 @@ const HotelSearchForm: React.FC = () => {
                     <span>{city.name}</span>
                     <span className="text-xs text-gray-400">{city.districts.length} ilçə</span>
                   </button>
-                  {city.districts.map(district => (
+                  {city.districts.filter(d => !cityFilter || city.name.toLowerCase().includes(cityFilter.toLowerCase()) || d.toLowerCase().includes(cityFilter.toLowerCase())).map(district => (
                     <button key={district}
                       onClick={() => handleCityChange(city.name, district)}
                       className={`w-full text-left px-8 py-2 hover:bg-blue-50 transition-colors text-sm border-b border-gray-50 ${selectedCity === city.name && selectedDistrict === district ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-600'}`}>
@@ -270,6 +298,7 @@ const HotelSearchForm: React.FC = () => {
                   ))}
                 </div>
               ))}
+              {filteredCities.length === 0 && <div className="px-4 py-4 text-center text-gray-500 text-sm">Nəticə tapılmadı</div>}
             </div>
           )}
         </div>
@@ -277,29 +306,31 @@ const HotelSearchForm: React.FC = () => {
         {/* Hotels */}
         <div ref={hotelRef} className="relative">
           <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Otel / Hotel</label>
-          <button
-            onClick={() => selectedCity && setShowHotel(!showHotel)}
-            disabled={!selectedCity}
-            className={`w-full flex items-center justify-between pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-lg font-medium transition-colors relative ${!selectedCity ? 'opacity-50 cursor-not-allowed' : 'hover:border-blue-300'}`}
-          >
-            <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <span className={selectedHotel ? 'text-gray-900 text-sm' : 'text-gray-500'}>
-              {selectedHotel || 'Otel seçin (opsional)'}
-            </span>
-            <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${showHotel ? 'rotate-180' : ''}`} />
-          </button>
+          <div className="relative">
+            <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+            <input
+              type="text"
+              value={hotelFilter}
+              placeholder="Otel adı yazın"
+              onChange={(e) => { setHotelFilter(e.target.value); setShowHotel(true); if (!e.target.value) setSelectedHotel(''); }}
+              onFocus={() => setShowHotel(true)}
+              className="w-full pl-10 pr-10 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-medium"
+            />
+            <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${showHotel ? 'rotate-180' : ''}`} />
+          </div>
           {showHotel && (
             <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-64 overflow-y-auto">
-              <button onClick={() => { setSelectedHotel(''); setShowHotel(false); }}
+              <button onClick={() => { setSelectedHotel(''); setHotelFilter(''); setShowHotel(false); }}
                 className="w-full text-left px-4 py-3 hover:bg-gray-50 text-gray-500 text-sm border-b border-gray-100">
                 Hamısı (Bütün otellər)
               </button>
-              {availableHotels.map(hotel => (
-                <button key={hotel} onClick={() => { setSelectedHotel(hotel); setShowHotel(false); }}
+              {filteredHotels.map(hotel => (
+                <button key={hotel} onClick={() => { setSelectedHotel(hotel); setHotelFilter(hotel); setShowHotel(false); }}
                   className={`w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors text-sm border-b border-gray-50 ${selectedHotel === hotel ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-900'}`}>
                   🏨 {hotel}
                 </button>
               ))}
+              {filteredHotels.length === 0 && <div className="px-4 py-4 text-center text-gray-500 text-sm">Otel tapılmadı</div>}
             </div>
           )}
         </div>
