@@ -295,10 +295,6 @@ const HeroSection: React.FC = () => {
                     <span className="text-gray-700 font-medium">{t('hero.roundTrip')}</span>
                   </label>
                   
-                  <label className="flex items-center space-x-2 cursor-pointer ml-8">
-                    <input type="checkbox" checked={showHotels} onChange={(e) => setShowHotels(e.target.checked)} className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                    <span className="text-gray-700">{t('hero.nonStop')}</span>
-                  </label>
                 </div>
               )}
 
