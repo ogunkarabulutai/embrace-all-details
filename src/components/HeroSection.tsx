@@ -788,9 +788,8 @@ const HeroSection: React.FC = () => {
                                     <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                       {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
                                     </span>
+                                    <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
                                   </div>
-
-                                  <div className="text-sm font-semibold text-gray-700">{result.flightCode}</div>
 
                                   <button
                                     onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
