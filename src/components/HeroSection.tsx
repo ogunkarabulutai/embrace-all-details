@@ -430,6 +430,7 @@ const HeroSection: React.FC = () => {
 
                 {/* Passengers (Hotel-style) */}
                 <div className="lg:col-span-2" ref={passengerRef}>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Qonaqlar / Guests</label>
                   <div className="relative">
                     <button onClick={() => setShowPassengerDropdown(!showPassengerDropdown)}
                       className="w-full flex items-center justify-between pl-10 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-lg font-medium hover:border-blue-300 transition-colors relative">
