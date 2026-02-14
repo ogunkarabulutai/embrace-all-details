@@ -862,6 +862,7 @@ const HeroSection: React.FC = () => {
                                       {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
                                     </span>
                                     <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
+                                    <span className="text-sm font-bold text-gray-900">${formatPrice(result.price)}</span>
                                   </div>
 
                                   <button
