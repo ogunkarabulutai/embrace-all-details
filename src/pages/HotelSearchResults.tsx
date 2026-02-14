@@ -26,97 +26,97 @@ const allHotels: HotelResult[] = [
   {
     id: 1, name: 'Maxx Royal Belek Golf Resort', city: 'Antalya', district: 'Belek', country: 'Türkiye',
     stars: 5, price: 450, originalPrice: 580, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop',
-    meals: 'Ultra All Inclusive', beds: '1 King Bed', reviewScore: 9.4, reviewCount: 2847, reviewLabel: 'Əla',
+    meals: 'Ultra All Inclusive', beds: '1 Bed', reviewScore: 9.4, reviewCount: 2847, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Air Conditioning', 'TV', 'Mini Bar']
   },
   {
     id: 2, name: 'Titanic Mardan Palace', city: 'Antalya', district: 'Lara', country: 'Türkiye',
     stars: 5, price: 520, originalPrice: 690, image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop',
-    meals: 'All Inclusive', beds: '2 Twin Beds', reviewScore: 9.1, reviewCount: 3421, reviewLabel: 'Əla',
+    meals: 'All Inclusive', beds: '2 Beds', reviewScore: 9.1, reviewCount: 3421, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Gym', 'Air Conditioning', 'TV', 'Bathtub']
   },
   {
     id: 3, name: 'Rixos Premium Belek', city: 'Antalya', district: 'Belek', country: 'Türkiye',
     stars: 5, price: 380, originalPrice: 490, image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&h=400&fit=crop',
-    meals: 'Ultra All Inclusive', beds: '1 King Bed', reviewScore: 9.2, reviewCount: 1956, reviewLabel: 'Əla',
+    meals: 'Ultra All Inclusive', beds: '1 Bed', reviewScore: 9.2, reviewCount: 1956, reviewLabel: 'Əla',
     freeCancellation: false, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Gym', 'TV', 'Mini Bar']
   },
   {
     id: 4, name: 'Voyage Belek Golf & Spa', city: 'Antalya', district: 'Belek', country: 'Türkiye',
     stars: 5, price: 310, originalPrice: 420, image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=400&fit=crop',
-    meals: 'All Inclusive', beds: '1 Double Bed', reviewScore: 8.8, reviewCount: 2103, reviewLabel: 'Çox yaxşı',
+    meals: 'All Inclusive', beds: '1 Bed', reviewScore: 8.8, reviewCount: 2103, reviewLabel: 'Çox yaxşı',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Air Conditioning', 'TV']
   },
   {
     id: 5, name: 'Four Seasons Bosphorus', city: 'İstanbul', district: 'Beşiktaş', country: 'Türkiye',
     stars: 5, price: 680, originalPrice: 850, image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&h=400&fit=crop',
-    meals: 'Breakfast', beds: '1 King Bed', reviewScore: 9.6, reviewCount: 1245, reviewLabel: 'Əla',
+    meals: 'Bed & Breakfast', beds: '1 Bed', reviewScore: 9.6, reviewCount: 1245, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Gym', 'TV', 'Bathtub', 'Mini Bar']
   },
   {
     id: 6, name: 'Çırağan Palace Kempinski', city: 'İstanbul', district: 'Beşiktaş', country: 'Türkiye',
     stars: 5, price: 720, originalPrice: 900, image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop',
-    meals: 'Breakfast', beds: '1 King Bed', reviewScore: 9.5, reviewCount: 987, reviewLabel: 'Əla',
+    meals: 'Bed & Breakfast', beds: '2 Beds', reviewScore: 9.5, reviewCount: 987, reviewLabel: 'Əla',
     freeCancellation: false, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'TV', 'Bathtub', 'Mini Bar']
   },
   {
     id: 7, name: 'Mandarin Oriental Bodrum', city: 'Bodrum', district: 'Yalıkavak', country: 'Türkiye',
     stars: 5, price: 590, originalPrice: 750, image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop',
-    meals: 'Half Board', beds: '1 King Bed', reviewScore: 9.3, reviewCount: 756, reviewLabel: 'Əla',
+    meals: 'Half Board', beds: '1 Bed', reviewScore: 9.3, reviewCount: 756, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Air Conditioning', 'TV', 'Mini Bar']
   },
   {
     id: 8, name: 'Four Seasons Baku', city: 'Bakı', district: 'Səbail', country: 'Azərbaycan',
     stars: 5, price: 350, originalPrice: 450, image: 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600&h=400&fit=crop',
-    meals: 'Breakfast', beds: '1 King Bed', reviewScore: 9.4, reviewCount: 1432, reviewLabel: 'Əla',
+    meals: 'Bed & Breakfast', beds: '2 Beds', reviewScore: 9.4, reviewCount: 1432, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Gym', 'TV', 'Bathtub']
   },
   {
     id: 9, name: 'Fairmont Baku', city: 'Bakı', district: 'Səbail', country: 'Azərbaycan',
     stars: 5, price: 280, originalPrice: 380, image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&h=400&fit=crop',
-    meals: 'Breakfast', beds: '2 Twin Beds', reviewScore: 9.0, reviewCount: 1876, reviewLabel: 'Əla',
+    meals: 'Room Only', beds: '2 Beds', reviewScore: 9.0, reviewCount: 1876, reviewLabel: 'Əla',
     freeCancellation: false, roomFeatures: ['Wi-Fi', 'Pool', 'Gym', 'Air Conditioning', 'TV']
   },
   {
     id: 10, name: 'Hilton Baku', city: 'Bakı', district: 'Xətai', country: 'Azərbaycan',
     stars: 5, price: 220, originalPrice: 300, image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=600&h=400&fit=crop',
-    meals: 'Half Board', beds: '1 Double Bed', reviewScore: 8.6, reviewCount: 2345, reviewLabel: 'Çox yaxşı',
+    meals: 'Half Board', beds: '1 Bed', reviewScore: 8.6, reviewCount: 2345, reviewLabel: 'Çox yaxşı',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Gym', 'Air Conditioning', 'TV']
   },
   {
     id: 11, name: 'Delphin Imperial Lara', city: 'Antalya', district: 'Lara', country: 'Türkiye',
     stars: 5, price: 340, originalPrice: 450, image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&h=400&fit=crop',
-    meals: 'Ultra All Inclusive', beds: '1 King Bed', reviewScore: 8.9, reviewCount: 3102, reviewLabel: 'Çox yaxşı',
+    meals: 'Ultra All Inclusive', beds: '1 Bed', reviewScore: 8.9, reviewCount: 3102, reviewLabel: 'Çox yaxşı',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Air Conditioning', 'TV', 'Mini Bar']
   },
   {
     id: 12, name: 'Granada Luxury Belek', city: 'Antalya', district: 'Belek', country: 'Türkiye',
     stars: 5, price: 290, originalPrice: 400, image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=400&fit=crop',
-    meals: 'All Inclusive', beds: '2 Twin Beds', reviewScore: 8.7, reviewCount: 1654, reviewLabel: 'Çox yaxşı',
+    meals: 'All Inclusive', beds: '3 Beds', reviewScore: 8.7, reviewCount: 1654, reviewLabel: 'Çox yaxşı',
     freeCancellation: false, roomFeatures: ['Wi-Fi', 'Pool', 'Air Conditioning', 'TV']
   },
   {
     id: 13, name: 'Burj Al Arab', city: 'Dubai', district: 'Jumeirah Beach', country: 'BƏƏ',
     stars: 5, price: 1200, originalPrice: 1500, image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=400&fit=crop',
-    meals: 'Breakfast', beds: '1 King Bed', reviewScore: 9.8, reviewCount: 4521, reviewLabel: 'Əla',
+    meals: 'Full Board', beds: '2 Beds', reviewScore: 9.8, reviewCount: 4521, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Gym', 'TV', 'Bathtub', 'Mini Bar']
   },
   {
     id: 14, name: 'Atlantis The Palm', city: 'Dubai', district: 'Palm Jumeirah', country: 'BƏƏ',
     stars: 5, price: 550, originalPrice: 720, image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=400&fit=crop',
-    meals: 'Half Board', beds: '1 King Bed', reviewScore: 9.1, reviewCount: 5678, reviewLabel: 'Əla',
+    meals: 'Half Board', beds: '1 Bed', reviewScore: 9.1, reviewCount: 5678, reviewLabel: 'Əla',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Pool', 'Spa', 'Gym', 'TV', 'Bathtub']
   },
   {
     id: 15, name: 'Rooms Hotel Tbilisi', city: 'Tbilisi', district: 'Köhnə Tbilisi', country: 'Gürcüstan',
     stars: 4, price: 150, originalPrice: 200, image: 'https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=600&h=400&fit=crop',
-    meals: 'Breakfast', beds: '1 Double Bed', reviewScore: 8.9, reviewCount: 876, reviewLabel: 'Çox yaxşı',
+    meals: 'Bed & Breakfast', beds: '1 Bed', reviewScore: 8.9, reviewCount: 876, reviewLabel: 'Çox yaxşı',
     freeCancellation: true, roomFeatures: ['Wi-Fi', 'Air Conditioning', 'TV', 'Mini Bar']
   },
   {
     id: 16, name: 'Qafqaz Riverside Hotel', city: 'Qəbələ', district: 'Qəbələ Mərkəz', country: 'Azərbaycan',
     stars: 4, price: 120, originalPrice: 170, image: 'https://images.unsplash.com/photo-1568084680786-a84f91d1153c?w=600&h=400&fit=crop',
-    meals: 'All Inclusive', beds: '1 Double Bed', reviewScore: 8.3, reviewCount: 654, reviewLabel: 'Çox yaxşı',
+    meals: 'All Inclusive', beds: '1 Bed', reviewScore: 8.3, reviewCount: 654, reviewLabel: 'Çox yaxşı',
     freeCancellation: false, roomFeatures: ['Wi-Fi', 'Pool', 'Air Conditioning', 'TV']
   },
 ];
@@ -172,9 +172,9 @@ const HotelSearchResults: React.FC = () => {
     });
   }, [searchCountry, searchCity, searchHotel, searchFreeCancellation]);
 
-  // Get unique values for filters
-  const allMeals = [...new Set(searchFilteredHotels.map(h => h.meals))];
-  const allBeds = [...new Set(searchFilteredHotels.map(h => h.beds))];
+  // Fixed filter options
+  const allMeals = ['All Inclusive', 'Ultra All Inclusive', 'Half Board', 'Full Board', 'Bed & Breakfast', 'Room Only'];
+  const allBeds = ['1 Bed', '2 Beds', '3 Beds', '4 Beds'];
   const allDistricts = [...new Set(searchFilteredHotels.map(h => h.district))];
   const allRoomFeatures = [...new Set(searchFilteredHotels.flatMap(h => h.roomFeatures))];
 
