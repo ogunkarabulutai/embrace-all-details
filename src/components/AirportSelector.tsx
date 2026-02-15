@@ -62,12 +62,13 @@ const AirportSelector: React.FC<AirportSelectorProps> = ({ label, placeholder, v
   }, []);
 
   const grouped = useMemo((): CountryGroup[] => {
-    const q = search.toLowerCase();
+    const normalize = (s: string) => s.toLocaleLowerCase('tr-TR');
+    const q = normalize(search);
     const filtered = airports.filter(a =>
-      a.name.toLowerCase().includes(q) ||
-      a.code.toLowerCase().includes(q) ||
-      a.city.toLowerCase().includes(q) ||
-      a.country.toLowerCase().includes(q)
+      normalize(a.name).includes(q) ||
+      normalize(a.code).includes(q) ||
+      normalize(a.city).includes(q) ||
+      normalize(a.country).includes(q)
     );
 
     const countryMap: Record<string, Record<string, Airport[]>> = {};
