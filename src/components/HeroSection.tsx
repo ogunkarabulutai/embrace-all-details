@@ -677,7 +677,13 @@ const HeroSection: React.FC = () => {
                 <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
                     <span className="font-semibold text-gray-900 text-sm">Filtr</span>
-                    <button className="text-blue-600 text-xs font-medium hover:underline">Təmizlə</button>
+                    <button className="text-blue-600 text-xs font-medium hover:underline" onClick={() => {
+                      setDepartTimeRange([0, 1439]);
+                      setArriveTimeRange([0, 1439]);
+                      const maxP = Math.max(...searchResults.map(r => r.price));
+                      setPriceRange([0, maxP]);
+                      setSortBy('cheapest');
+                    }}>Təmizlə</button>
                   </div>
 
                   <div className="px-3">
