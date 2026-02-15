@@ -288,6 +288,14 @@ const HeroSection: React.FC = () => {
            r.price >= priceRange[0] && r.price <= priceRange[1];
   });
 
+  const filteredReturnFlights = searchResults.filter((r) => {
+    const dep = timeToMinutes(r.departTime);
+    const arr = timeToMinutes(r.arriveTime);
+    return dep >= returnDepartTimeRange[0] && dep <= returnDepartTimeRange[1] &&
+           arr >= returnArriveTimeRange[0] && arr <= returnArriveTimeRange[1] &&
+           r.price >= priceRange[0] && r.price <= priceRange[1];
+  });
+
   const sortedResults = [...filteredByTime].sort((a, b) => {
     if (sortBy === 'cheapest') return a.price - b.price;
     if (sortBy === 'fastest') {
@@ -1031,10 +1039,11 @@ const HeroSection: React.FC = () => {
                       }
 
                       // ========== ROUND-TRIP CARD LAYOUT ==========
+                      const returnFlightsForAirline = filteredReturnFlights.filter(f => f.airline === airline).sort((a, b) => a.departTime.localeCompare(b.departTime));
                       const selectedOut = selectedOutbound[airline] ?? sortedFlights[0]?.id;
-                      const selectedRet = selectedReturn[airline] ?? sortedFlights[0]?.id;
+                      const selectedRet = selectedReturn[airline] ?? returnFlightsForAirline[0]?.id;
                       const outFlight = sortedFlights.find(f => f.id === selectedOut) || sortedFlights[0];
-                      const retFlight = sortedFlights.find(f => f.id === selectedRet) || sortedFlights[0];
+                      const retFlight = returnFlightsForAirline.find(f => f.id === selectedRet) || returnFlightsForAirline[0];
                       const combinedPrice = (outFlight?.price || 0) + (retFlight?.price || 0);
 
                       return (
@@ -1155,7 +1164,7 @@ const HeroSection: React.FC = () => {
                               <span className="text-sm text-gray-500">{toCountry} → {fromCountry}</span>
                             </div>
                             <div className="space-y-2">
-                              {sortedFlights.map((result) => (
+                              {returnFlightsForAirline.map((result) => (
                                 <div key={`ret-${result.id}`}>
                                   <div
                                     onClick={() => setSelectedReturn(prev => ({ ...prev, [airline]: result.id }))}
