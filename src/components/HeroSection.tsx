@@ -656,6 +656,19 @@ const HeroSection: React.FC = () => {
                   <ChevronDown className="w-4 h-4" />
                 </button>
 
+                {/* Sort By */}
+                <div className="bg-white rounded-lg border border-gray-200 overflow-hidden mb-4">
+                  <div className="px-4 py-3">
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Sırala</label>
+                    <select className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M6%208L1%203h10z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_12px_center]">
+                      <option value="price-asc">Qiymət: Aşağıdan Yuxarıya</option>
+                      <option value="price-desc">Qiymət: Yuxarıdan Aşağıya</option>
+                      <option value="duration">Müddət: Ən Qısa</option>
+                      <option value="departure">Kalkış: Ən Erkən</option>
+                    </select>
+                  </div>
+                </div>
+
                 {/* Filters */}
                 <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
