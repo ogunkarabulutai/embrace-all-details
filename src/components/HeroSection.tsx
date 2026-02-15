@@ -202,11 +202,30 @@ const HeroSection: React.FC = () => {
   const [returnArriveTimeRange, setReturnArriveTimeRange] = useState<[number, number]>([0, 1439]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
 
+  // Tour country searchable dropdown state
+  const [tourCountry, setTourCountry] = useState('');
+  const [tourCountryFilter, setTourCountryFilter] = useState('');
+  const [showTourCountryDropdown, setShowTourCountryDropdown] = useState(false);
+
+  const tourCountries = [
+    { value: 'turkey', label: 'Türkiyə' },
+    { value: 'egypt', label: 'Misir' },
+    { value: 'uae', label: 'BƏƏ' },
+    { value: 'georgia', label: 'Gürcüstan' },
+    { value: 'thailand', label: 'Tayland' },
+    { value: 'maldives', label: 'Maldiv' },
+    { value: 'greece', label: 'Yunanıstan' },
+    { value: 'spain', label: 'İspaniya' },
+    { value: 'italy', label: 'İtaliya' },
+    { value: 'montenegro', label: 'Monteneqro' },
+  ];
+
   const fromRef = useRef<HTMLDivElement>(null);
   const toRef = useRef<HTMLDivElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const passengerRef = useRef<HTMLDivElement>(null);
   const airlineRef = useRef<HTMLDivElement>(null);
+  const tourCountryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -221,6 +240,9 @@ const HeroSection: React.FC = () => {
       }
       if (airlineRef.current && !airlineRef.current.contains(event.target as Node)) {
         setShowAirlineDropdown(false);
+      }
+      if (tourCountryRef.current && !tourCountryRef.current.contains(event.target as Node)) {
+        setShowTourCountryDropdown(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -401,18 +423,28 @@ const HeroSection: React.FC = () => {
                       <input type="text" placeholder="Şəhər seçin" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium" />
                     </div>
                     {/* State */}
-                    <div className="relative">
+                    <div className="relative" ref={tourCountryRef}>
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Ölkə / State</label>
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
-                        <option value="">Ölkə seçin</option>
-                        <option value="turkey">Türkiyə</option>
-                        <option value="egypt">Misir</option>
-                        <option value="uae">BƏƏ</option>
-                        <option value="georgia">Gürcüstan</option>
-                        <option value="thailand">Tayland</option>
-                        <option value="maldives">Maldiv</option>
-                      </select>
+                      <input
+                        type="text"
+                        value={tourCountryFilter}
+                        placeholder="Ölkə seçin"
+                        onChange={(e) => { setTourCountryFilter(e.target.value); setShowTourCountryDropdown(true); if (!e.target.value) setTourCountry(''); }}
+                        onFocus={() => setShowTourCountryDropdown(true)}
+                        className="w-full pl-10 pr-10 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
+                      />
+                      <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${showTourCountryDropdown ? 'rotate-180' : ''}`} />
+                      {showTourCountryDropdown && (
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto">
+                          {tourCountries.filter(c => c.label.toLowerCase().includes(tourCountryFilter.toLowerCase())).map(country => (
+                            <button key={country.value} onClick={() => { setTourCountry(country.value); setTourCountryFilter(country.label); setShowTourCountryDropdown(false); }}
+                              className={`w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors text-sm border-b border-gray-50 ${tourCountry === country.value ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-900'}`}>
+                              {country.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     {/* Airlines */}
                     <div className="relative">
