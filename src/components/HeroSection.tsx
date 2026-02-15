@@ -389,8 +389,93 @@ const HeroSection: React.FC = () => {
                 <HotelSearchForm />
               )}
 
+              {/* Tour Tab */}
+              {activeTab === 'tour' && (
+                <div className="space-y-4">
+                  {/* Row 1: Departure Town, State, Airlines, Guests */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {/* Departure Town */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Çıxış Şəhəri / Departure Town</label>
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <input type="text" placeholder="Şəhər seçin" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium" />
+                    </div>
+                    {/* State */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Ölkə / State</label>
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                        <option value="">Ölkə seçin</option>
+                        <option value="turkey">Türkiyə</option>
+                        <option value="egypt">Misir</option>
+                        <option value="uae">BƏƏ</option>
+                        <option value="georgia">Gürcüstan</option>
+                        <option value="thailand">Tayland</option>
+                        <option value="maldives">Maldiv</option>
+                      </select>
+                    </div>
+                    {/* Airlines */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Aviaşirkət / Airlines</label>
+                      <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                        <option value="">Hamısı</option>
+                        {airlineData.map(a => <option key={a.name} value={a.name}>{a.name}</option>)}
+                      </select>
+                    </div>
+                    {/* Guests */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Qonaqlar / Guests</label>
+                      <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                        {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} Qonaq</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Row 2: Departure From, Departure To, Nights From, Nights To, Search */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
+                    {/* Departure From */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gediş / Departure From</label>
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <input type="date" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
+                    </div>
+                    {/* Departure To */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gediş Son / Departure To</label>
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <input type="date" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
+                    </div>
+                    {/* Nights From */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gecə (Min) / Nights From</label>
+                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                        {Array.from({length: 14}, (_, i) => i + 1).map(n => <option key={n} value={n}>{n} gecə</option>)}
+                      </select>
+                    </div>
+                    {/* Nights To */}
+                    <div className="relative">
+                      <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gecə (Max) / Nights To</label>
+                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                        {Array.from({length: 14}, (_, i) => i + 1).map(n => <option key={n} value={n}>{n} gecə</option>)}
+                      </select>
+                    </div>
+                    {/* Search Button */}
+                    <div>
+                      <button className="w-full py-4 bg-green-500 hover:bg-green-600 text-white rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
+                        <span>Tur Axtar</span>
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Flight Form Fields */}
-              {activeTab !== 'hotel' && (
+              {activeTab === 'flight' && (
               <>
               {/* Row 1: From, Swap, To, Dates */}
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_1fr_1fr] gap-3 items-end">
