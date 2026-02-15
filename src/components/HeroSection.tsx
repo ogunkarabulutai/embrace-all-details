@@ -684,8 +684,8 @@ const HeroSection: React.FC = () => {
                     <FilterSection icon={<CreditCard className="w-4 h-4" />} label="Bilet qiyməti" isOpen={!!openFilters.price} onToggle={() => toggleFilter('price')}>
                       <div className="pl-2 pr-1">
                         <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
-                          <span>{priceRange[0]} ₼</span>
-                          <span className="text-gray-500">{priceRange[1]} ₼</span>
+                          <span>{priceRange[0]} $</span>
+                          <span className="text-gray-500">{priceRange[1]} $</span>
                         </div>
                         <div className="relative h-6">
                           <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
