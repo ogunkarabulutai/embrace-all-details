@@ -955,12 +955,16 @@ const HeroSection: React.FC = () => {
                                         {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
                                       </span>
                                       <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
-                                      <span className="text-base font-bold text-green-600 ml-auto">${formatPrice(result.price)}</span>
                                     </div>
-                                    <button onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
-                                      className={`w-10 h-10 rounded-lg border-2 flex items-center justify-center transition-all ${expandedDetails[result.id] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-300 hover:border-gray-400'}`}>
-                                      <ChevronDown className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${expandedDetails[result.id] ? 'rotate-180' : ''}`} />
-                                    </button>
+                                    <div className="flex items-center space-x-3">
+                                      <div className="px-4 py-2 rounded-xl text-white font-bold text-base" style={{ backgroundColor: airlineColor }}>
+                                        ${formatPrice(result.price)}
+                                      </div>
+                                      <button onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
+                                        className={`w-10 h-10 rounded-lg border-2 flex items-center justify-center transition-all ${expandedDetails[result.id] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-300 hover:border-gray-400'}`}>
+                                        <ChevronDown className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${expandedDetails[result.id] ? 'rotate-180' : ''}`} />
+                                      </button>
+                                    </div>
                                   </div>
                                   {expandedDetails[result.id] && (
                                     <div className="bg-gray-50 border-t border-gray-100">
