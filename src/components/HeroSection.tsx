@@ -692,13 +692,13 @@ const HeroSection: React.FC = () => {
                               }}
                             />
                             <input
-                              type="range" min={0} max={1439} step={15}
+                              type="range" min={0} max={1439} step={1}
                               value={departTimeRange[0]}
                               onChange={(e) => setDepartTimeRange([Math.min(Number(e.target.value), departTimeRange[1]), departTimeRange[1]])}
                               className="dual-range-input absolute inset-0 w-full h-full z-20"
                             />
                             <input
-                              type="range" min={0} max={1439} step={15}
+                              type="range" min={0} max={1439} step={1}
                               value={departTimeRange[1]}
                               onChange={(e) => setDepartTimeRange([departTimeRange[0], Math.max(Number(e.target.value), departTimeRange[0])])}
                               className="dual-range-input absolute inset-0 w-full h-full z-20"
@@ -722,13 +722,13 @@ const HeroSection: React.FC = () => {
                               }}
                             />
                             <input
-                              type="range" min={0} max={1439} step={15}
+                              type="range" min={0} max={1439} step={1}
                               value={arriveTimeRange[0]}
                               onChange={(e) => setArriveTimeRange([Math.min(Number(e.target.value), arriveTimeRange[1]), arriveTimeRange[1]])}
                               className="dual-range-input absolute inset-0 w-full h-full z-20"
                             />
                             <input
-                              type="range" min={0} max={1439} step={15}
+                              type="range" min={0} max={1439} step={1}
                               value={arriveTimeRange[1]}
                               onChange={(e) => setArriveTimeRange([arriveTimeRange[0], Math.max(Number(e.target.value), arriveTimeRange[0])])}
                               className="dual-range-input absolute inset-0 w-full h-full z-20"
