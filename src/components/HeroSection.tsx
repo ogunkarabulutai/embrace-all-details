@@ -664,15 +664,6 @@ const HeroSection: React.FC = () => {
                   </div>
 
                   <div className="px-3">
-                    <FilterSection icon={<Filter className="w-4 h-4" />} label="Ötürmə" isOpen={!!openFilters.stops} onToggle={() => toggleFilter('stops')}>
-                      <div className="space-y-2 pl-7">
-                        <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" className="rounded border-gray-300 text-blue-600" defaultChecked /><span>Ötürməsiz</span></label>
-                        <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" className="rounded border-gray-300 text-blue-600" defaultChecked /><span>1 Ötürmə</span></label>
-                        <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" className="rounded border-gray-300 text-blue-600" /><span>2+ Ötürmə</span></label>
-                      </div>
-                    </FilterSection>
-
-                    <FilterSection icon={<Luggage className="w-4 h-4" />} label="Baqaj" isOpen={!!openFilters.baggage} onToggle={() => toggleFilter('baggage')} />
                     <FilterSection icon={<CreditCard className="w-4 h-4" />} label="Bilet qiyməti" isOpen={!!openFilters.price} onToggle={() => toggleFilter('price')} />
                     <FilterSection icon={<Clock className="w-4 h-4" />} label="Kalkış / varış saatları" isOpen={!!openFilters.times} onToggle={() => toggleFilter('times')}>
                       <div className="pl-2 pr-1 space-y-4">
@@ -737,7 +728,7 @@ const HeroSection: React.FC = () => {
                         </div>
                       </div>
                     </FilterSection>
-                    <FilterSection icon={<Timer className="w-4 h-4" />} label="Uçuş müddəti" isOpen={!!openFilters.duration} onToggle={() => toggleFilter('duration')} />
+
 
                     <FilterSection icon={<Plane className="w-4 h-4" />} label="Aviaşirkətlər" isOpen={!!openFilters.airlines} onToggle={() => toggleFilter('airlines')}>
                       <div className="space-y-2 pl-7">
