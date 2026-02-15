@@ -194,6 +194,7 @@ const HeroSection: React.FC = () => {
   const [expandedDetails, setExpandedDetails] = useState<Record<number, boolean>>({});
   const [departTimeRange, setDepartTimeRange] = useState<[number, number]>([0, 1439]); // minutes from midnight
   const [arriveTimeRange, setArriveTimeRange] = useState<[number, number]>([0, 1439]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
 
   const fromRef = useRef<HTMLDivElement>(null);
   const toRef = useRef<HTMLDivElement>(null);
@@ -242,6 +243,8 @@ const HeroSection: React.FC = () => {
     setHasSearched(false);
     await new Promise(resolve => setTimeout(resolve, 1500));
     const results = generateMockResults(formData.fromCode, formData.toCode, formData.departDate, formData.returnDate, tripType);
+    const maxP = Math.max(...results.map(r => r.price));
+    setPriceRange([0, maxP]);
     setSearchResults(results);
     setIsSearching(false);
     setHasSearched(true);
@@ -277,7 +280,8 @@ const HeroSection: React.FC = () => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
     return dep >= departTimeRange[0] && dep <= departTimeRange[1] &&
-           arr >= arriveTimeRange[0] && arr <= arriveTimeRange[1];
+           arr >= arriveTimeRange[0] && arr <= arriveTimeRange[1] &&
+           r.price >= priceRange[0] && r.price <= priceRange[1];
   });
 
   const sortedResults = [...filteredByTime].sort((a, b) => {
@@ -677,7 +681,36 @@ const HeroSection: React.FC = () => {
                   </div>
 
                   <div className="px-3">
-                    <FilterSection icon={<CreditCard className="w-4 h-4" />} label="Bilet qiyməti" isOpen={!!openFilters.price} onToggle={() => toggleFilter('price')} />
+                    <FilterSection icon={<CreditCard className="w-4 h-4" />} label="Bilet qiyməti" isOpen={!!openFilters.price} onToggle={() => toggleFilter('price')}>
+                      <div className="pl-2 pr-1">
+                        <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
+                          <span>{priceRange[0]} ₼</span>
+                          <span className="text-gray-500">{priceRange[1]} ₼</span>
+                        </div>
+                        <div className="relative h-6">
+                          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
+                          <div
+                            className="absolute top-1/2 -translate-y-1/2 h-1.5 rounded-full bg-green-500"
+                            style={{
+                              left: `${(priceRange[0] / (Math.max(...searchResults.map(r => r.price)) || 1)) * 100}%`,
+                              right: `${100 - (priceRange[1] / (Math.max(...searchResults.map(r => r.price)) || 1)) * 100}%`,
+                            }}
+                          />
+                          <input
+                            type="range" min={0} max={Math.max(...searchResults.map(r => r.price)) || 1000} step={1}
+                            value={priceRange[0]}
+                            onChange={(e) => setPriceRange([Math.min(Number(e.target.value), priceRange[1]), priceRange[1]])}
+                            className="dual-range-input absolute inset-0 w-full h-full z-20"
+                          />
+                          <input
+                            type="range" min={0} max={Math.max(...searchResults.map(r => r.price)) || 1000} step={1}
+                            value={priceRange[1]}
+                            onChange={(e) => setPriceRange([priceRange[0], Math.max(Number(e.target.value), priceRange[0])])}
+                            className="dual-range-input absolute inset-0 w-full h-full z-20"
+                          />
+                        </div>
+                      </div>
+                    </FilterSection>
                     <FilterSection icon={<Clock className="w-4 h-4" />} label="Kalkış / varış saatları" isOpen={!!openFilters.times} onToggle={() => toggleFilter('times')}>
                       <div className="pl-2 pr-1 space-y-4">
                         {/* Departure */}
