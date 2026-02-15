@@ -194,6 +194,8 @@ const HeroSection: React.FC = () => {
   const [expandedDetails, setExpandedDetails] = useState<Record<number, boolean>>({});
   const [departTimeRange, setDepartTimeRange] = useState<[number, number]>([0, 1439]); // minutes from midnight
   const [arriveTimeRange, setArriveTimeRange] = useState<[number, number]>([0, 1439]);
+  const [returnDepartTimeRange, setReturnDepartTimeRange] = useState<[number, number]>([0, 1439]);
+  const [returnArriveTimeRange, setReturnArriveTimeRange] = useState<[number, number]>([0, 1439]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
 
   const fromRef = useRef<HTMLDivElement>(null);
@@ -680,6 +682,8 @@ const HeroSection: React.FC = () => {
                     <button className="text-blue-600 text-xs font-medium hover:underline" onClick={() => {
                       setDepartTimeRange([0, 1439]);
                       setArriveTimeRange([0, 1439]);
+                      setReturnDepartTimeRange([0, 1439]);
+                      setReturnArriveTimeRange([0, 1439]);
                       const maxP = Math.max(...searchResults.map(r => r.price));
                       setPriceRange([0, maxP]);
                       setSortBy('cheapest');
@@ -778,6 +782,71 @@ const HeroSection: React.FC = () => {
                             />
                           </div>
                         </div>
+
+                        {/* Return flight times - only for roundtrip */}
+                        {tripType === 'roundtrip' && (
+                          <>
+                            {/* Return Departure */}
+                            <div>
+                              <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
+                                <span>Dönüş kalkış, {formData.to || 'Şəhər'} | {formData.toCode || '—'}</span>
+                                <span className="text-gray-500">{minutesToTime(returnDepartTimeRange[0])} ilə {minutesToTime(returnDepartTimeRange[1])} arası</span>
+                              </div>
+                              <div className="relative h-6">
+                                <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
+                                <div
+                                  className="absolute top-1/2 -translate-y-1/2 h-1.5 rounded-full bg-green-500"
+                                  style={{
+                                    left: `${(returnDepartTimeRange[0] / 1439) * 100}%`,
+                                    right: `${100 - (returnDepartTimeRange[1] / 1439) * 100}%`,
+                                  }}
+                                />
+                                <input
+                                  type="range" min={0} max={1439} step={1}
+                                  value={returnDepartTimeRange[0]}
+                                  onChange={(e) => setReturnDepartTimeRange([Math.min(Number(e.target.value), returnDepartTimeRange[1]), returnDepartTimeRange[1]])}
+                                  className="dual-range-input absolute inset-0 w-full h-full z-20"
+                                />
+                                <input
+                                  type="range" min={0} max={1439} step={1}
+                                  value={returnDepartTimeRange[1]}
+                                  onChange={(e) => setReturnDepartTimeRange([returnDepartTimeRange[0], Math.max(Number(e.target.value), returnDepartTimeRange[0])])}
+                                  className="dual-range-input absolute inset-0 w-full h-full z-20"
+                                />
+                              </div>
+                            </div>
+
+                            {/* Return Arrival */}
+                            <div>
+                              <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
+                                <span>Dönüş eniş, {formData.from || 'Şəhər'} | {formData.fromCode || '—'}</span>
+                                <span className="text-gray-500">{minutesToTime(returnArriveTimeRange[0])} ilə {minutesToTime(returnArriveTimeRange[1])} arası</span>
+                              </div>
+                              <div className="relative h-6">
+                                <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
+                                <div
+                                  className="absolute top-1/2 -translate-y-1/2 h-1.5 rounded-full bg-green-500"
+                                  style={{
+                                    left: `${(returnArriveTimeRange[0] / 1439) * 100}%`,
+                                    right: `${100 - (returnArriveTimeRange[1] / 1439) * 100}%`,
+                                  }}
+                                />
+                                <input
+                                  type="range" min={0} max={1439} step={1}
+                                  value={returnArriveTimeRange[0]}
+                                  onChange={(e) => setReturnArriveTimeRange([Math.min(Number(e.target.value), returnArriveTimeRange[1]), returnArriveTimeRange[1]])}
+                                  className="dual-range-input absolute inset-0 w-full h-full z-20"
+                                />
+                                <input
+                                  type="range" min={0} max={1439} step={1}
+                                  value={returnArriveTimeRange[1]}
+                                  onChange={(e) => setReturnArriveTimeRange([returnArriveTimeRange[0], Math.max(Number(e.target.value), returnArriveTimeRange[0])])}
+                                  className="dual-range-input absolute inset-0 w-full h-full z-20"
+                                />
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </FilterSection>
 
