@@ -4,6 +4,8 @@ import { ArrowRight, Plane, Building, Camera, MapPin, Calendar, Users, ChevronDo
 import BookingModal from './BookingModal';
 import DateRangePicker from './DateRangePicker';
 import HotelSearchForm from './HotelSearchForm';
+import AirportSelector, { airports } from './AirportSelector';
+import type { Airport } from './AirportSelector';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface MockCity {
@@ -174,8 +176,8 @@ const HeroSection: React.FC = () => {
     cabinClass: 'economy'
   });
 
-  const [showFromDropdown, setShowFromDropdown] = useState(false);
-  const [showToDropdown, setShowToDropdown] = useState(false);
+  const [showFromDropdown, setShowFromDropdown] = useState(false); // kept for swap logic
+  const [showToDropdown, setShowToDropdown] = useState(false); // kept for swap logic
   const [fromFilter, setFromFilter] = useState('');
   const [toFilter, setToFilter] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -393,36 +395,18 @@ const HeroSection: React.FC = () => {
               {/* Row 1: From, Swap, To, Dates */}
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_1fr_1fr] gap-3 items-end">
                 {/* From */}
-                <div ref={fromRef}>
-                  <div className="relative">
-                    <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Haradan / From</label>
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"><MapPin className="w-5 h-5" /></div>
-                    <input data-testid="input-from" type="text" placeholder={t('hero.from')} value={formData.from}
-                      onChange={(e) => { handleInputChange('from', e.target.value); setFromFilter(e.target.value); setShowFromDropdown(true); }}
-                      onFocus={() => { setShowFromDropdown(true); setFromFilter(formData.from); }}
-                      className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
-                    />
-                    {showFromDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-64 overflow-y-auto">
-                        {filteredFromCities.map((city) => (
-                          <button key={city.code} data-testid={`from-city-${city.code}`}
-                            onClick={() => { handleInputChange('from', city.name); handleInputChange('fromCode', city.code); setFromFilter(city.name); setShowFromDropdown(false); }}
-                            className="w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors duration-150 flex items-center space-x-3 border-b border-gray-50 last:border-b-0">
-                            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><Plane className="w-5 h-5 text-blue-600" /></div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between">
-                                <span className="font-semibold text-gray-900">{city.name}</span>
-                                <span className="text-sm font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{city.code}</span>
-                              </div>
-                              <div className="text-xs text-gray-500 truncate">{city.airport}</div>
-                              <div className="text-xs text-gray-400">{city.country}</div>
-                            </div>
-                          </button>
-                        ))}
-                        {filteredFromCities.length === 0 && <div className="px-4 py-6 text-center text-gray-500 text-sm">Nəticə tapılmadı</div>}
-                      </div>
-                    )}
-                  </div>
+                <div>
+                  <AirportSelector
+                    label="Haradan / From"
+                    placeholder={t('hero.from')}
+                    value={formData.from}
+                    testId="input-from"
+                    onSelect={(airport: Airport) => {
+                      handleInputChange('from', `${airport.city} (${airport.code})`);
+                      handleInputChange('fromCode', airport.code);
+                      setFromFilter(airport.city);
+                    }}
+                  />
                 </div>
 
                 {/* Swap */}
@@ -437,36 +421,18 @@ const HeroSection: React.FC = () => {
                 </div>
 
                 {/* To */}
-                <div ref={toRef}>
-                  <div className="relative">
-                    <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Haraya / To</label>
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"><MapPin className="w-5 h-5" /></div>
-                    <input data-testid="input-to" type="text" placeholder={t('hero.to')} value={formData.to}
-                      onChange={(e) => { handleInputChange('to', e.target.value); setToFilter(e.target.value); setShowToDropdown(true); }}
-                      onFocus={() => { setShowToDropdown(true); setToFilter(formData.to); }}
-                      className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium"
-                    />
-                    {showToDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 max-h-64 overflow-y-auto">
-                        {filteredToCities.map((city) => (
-                          <button key={city.code} data-testid={`to-city-${city.code}`}
-                            onClick={() => { handleInputChange('to', city.name); handleInputChange('toCode', city.code); setToFilter(city.name); setShowToDropdown(false); }}
-                            className="w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors duration-150 flex items-center space-x-3 border-b border-gray-50 last:border-b-0">
-                            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><Plane className="w-5 h-5 text-blue-600" /></div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between">
-                                <span className="font-semibold text-gray-900">{city.name}</span>
-                                <span className="text-sm font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded">{city.code}</span>
-                              </div>
-                              <div className="text-xs text-gray-500 truncate">{city.airport}</div>
-                              <div className="text-xs text-gray-400">{city.country}</div>
-                            </div>
-                          </button>
-                        ))}
-                        {filteredToCities.length === 0 && <div className="px-4 py-6 text-center text-gray-500 text-sm">Nəticə tapılmadı</div>}
-                      </div>
-                    )}
-                  </div>
+                <div>
+                  <AirportSelector
+                    label="Haraya / To"
+                    placeholder={t('hero.to')}
+                    value={formData.to}
+                    testId="input-to"
+                    onSelect={(airport: Airport) => {
+                      handleInputChange('to', `${airport.city} (${airport.code})`);
+                      handleInputChange('toCode', airport.code);
+                      setToFilter(airport.city);
+                    }}
+                  />
                 </div>
 
                 {/* Departure Date */}
