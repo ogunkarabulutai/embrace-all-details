@@ -682,18 +682,26 @@ const HeroSection: React.FC = () => {
                             <span>Kalkış, {formData.from || 'Şəhər'} | {formData.fromCode || '—'}</span>
                             <span className="text-gray-500">{minutesToTime(departTimeRange[0])} ilə {minutesToTime(departTimeRange[1])} arası</span>
                           </div>
-                          <div className="relative h-5">
+                          <div className="relative h-6">
+                            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
+                            <div
+                              className="absolute top-1/2 -translate-y-1/2 h-1.5 rounded-full bg-green-500"
+                              style={{
+                                left: `${(departTimeRange[0] / 1439) * 100}%`,
+                                right: `${100 - (departTimeRange[1] / 1439) * 100}%`,
+                              }}
+                            />
                             <input
                               type="range" min={0} max={1439} step={15}
                               value={departTimeRange[0]}
                               onChange={(e) => setDepartTimeRange([Math.min(Number(e.target.value), departTimeRange[1]), departTimeRange[1]])}
-                              className="absolute inset-0 w-full accent-green-500 h-1.5 top-1/2 -translate-y-1/2 pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto z-20"
+                              className="dual-range-input absolute inset-0 w-full h-full z-20"
                             />
                             <input
                               type="range" min={0} max={1439} step={15}
                               value={departTimeRange[1]}
                               onChange={(e) => setDepartTimeRange([departTimeRange[0], Math.max(Number(e.target.value), departTimeRange[0])])}
-                              className="absolute inset-0 w-full accent-green-500 h-1.5 top-1/2 -translate-y-1/2 pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto z-20"
+                              className="dual-range-input absolute inset-0 w-full h-full z-20"
                             />
                           </div>
                         </div>
@@ -704,18 +712,26 @@ const HeroSection: React.FC = () => {
                             <span>Eniş, {formData.to || 'Şəhər'} | {formData.toCode || '—'}</span>
                             <span className="text-gray-500">{minutesToTime(arriveTimeRange[0])} ilə {minutesToTime(arriveTimeRange[1])} arası</span>
                           </div>
-                          <div className="relative h-5">
+                          <div className="relative h-6">
+                            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
+                            <div
+                              className="absolute top-1/2 -translate-y-1/2 h-1.5 rounded-full bg-green-500"
+                              style={{
+                                left: `${(arriveTimeRange[0] / 1439) * 100}%`,
+                                right: `${100 - (arriveTimeRange[1] / 1439) * 100}%`,
+                              }}
+                            />
                             <input
                               type="range" min={0} max={1439} step={15}
                               value={arriveTimeRange[0]}
                               onChange={(e) => setArriveTimeRange([Math.min(Number(e.target.value), arriveTimeRange[1]), arriveTimeRange[1]])}
-                              className="absolute inset-0 w-full accent-green-500 h-1.5 top-1/2 -translate-y-1/2 pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto z-20"
+                              className="dual-range-input absolute inset-0 w-full h-full z-20"
                             />
                             <input
                               type="range" min={0} max={1439} step={15}
                               value={arriveTimeRange[1]}
                               onChange={(e) => setArriveTimeRange([arriveTimeRange[0], Math.max(Number(e.target.value), arriveTimeRange[0])])}
-                              className="absolute inset-0 w-full accent-green-500 h-1.5 top-1/2 -translate-y-1/2 pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-moz-range-thumb]:pointer-events-auto z-20"
+                              className="dual-range-input absolute inset-0 w-full h-full z-20"
                             />
                           </div>
                         </div>
