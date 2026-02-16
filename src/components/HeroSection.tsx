@@ -128,6 +128,124 @@ const generateMockResults = (fromCode: string, toCode: string, departDate: strin
   return results.sort((a, b) => a.price - b.price);
 };
 
+const getStopCity = (code: string) => mockCities.find(c => c.code === code);
+
+const renderFlightTimeline = (result: SearchResult, dateLabel: string, isReturn = false) => {
+  const from = isReturn ? result.to : result.from;
+  const fromCode = isReturn ? result.toCode : result.fromCode;
+  const fromAirport = isReturn ? result.toAirport : result.fromAirport;
+  const to = isReturn ? result.from : result.to;
+  const toCode = isReturn ? result.fromCode : result.toCode;
+  const toAirport = isReturn ? result.fromAirport : result.toAirport;
+
+  if (result.stops === 0) {
+    return (
+      <div className="relative pl-5 space-y-0">
+        <div className="flex items-start relative">
+          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
+          <div className="pb-6">
+            <div className="text-sm font-bold text-gray-900">{result.departTime}  {from}</div>
+            <div className="text-xs text-gray-500">{dateLabel}</div>
+            <div className="text-xs text-gray-500">{fromAirport}, {fromCode}</div>
+          </div>
+        </div>
+        <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
+        <div className="pl-2 pb-6"><span className="text-xs text-gray-500">{result.duration}</span></div>
+        <div className="flex items-start relative">
+          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
+          <div>
+            <div className="text-sm font-bold text-gray-900">{result.arriveTime}  {to}</div>
+            <div className="text-xs text-gray-500">{dateLabel}</div>
+            <div className="text-xs text-gray-500">{toAirport}, {toCode}</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Multi-leg with stops
+  const legs: { fromCity: string; fromAirport: string; fromCode: string; toCity: string; toAirport: string; toCode: string; departTime: string; arriveTime: string; duration: string; flightCode: string }[] = [];
+  const totalMinutes = parseInt(result.duration);
+  const durationParts = result.duration.match(/(\d+)sa\s*(\d+)dk/);
+  const totalMins = durationParts ? parseInt(durationParts[1]) * 60 + parseInt(durationParts[2]) : 180;
+  const stopoverMins = 60 + Math.floor(Math.random() * 90); // 1-2.5h stopover
+  const flightMinsPerLeg = Math.floor((totalMins - stopoverMins * result.stops) / (result.stops + 1));
+
+  let currentDepartTime = result.departTime;
+  const prefix = result.flightCode.split('-')[0];
+
+  for (let i = 0; i <= result.stops; i++) {
+    const legFrom = i === 0 ? { name: from, airport: fromAirport, code: fromCode } : { name: getStopCity(result.stopCodes[i - 1])?.name || result.stopCodes[i - 1], airport: getStopCity(result.stopCodes[i - 1])?.airport || 'Hava Limanı', code: result.stopCodes[i - 1] };
+    const legTo = i === result.stops ? { name: to, airport: toAirport, code: toCode } : { name: getStopCity(result.stopCodes[i])?.name || result.stopCodes[i], airport: getStopCity(result.stopCodes[i])?.airport || 'Hava Limanı', code: result.stopCodes[i] };
+
+    const [dH, dM] = currentDepartTime.split(':').map(Number);
+    const arrMins = dH * 60 + dM + flightMinsPerLeg;
+    const arrH = Math.floor(arrMins / 60) % 24;
+    const arrM = arrMins % 60;
+    const arriveTime = `${String(arrH).padStart(2, '0')}:${String(arrM).padStart(2, '0')}`;
+
+    const legH = Math.floor(flightMinsPerLeg / 60);
+    const legM = flightMinsPerLeg % 60;
+
+    legs.push({
+      fromCity: legFrom.name, fromAirport: legFrom.airport, fromCode: legFrom.code,
+      toCity: legTo.name, toAirport: legTo.airport, toCode: legTo.code,
+      departTime: currentDepartTime, arriveTime,
+      duration: `${legH}sa ${legM}dk`,
+      flightCode: `${prefix}-${100 + Math.floor(Math.random() * 900)}`,
+    });
+
+    // Next leg departs after stopover
+    const nextDepartMins = arrMins + stopoverMins;
+    const nextH = Math.floor(nextDepartMins / 60) % 24;
+    const nextM = nextDepartMins % 60;
+    currentDepartTime = `${String(nextH).padStart(2, '0')}:${String(nextM).padStart(2, '0')}`;
+  }
+
+  return (
+    <div className="space-y-0">
+      {legs.map((leg, idx) => (
+        <div key={idx}>
+          {idx > 0 && (
+            <div className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 my-3 flex items-center space-x-2">
+              <Clock className="w-3.5 h-3.5 text-gray-500" />
+              <span className="text-xs text-gray-600 font-medium">
+                {Math.floor(stopoverMins / 60)}sa {stopoverMins % 60}dk aktarma · {getStopCity(result.stopCodes[idx - 1])?.name || result.stopCodes[idx - 1]}
+              </span>
+            </div>
+          )}
+          <div className="mb-2">
+            <div className="flex items-center space-x-2 mb-2">
+              <div className="w-5 h-5 rounded bg-gray-600 flex items-center justify-center text-white text-[8px] font-bold">{prefix}</div>
+              <span className="text-xs font-semibold text-gray-700">Uçuş {leg.flightCode}</span>
+            </div>
+          </div>
+          <div className="relative pl-5 space-y-0">
+            <div className="flex items-start relative">
+              <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
+              <div className="pb-5">
+                <div className="text-sm font-bold text-gray-900">{leg.departTime}  {leg.fromCity}</div>
+                <div className="text-xs text-gray-500">{dateLabel}</div>
+                <div className="text-xs text-gray-500">{leg.fromAirport}, {leg.fromCode}</div>
+              </div>
+            </div>
+            <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
+            <div className="pl-2 pb-5"><span className="text-xs text-gray-500">{leg.duration}</span></div>
+            <div className="flex items-start relative">
+              <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
+              <div>
+                <div className="text-sm font-bold text-gray-900">{leg.arriveTime}  {leg.toCity}</div>
+                <div className="text-xs text-gray-500">{dateLabel}</div>
+                <div className="text-xs text-gray-500">{leg.toAirport}, {leg.toCode}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const formatPrice = (price: number): string => {
   return price.toLocaleString('en-US');
 };
@@ -1115,26 +1233,7 @@ const HeroSection: React.FC = () => {
                                         <span className="text-xs font-medium text-green-600 mb-4 block">
                                           {result.cabinClass === 'business' ? 'Biznes sinif' : result.cabinClass === 'first' ? 'Birinci sinif' : result.cabinClass === 'premium' ? 'Premium sinif' : 'Ekonom sinif'}
                                         </span>
-                                        <div className="relative pl-5 space-y-0">
-                                          <div className="flex items-start space-x-4 relative">
-                                            <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
-                                            <div className="pb-6">
-                                              <div className="text-base font-bold text-gray-900">{result.departTime}  {result.from}</div>
-                                              <div className="text-xs text-gray-500">{dateLabel}</div>
-                                              <div className="text-xs text-gray-500">{result.fromAirport}, {result.fromCode}</div>
-                                            </div>
-                                          </div>
-                                          <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
-                                          <div className="pl-2 pb-6"><span className="text-xs text-gray-500">{result.duration}</span></div>
-                                          <div className="flex items-start space-x-4 relative">
-                                            <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
-                                            <div>
-                                              <div className="text-base font-bold text-gray-900">{result.arriveTime}  {result.to}</div>
-                                              <div className="text-xs text-gray-500">{dateLabel}</div>
-                                              <div className="text-xs text-gray-500">{result.toAirport}, {result.toCode}</div>
-                                            </div>
-                                          </div>
-                                        </div>
+                                        {renderFlightTimeline(result, dateLabel)}
                                         <div className="border-t border-gray-200 mt-5 pt-4 flex justify-end">
                                           <button data-testid={`select-flight-${result.id}`} onClick={() => navigate('/checkout', { state: { flight: result } })}
                                             className="px-8 py-2.5 rounded-lg border-2 border-yellow-400 text-gray-900 font-semibold text-sm hover:bg-yellow-50 transition-colors">Seç</button>
@@ -1227,33 +1326,10 @@ const HeroSection: React.FC = () => {
                                   </div>
                                   {expandedDetails[result.id] && (
                                     <div className="mx-4 my-2 bg-gray-50 rounded-xl border border-gray-200 p-4">
-                                      <div className="flex items-center space-x-2 mb-2">
-                                        <div className="w-6 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
-                                        <span className="text-sm font-semibold text-gray-900">Uçuş {result.flightCode}</span>
-                                      </div>
                                       <span className="text-xs font-medium text-green-600 mb-3 block">
                                         {result.cabinClass === 'business' ? 'Biznes sinif' : result.cabinClass === 'first' ? 'Birinci sinif' : result.cabinClass === 'premium' ? 'Premium sinif' : 'Ekonom sinif'}
                                       </span>
-                                      <div className="relative pl-5 space-y-0">
-                                        <div className="flex items-start relative">
-                                          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
-                                          <div className="pb-5">
-                                            <div className="text-sm font-bold text-gray-900">{result.departTime}  {result.from}</div>
-                                            <div className="text-xs text-gray-500">{dateLabel}</div>
-                                            <div className="text-xs text-gray-500">{result.fromAirport}, {result.fromCode}</div>
-                                          </div>
-                                        </div>
-                                        <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
-                                        <div className="pl-2 pb-5"><span className="text-xs text-gray-500">{result.duration}</span></div>
-                                        <div className="flex items-start relative">
-                                          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
-                                          <div>
-                                            <div className="text-sm font-bold text-gray-900">{result.arriveTime}  {result.to}</div>
-                                            <div className="text-xs text-gray-500">{dateLabel}</div>
-                                            <div className="text-xs text-gray-500">{result.toAirport}, {result.toCode}</div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      {renderFlightTimeline(result, dateLabel)}
                                     </div>
                                   )}
                                 </div>
@@ -1312,33 +1388,10 @@ const HeroSection: React.FC = () => {
                                   </div>
                                   {expandedDetails[result.id + 1000] && (
                                     <div className="mx-4 my-2 bg-gray-50 rounded-xl border border-gray-200 p-4">
-                                      <div className="flex items-center space-x-2 mb-2">
-                                        <div className="w-6 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
-                                        <span className="text-sm font-semibold text-gray-900">Uçuş {result.flightCode}</span>
-                                      </div>
                                       <span className="text-xs font-medium text-green-600 mb-3 block">
                                         {result.cabinClass === 'business' ? 'Biznes sinif' : result.cabinClass === 'first' ? 'Birinci sinif' : result.cabinClass === 'premium' ? 'Premium sinif' : 'Ekonom sinif'}
                                       </span>
-                                      <div className="relative pl-5 space-y-0">
-                                        <div className="flex items-start relative">
-                                          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
-                                          <div className="pb-5">
-                                            <div className="text-sm font-bold text-gray-900">{result.departTime}  {result.to}</div>
-                                            <div className="text-xs text-gray-500">{returnDateLabel}</div>
-                                            <div className="text-xs text-gray-500">{result.toAirport}, {result.toCode}</div>
-                                          </div>
-                                        </div>
-                                        <div className="absolute left-[-8px] top-5 bottom-5 w-0.5 bg-yellow-300" />
-                                        <div className="pl-2 pb-5"><span className="text-xs text-gray-500">{result.duration}</span></div>
-                                        <div className="flex items-start relative">
-                                          <div className="absolute left-[-14px] top-1.5 w-3 h-3 rounded-full bg-yellow-400 z-10" />
-                                          <div>
-                                            <div className="text-sm font-bold text-gray-900">{result.arriveTime}  {result.from}</div>
-                                            <div className="text-xs text-gray-500">{returnDateLabel}</div>
-                                            <div className="text-xs text-gray-500">{result.fromAirport}, {result.fromCode}</div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      {renderFlightTimeline(result, returnDateLabel, true)}
                                     </div>
                                   )}
                                 </div>
