@@ -12,7 +12,9 @@ import Footer from './components/Footer';
 import AuthModal from './components/AuthModal';
 import Services from './components/Services';
 import AboutUs from './components/AboutUs';
-import Policies from './components/Policies';
+import RefundPolicy from './pages/RefundPolicy';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
 import Checkout from './pages/Checkout';
 import HotelSearchResults from './pages/HotelSearchResults';
 
@@ -56,7 +58,9 @@ function App() {
             } />
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/policies" element={<Policies />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/hotel-results" element={<HotelSearchResults />} />
           </Routes>
