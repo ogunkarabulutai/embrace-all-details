@@ -180,6 +180,7 @@ const translations: Record<Language, Record<string, string>> = {
     'filter.stops': 'Aktarmalar',
     'filter.allFlights': 'Tüm uçuşlar',
     'filter.oneStop': '1 Aktarma',
+    'filter.directFlight': 'Direkt uçuş',
   },
   en: {
     'header.services': 'Services',
@@ -350,6 +351,7 @@ const translations: Record<Language, Record<string, string>> = {
     'filter.stops': 'Stops',
     'filter.allFlights': 'All flights',
     'filter.oneStop': '1 Stop',
+    'filter.directFlight': 'Direct flight',
   },
   az: {
     'header.services': 'Xidmətlər',
@@ -520,6 +522,7 @@ const translations: Record<Language, Record<string, string>> = {
     'filter.stops': 'Ötürmələr',
     'filter.allFlights': 'Bütün uçuşlar',
     'filter.oneStop': '1 Ötürmə',
+    'filter.directFlight': 'Birbaşa uçuş',
   },
 };
 
