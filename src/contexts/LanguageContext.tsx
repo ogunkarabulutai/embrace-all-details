@@ -177,6 +177,9 @@ const translations: Record<Language, Record<string, string>> = {
     'checkout.passenger': 'Yolcu',
     'checkout.emailSent': 'Bilet detayları e-posta adresinize gönderildi:',
     'checkout.backToHome': 'Ana Sayfaya Dön',
+    'filter.stops': 'Aktarmalar',
+    'filter.allFlights': 'Tüm uçuşlar',
+    'filter.oneStop': '1 Aktarma',
   },
   en: {
     'header.services': 'Services',
@@ -344,6 +347,9 @@ const translations: Record<Language, Record<string, string>> = {
     'checkout.passenger': 'Passenger',
     'checkout.emailSent': 'Ticket details have been sent to:',
     'checkout.backToHome': 'Back to Home',
+    'filter.stops': 'Stops',
+    'filter.allFlights': 'All flights',
+    'filter.oneStop': '1 Stop',
   },
   az: {
     'header.services': 'Xidmətlər',
@@ -511,6 +517,9 @@ const translations: Record<Language, Record<string, string>> = {
     'checkout.passenger': 'Sərnişin',
     'checkout.emailSent': 'Bilet detalları e-poçt ünvanınıza göndərildi:',
     'checkout.backToHome': 'Ana Səhifəyə Qayıt',
+    'filter.stops': 'Ötürmələr',
+    'filter.allFlights': 'Bütün uçuşlar',
+    'filter.oneStop': '1 Ötürmə',
   },
 };
 
