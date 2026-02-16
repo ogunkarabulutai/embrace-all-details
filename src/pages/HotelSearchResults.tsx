@@ -325,18 +325,6 @@ const HotelSearchResults: React.FC = () => {
                 </div>
               </FilterSection>
 
-              {/* Beds Filter */}
-              <FilterSection title="Yataq Sayı" icon={<Bed className="w-4 h-4" />}>
-                <div className="space-y-2">
-                  {allBeds.map(bed => (
-                    <label key={bed} className="flex items-center gap-2 cursor-pointer group">
-                      <input type="checkbox" checked={filterBeds.includes(bed)} onChange={() => toggleFilter(filterBeds, bed, setFilterBeds)}
-                        className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">{bed}</span>
-                    </label>
-                  ))}
-                </div>
-              </FilterSection>
 
               {/* In the Room Filter */}
               <FilterSection title="Otaqda" icon={<span>🛏️</span>} defaultOpen={false}>
