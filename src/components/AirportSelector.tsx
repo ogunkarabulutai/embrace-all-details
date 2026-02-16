@@ -133,8 +133,8 @@ const AirportSelector: React.FC<AirportSelectorProps> = ({ label, placeholder, v
                   onClick={() => {
                     onSelect({
                       code: '',
-                      name: `${group.country} - Bütün hava limanları`,
-                      city: 'Bütün şəhərlər',
+                      name: group.country,
+                      city: '',
                       country: group.country,
                     });
                     setIsOpen(false);
