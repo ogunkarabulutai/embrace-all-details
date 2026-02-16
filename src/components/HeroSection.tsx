@@ -845,20 +845,7 @@ const HeroSection: React.FC = () => {
       {/* ===================== SEARCH RESULTS ===================== */}
       {hasSearched && searchResults.length > 0 && (
         <section ref={resultsRef} data-testid="search-results" className="bg-[#f0f3f8] dark:bg-gray-800 py-0">
-          {/* Date Navigation Bar */}
-          <div className="bg-white border-b border-gray-200 sticky top-0 z-30">
-            <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
-              <button className="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors">
-                <ChevronLeft className="w-4 h-4" />
-                <span>Əvvəlki gün <strong>{prevDayPrice} AZN</strong></span>
-              </button>
-              <span className="text-base font-semibold text-gray-800">{currentDate}</span>
-              <button className="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span>Sonrakı gün <strong>{nextDayPrice} AZN</strong></span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+          {/* Date Navigation Bar - hidden for now */}
 
           <div className="max-w-7xl mx-auto px-4 py-6">
             <div className="flex gap-6">
