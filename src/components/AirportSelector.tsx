@@ -158,7 +158,7 @@ const AirportSelector: React.FC<AirportSelectorProps> = ({ label, placeholder, v
                         const codes = cityGroup.airports.map(a => a.code).join(',');
                         onSelect({
                           code: codes,
-                          name: `${cityGroup.city} - Bütün hava limanları`,
+                          name: cityGroup.city,
                           city: cityGroup.city,
                           country: group.country,
                         });

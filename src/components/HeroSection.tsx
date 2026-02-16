@@ -519,9 +519,11 @@ const HeroSection: React.FC = () => {
                     value={formData.from}
                     testId="input-from"
                     onSelect={(airport: Airport) => {
-                      handleInputChange('from', `${airport.city} (${airport.code})`);
+                      const isSingle = airport.code && !airport.code.includes(',');
+                      const displayValue = isSingle ? `${airport.city} (${airport.code})` : airport.name;
+                      handleInputChange('from', displayValue);
                       handleInputChange('fromCode', airport.code);
-                      setFromFilter(airport.city);
+                      setFromFilter(airport.code ? airport.city : airport.country);
                     }}
                   />
                 </div>
@@ -545,9 +547,11 @@ const HeroSection: React.FC = () => {
                     value={formData.to}
                     testId="input-to"
                     onSelect={(airport: Airport) => {
-                      handleInputChange('to', `${airport.city} (${airport.code})`);
+                      const isSingle = airport.code && !airport.code.includes(',');
+                      const displayValue = isSingle ? `${airport.city} (${airport.code})` : airport.name;
+                      handleInputChange('to', displayValue);
                       handleInputChange('toCode', airport.code);
-                      setToFilter(airport.city);
+                      setToFilter(airport.code ? airport.city : airport.country);
                     }}
                   />
                 </div>
