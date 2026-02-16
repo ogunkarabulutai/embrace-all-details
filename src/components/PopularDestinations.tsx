@@ -91,7 +91,7 @@ const PopularDestinations: React.FC = () => {
                   <div>
                     <span className="text-sm text-gray-500 dark:text-gray-400">En düşük</span>
                     <div className="font-bold text-lg text-gray-900 dark:text-white">
-                      ₺{destination.startingPrice.toLocaleString()}
+                      {destination.startingPrice.toLocaleString()} AZN
                     </div>
                   </div>
                   

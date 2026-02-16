@@ -725,11 +725,11 @@ const HeroSection: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
               <button className="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors">
                 <ChevronLeft className="w-4 h-4" />
-                <span>Əvvəlki gün <strong>${prevDayPrice}</strong></span>
+                <span>Əvvəlki gün <strong>{prevDayPrice} AZN</strong></span>
               </button>
               <span className="text-base font-semibold text-gray-800">{currentDate}</span>
               <button className="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-800 font-medium border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-50 transition-colors">
-                <span>Sonrakı gün <strong>${nextDayPrice}</strong></span>
+                <span>Sonrakı gün <strong>{nextDayPrice} AZN</strong></span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -787,8 +787,8 @@ const HeroSection: React.FC = () => {
                     <FilterSection icon={<CreditCard className="w-4 h-4" />} label="Bilet qiyməti" isOpen={!!openFilters.price} onToggle={() => toggleFilter('price')}>
                       <div className="pl-2 pr-1">
                         <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
-                          <span>{priceRange[0]} $</span>
-                          <span className="text-gray-500">{priceRange[1]} $</span>
+          <span>{priceRange[0]} AZN</span>
+                          <span className="text-gray-500">{priceRange[1]} AZN</span>
                         </div>
                         <div className="relative h-6">
                           <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1.5 rounded-full bg-gray-200" />
@@ -1039,7 +1039,7 @@ const HeroSection: React.FC = () => {
                                 <div className="w-8 h-8 rounded bg-white/20 flex items-center justify-center text-white text-xs font-bold">{airlinePrefix}</div>
                                 <span className="text-white font-semibold text-sm">{airline}</span>
                               </div>
-                              <span className="text-white font-bold text-base">${formatPrice(lowestPrice)}+</span>
+                              <span className="text-white font-bold text-base">{formatPrice(lowestPrice)} AZN+</span>
                             </div>
                             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
                               <div>
@@ -1075,7 +1075,7 @@ const HeroSection: React.FC = () => {
                                     </div>
                                     <div className="flex items-center space-x-3">
                                       <div className="px-4 py-2 rounded-xl text-white font-bold text-base" style={{ backgroundColor: airlineColor }}>
-                                        ${formatPrice(result.price)}
+                                        {formatPrice(result.price)} AZN
                                       </div>
                                       <button onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
                                         className={`w-10 h-10 rounded-lg border-2 flex items-center justify-center transition-all ${expandedDetails[result.id] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-300 hover:border-gray-400'}`}>
@@ -1153,7 +1153,7 @@ const HeroSection: React.FC = () => {
                               </div>
                             </div>
                             <div className="flex items-center">
-                              <div className="bg-white text-gray-900 font-bold text-lg px-4 py-1 rounded-lg">${formatPrice(combinedPrice)}</div>
+                              <div className="bg-white text-gray-900 font-bold text-lg px-4 py-1 rounded-lg">{formatPrice(combinedPrice)} AZN</div>
                             </div>
                           </div>
 
