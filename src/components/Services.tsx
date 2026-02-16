@@ -1,6 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, Shield, Award, Clock, Users, Building, Plane, Globe, Heart, Thermometer, Map, GraduationCap, FileCheck, Car, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+
+const serviceSlugs: Record<number, string> = {
+  1: 'otel-bronu',
+  2: 'aviabiletler',
+  3: 'turpaketler',
+  4: 'balayi-seyahetleri',
+  5: 'mualicevi-turlar',
+  6: 'rayon-turlari',
+  7: 'mektebli-turlari',
+  8: 'viza-desteyi',
+  9: 'transfer-xidmeti',
+  10: 'sigorta',
+};
 
 const services = [
   {
@@ -110,6 +124,7 @@ const whyChooseUs = [
 
 const Services: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
@@ -191,7 +206,7 @@ const Services: React.FC = () => {
                     {service.description}
                   </p>
 
-                  <button className="group/btn w-full bg-gray-100 dark:bg-gray-800 hover:bg-orange-500 text-gray-900 dark:text-white hover:text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2">
+                  <button onClick={() => navigate(`/services/${serviceSlugs[service.id]}`)} className="group/btn w-full bg-gray-100 dark:bg-gray-800 hover:bg-orange-500 text-gray-900 dark:text-white hover:text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 flex items-center justify-center space-x-2">
                     <span>Ətraflı Bax</span>
                     <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
                   </button>
