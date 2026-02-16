@@ -823,15 +823,15 @@ const HeroSection: React.FC = () => {
                       </div>
                     </FilterSection>
 
-                    <FilterSection icon={<Plane className="w-4 h-4" />} label="Aktarmalar" isOpen={!!openFilters.stops} onToggle={() => toggleFilter('stops')}>
+                    <FilterSection icon={<Plane className="w-4 h-4" />} label={t('filter.stops')} isOpen={!!openFilters.stops} onToggle={() => toggleFilter('stops')}>
                       <div className="space-y-2 pl-7">
                         <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
                           <input type="radio" name="stopsFilter" checked={stopsFilter === 'all'} onChange={() => setStopsFilter('all')} className="text-blue-600 border-gray-300" />
-                          <span>Bütün uçuşlar</span>
+                          <span>{t('filter.allFlights')}</span>
                         </label>
                         <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
                           <input type="radio" name="stopsFilter" checked={stopsFilter === 'direct'} onChange={() => setStopsFilter('direct')} className="text-blue-600 border-gray-300" />
-                          <span>Birbaşa uçuş</span>
+                          <span>{t('filter.oneStop')}</span>
                         </label>
                       </div>
                     </FilterSection>
