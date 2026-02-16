@@ -1089,7 +1089,7 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Birbaşa uçuş' : `${result.stops} Ötürmə`}</span>
+                                      <span className="text-sm text-gray-600">{result.isDirect ? '' : `${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                         {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
@@ -1214,7 +1214,7 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Birbaşa' : `${result.stops} Ötürmə`}</span>
+                                      <span className="text-sm text-gray-600">{result.isDirect ? '' : `${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                         {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
@@ -1299,7 +1299,7 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Birbaşa' : `${result.stops} Ötürmə`}</span>
+                                      <span className="text-sm text-gray-600">{result.isDirect ? '' : `${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                         {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
