@@ -23,6 +23,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 import Checkout from './pages/Checkout';
 import HotelSearchResults from './pages/HotelSearchResults';
+import ServiceDetail from './pages/ServiceDetail';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -64,6 +65,7 @@ function App() {
               </>
             } />
             <Route path="/services" element={<Services />} />
+            <Route path="/services/:slug" element={<ServiceDetail />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
