@@ -424,9 +424,6 @@ const HotelSearchResults: React.FC = () => {
                             <span className="inline-flex items-center gap-1 text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full font-medium">
                               <Utensils className="w-3 h-3" /> {hotel.meals}
                             </span>
-                            <span className="inline-flex items-center gap-1 text-xs bg-purple-50 text-purple-700 px-2.5 py-1 rounded-full font-medium">
-                              <Bed className="w-3 h-3" /> {hotel.beds}
-                            </span>
                           </div>
 
                           {/* Room Features */}
