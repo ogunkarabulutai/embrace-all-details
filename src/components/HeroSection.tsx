@@ -201,6 +201,7 @@ const HeroSection: React.FC = () => {
   const [returnDepartTimeRange, setReturnDepartTimeRange] = useState<[number, number]>([0, 1439]);
   const [returnArriveTimeRange, setReturnArriveTimeRange] = useState<[number, number]>([0, 1439]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
+  const [stopsFilter, setStopsFilter] = useState<'all' | 'direct'>('all');
 
   // Tour country searchable dropdown state
   const [tourCountry, setTourCountry] = useState('');
@@ -307,6 +308,7 @@ const HeroSection: React.FC = () => {
   const filteredByTime = searchResults.filter((r) => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
+    if (stopsFilter === 'direct' && !r.isDirect) return false;
     return dep >= departTimeRange[0] && dep <= departTimeRange[1] &&
            arr >= arriveTimeRange[0] && arr <= arriveTimeRange[1] &&
            r.price >= priceRange[0] && r.price <= priceRange[1];
@@ -315,6 +317,7 @@ const HeroSection: React.FC = () => {
   const filteredReturnFlights = searchResults.filter((r) => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
+    if (stopsFilter === 'direct' && !r.isDirect) return false;
     return dep >= returnDepartTimeRange[0] && dep <= returnDepartTimeRange[1] &&
            arr >= returnArriveTimeRange[0] && arr <= returnArriveTimeRange[1] &&
            r.price >= priceRange[0] && r.price <= priceRange[1];
@@ -784,6 +787,7 @@ const HeroSection: React.FC = () => {
                       const maxP = Math.max(...searchResults.map(r => r.price));
                       setPriceRange([0, maxP]);
                       setSortBy('cheapest');
+                      setStopsFilter('all');
                     }}>Təmizlə</button>
                   </div>
 
@@ -818,6 +822,20 @@ const HeroSection: React.FC = () => {
                         </div>
                       </div>
                     </FilterSection>
+
+                    <FilterSection icon={<Plane className="w-4 h-4" />} label="Aktarmalar" isOpen={!!openFilters.stops} onToggle={() => toggleFilter('stops')}>
+                      <div className="space-y-2 pl-7">
+                        <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
+                          <input type="radio" name="stopsFilter" checked={stopsFilter === 'all'} onChange={() => setStopsFilter('all')} className="text-blue-600 border-gray-300" />
+                          <span>Bütün uçuşlar</span>
+                        </label>
+                        <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
+                          <input type="radio" name="stopsFilter" checked={stopsFilter === 'direct'} onChange={() => setStopsFilter('direct')} className="text-blue-600 border-gray-300" />
+                          <span>Birbaşa uçuş</span>
+                        </label>
+                      </div>
+                    </FilterSection>
+
                     <FilterSection icon={<Clock className="w-4 h-4" />} label="Gediş kalkış / varış saatları" isOpen={!!openFilters.times} onToggle={() => toggleFilter('times')}>
                       <div className="pl-2 pr-1 space-y-4">
                         {/* Departure */}
