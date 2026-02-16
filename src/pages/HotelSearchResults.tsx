@@ -320,7 +320,7 @@ const HotelSearchResults: React.FC = () => {
                   <input type="range" min={0} max={2000} value={filterPriceMax} onChange={e => setFilterPriceMax(Number(e.target.value))}
                     className="w-full accent-blue-600" />
                   <div className="flex justify-between text-xs text-gray-400">
-                    <span>$0</span><span>${filterPriceMax}</span>
+                    <span>0 AZN</span><span>{filterPriceMax} AZN</span>
                   </div>
                 </div>
               </FilterSection>
@@ -456,8 +456,8 @@ const HotelSearchResults: React.FC = () => {
                           <div>
                             {searchNights > 0 && <p className="text-xs text-gray-400">{searchNights} gecə, {searchAdults} nəfər</p>}
                             <div className="flex items-baseline gap-2">
-                              <span className="text-sm text-gray-400 line-through">${hotel.originalPrice}</span>
-                              <span className="text-2xl font-bold text-gray-900">${hotel.price}</span>
+                              <span className="text-sm text-gray-400 line-through">{hotel.originalPrice} AZN</span>
+                              <span className="text-2xl font-bold text-gray-900">{hotel.price} AZN</span>
                             </div>
                             <p className="text-xs text-green-600 font-medium">
                               {Math.round((1 - hotel.price / hotel.originalPrice) * 100)}% endirim

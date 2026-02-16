@@ -168,10 +168,10 @@ const FeaturedHotels: React.FC = () => {
                   <div className="flex items-end justify-between mb-3">
                     <div>
                       <div className="text-xs text-gray-500 dark:text-gray-400 line-through">
-                        ₺{hotel.originalPrice.toLocaleString()}
+                        {hotel.originalPrice.toLocaleString()} AZN
                       </div>
                       <div className="text-2xl font-bold text-orange-600">
-                        ₺{hotel.price.toLocaleString()}
+                        {hotel.price.toLocaleString()} AZN
                       </div>
                       <div className="text-xs text-gray-600 dark:text-gray-400">
                         {t('hotels.perNight')}

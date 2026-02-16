@@ -544,17 +544,17 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                           <div className="flex flex-col">
                             {hotel.originalPrice && (
                               <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
-                                ₺{hotel.originalPrice.toLocaleString()}
+                                {hotel.originalPrice.toLocaleString()} AZN
                               </span>
                             )}
                             <div className="flex items-center space-x-2">
                               <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                                ₺{hotel.price.toLocaleString()}
+                                {hotel.price.toLocaleString()} AZN
                               </span>
                               <span className="text-sm text-gray-500 dark:text-gray-400">/gece</span>
                             </div>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {nights} gece toplam: ₺{(hotel.price * nights).toLocaleString()}
+                              {nights} gece toplam: {(hotel.price * nights).toLocaleString()} AZN
                             </span>
                           </div>
 
