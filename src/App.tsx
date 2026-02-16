@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import PopularDestinations from './components/PopularDestinations';
@@ -40,6 +46,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
         <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
           <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} onOpenAuth={openAuthModal} />
