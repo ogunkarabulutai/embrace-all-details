@@ -174,9 +174,9 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth })
           <div className="space-y-3">
             <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800 rounded-lg px-3 py-2">
               <MapPin className="w-4 h-4 text-gray-400" />
-              <input
+                <input
                 type="text"
-                placeholder="Nereye gitmek istiyorsunuz?"
+                placeholder="Hara getmək istəyirsiniz?"
                 className="bg-transparent text-sm text-gray-700 dark:text-gray-300 placeholder-gray-400 border-none outline-none flex-1"
               />
             </div>
@@ -186,7 +186,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth })
                 <Calendar className="w-4 h-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Tarih"
+                  placeholder="Tarix"
                   className="bg-transparent text-sm text-gray-700 dark:text-gray-300 placeholder-gray-400 border-none outline-none flex-1"
                 />
               </div>
@@ -195,7 +195,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth })
                 <Users className="w-4 h-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Misafir"
+                  placeholder="Qonaq"
                   className="bg-transparent text-sm text-gray-700 dark:text-gray-300 placeholder-gray-400 border-none outline-none flex-1"
                 />
               </div>
@@ -203,7 +203,7 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth })
             
             <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center space-x-2">
               <Search className="w-5 h-5" />
-              <span>Ara</span>
+              <span>Axtar</span>
             </button>
           </div>
         </div>

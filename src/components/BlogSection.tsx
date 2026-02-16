@@ -49,7 +49,7 @@ const BlogSection: React.FC = () => {
             {t('blog.title')}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Tatil deneyiminizi zenginleştirren rehberler, ipuçları ve keşif önerileri
+            Tətil təcrübənizi zənginləşdirən bələdçilər, ipucları və kəşf tövsiyələri
           </p>
         </div>
         
@@ -103,7 +103,7 @@ const BlogSection: React.FC = () => {
                   </span>
                   
                   <button className="group/btn flex items-center space-x-1 text-orange-500 hover:text-orange-600 font-medium text-sm transition-colors duration-200">
-                    <span>Devamını Oku</span>
+                    <span>{t('blog.readMore')}</span>
                     <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
                   </button>
                 </div>
@@ -114,7 +114,7 @@ const BlogSection: React.FC = () => {
         
         <div className="text-center mt-12">
           <button className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 hover:border-orange-500 dark:hover:border-orange-500 px-8 py-3 rounded-full font-medium transition-all duration-200 inline-flex items-center space-x-2">
-            <span>Tüm Blog Yazılarını Gör</span>
+            <span>{t('blog.allArticles')}</span>
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>

@@ -385,10 +385,10 @@ const HeroSection: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     {[
-                      { value: 'economy', label: 'Economy' },
+                      { value: 'economy', label: 'Ekonom' },
                       { value: 'premium', label: 'Premium' },
-                      { value: 'business', label: 'Business' },
-                      { value: 'first', label: 'First' },
+                      { value: 'business', label: 'Biznes' },
+                      { value: 'first', label: 'Birinci' },
                     ].map((cabin) => (
                       <button
                         key={cabin.value}
@@ -1069,7 +1069,7 @@ const HeroSection: React.FC = () => {
                                     <div className="flex items-center space-x-3">
                                       <span className="text-sm text-gray-600">{result.isDirect ? 'Birbaşa uçuş' : `${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
-                                        {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
+                                        {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
                                       <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
                                     </div>
@@ -1088,10 +1088,10 @@ const HeroSection: React.FC = () => {
                                       <div className="mx-5 my-4 bg-white rounded-xl border border-gray-200 p-5">
                                         <div className="flex items-center space-x-2 mb-3">
                                           <div className="w-7 h-7 rounded flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
-                                          <span className="text-sm font-semibold text-gray-900">Flight {result.flightCode}</span>
+                                          <span className="text-sm font-semibold text-gray-900">Uçuş {result.flightCode}</span>
                                         </div>
                                         <span className="text-xs font-medium text-green-600 mb-4 block">
-                                          {result.cabinClass === 'business' ? 'Business class' : result.cabinClass === 'first' ? 'First class' : result.cabinClass === 'premium' ? 'Premium class' : 'Economy class'}
+                                          {result.cabinClass === 'business' ? 'Biznes sinif' : result.cabinClass === 'first' ? 'Birinci sinif' : result.cabinClass === 'premium' ? 'Premium sinif' : 'Ekonom sinif'}
                                         </span>
                                         <div className="relative pl-5 space-y-0">
                                           <div className="flex items-start space-x-4 relative">
@@ -1141,13 +1141,13 @@ const HeroSection: React.FC = () => {
                           <div className="flex items-center justify-between px-5 py-3" style={{ backgroundColor: airlineColor }}>
                             <div className="flex items-center space-x-4">
                               <div className="flex items-center space-x-2">
-                                <span className="text-white/70 text-xs">Depart:</span>
+                                <span className="text-white/70 text-xs">Gediş:</span>
                                 <div className="w-6 h-6 rounded bg-white/20 flex items-center justify-center text-white text-[10px] font-bold">{airlinePrefix}</div>
                                 <span className="text-white font-semibold text-sm">{airline}</span>
                               </div>
                               <span className="text-white/50">/</span>
                               <div className="flex items-center space-x-2">
-                                <span className="text-white/70 text-xs">Return:</span>
+                                <span className="text-white/70 text-xs">Qayıdış:</span>
                                 <div className="w-6 h-6 rounded bg-white/20 flex items-center justify-center text-white text-[10px] font-bold">{airlinePrefix}</div>
                                 <span className="text-white font-semibold text-sm">{airline}</span>
                               </div>
@@ -1162,7 +1162,7 @@ const HeroSection: React.FC = () => {
                             <div className="flex items-center justify-between mb-3">
                               <div className="flex items-center space-x-2">
                                 <Plane className="w-4 h-4 text-gray-500" />
-                                <span className="font-semibold text-gray-900">Outbound</span>
+                                <span className="font-semibold text-gray-900">Gediş</span>
                                 <span className="text-gray-400 text-sm">· {dateLabel}</span>
                               </div>
                               <span className="text-sm text-gray-500">{fromCountry} → {toCountry}</span>
@@ -1192,9 +1192,9 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Direct' : `${result.stops} Stop`}</span>
+                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Birbaşa' : `${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
-                                        {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
+                                        {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
                                       <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
                                       <button onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
@@ -1207,10 +1207,10 @@ const HeroSection: React.FC = () => {
                                     <div className="mx-4 my-2 bg-gray-50 rounded-xl border border-gray-200 p-4">
                                       <div className="flex items-center space-x-2 mb-2">
                                         <div className="w-6 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
-                                        <span className="text-sm font-semibold text-gray-900">Flight {result.flightCode}</span>
+                                        <span className="text-sm font-semibold text-gray-900">Uçuş {result.flightCode}</span>
                                       </div>
                                       <span className="text-xs font-medium text-green-600 mb-3 block">
-                                        {result.cabinClass === 'business' ? 'Business class' : result.cabinClass === 'first' ? 'First class' : result.cabinClass === 'premium' ? 'Premium class' : 'Economy class'}
+                                        {result.cabinClass === 'business' ? 'Biznes sinif' : result.cabinClass === 'first' ? 'Birinci sinif' : result.cabinClass === 'premium' ? 'Premium sinif' : 'Ekonom sinif'}
                                       </span>
                                       <div className="relative pl-5 space-y-0">
                                         <div className="flex items-start relative">
@@ -1247,7 +1247,7 @@ const HeroSection: React.FC = () => {
                             <div className="flex items-center justify-between mb-3">
                               <div className="flex items-center space-x-2">
                                 <Plane className="w-4 h-4 text-gray-500 rotate-180" />
-                                <span className="font-semibold text-gray-900">Return</span>
+                                <span className="font-semibold text-gray-900">Qayıdış</span>
                                 <span className="text-gray-400 text-sm">· {returnDateLabel}</span>
                               </div>
                               <span className="text-sm text-gray-500">{toCountry} → {fromCountry}</span>
@@ -1277,9 +1277,9 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Direct' : `${result.stops} Stop`}</span>
+                                      <span className="text-sm text-gray-600">{result.isDirect ? 'Birbaşa' : `${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
-                                        {result.cabinClass === 'business' ? 'Business' : result.cabinClass === 'first' ? 'First' : result.cabinClass === 'premium' ? 'Premium' : 'Economy'}
+                                        {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
                                       <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
                                       <button onClick={(e) => { e.stopPropagation(); toggleDetail(result.id + 1000); }}
@@ -1292,10 +1292,10 @@ const HeroSection: React.FC = () => {
                                     <div className="mx-4 my-2 bg-gray-50 rounded-xl border border-gray-200 p-4">
                                       <div className="flex items-center space-x-2 mb-2">
                                         <div className="w-6 h-6 rounded flex items-center justify-center text-white text-[9px] font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
-                                        <span className="text-sm font-semibold text-gray-900">Flight {result.flightCode}</span>
+                                        <span className="text-sm font-semibold text-gray-900">Uçuş {result.flightCode}</span>
                                       </div>
                                       <span className="text-xs font-medium text-green-600 mb-3 block">
-                                        {result.cabinClass === 'business' ? 'Business class' : result.cabinClass === 'first' ? 'First class' : result.cabinClass === 'premium' ? 'Premium class' : 'Economy class'}
+                                        {result.cabinClass === 'business' ? 'Biznes sinif' : result.cabinClass === 'first' ? 'Birinci sinif' : result.cabinClass === 'premium' ? 'Premium sinif' : 'Ekonom sinif'}
                                       </span>
                                       <div className="relative pl-5 space-y-0">
                                         <div className="flex items-start relative">
@@ -1330,7 +1330,7 @@ const HeroSection: React.FC = () => {
                               onClick={() => navigate('/checkout', { state: { flight: outFlight, returnFlight: retFlight, totalPrice: combinedPrice } })}
                               className="px-8 py-2.5 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold text-sm transition-colors"
                             >
-                              Choose
+                              Seç
                             </button>
                           </div>
                         </div>

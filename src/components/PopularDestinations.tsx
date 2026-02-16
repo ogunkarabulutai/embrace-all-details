@@ -6,7 +6,7 @@ const destinations = [
   {
     id: 1,
     name: 'Antalya',
-    country: 'Türkiye',
+    country: 'Türkiyə',
     image: 'https://images.pexels.com/photos/1134166/pexels-photo-1134166.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     rating: 4.8,
     hotels: 250,
@@ -15,7 +15,7 @@ const destinations = [
   {
     id: 2,
     name: 'Bodrum',
-    country: 'Türkiye', 
+    country: 'Türkiyə', 
     image: 'https://images.pexels.com/photos/1548024/pexels-photo-1548024.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     rating: 4.7,
     hotels: 180,
@@ -24,7 +24,7 @@ const destinations = [
   {
     id: 3,
     name: 'Kapadokya',
-    country: 'Türkiye',
+    country: 'Türkiyə',
     image: 'https://images.pexels.com/photos/2161467/pexels-photo-2161467.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     rating: 4.9,
     hotels: 120,
@@ -33,7 +33,7 @@ const destinations = [
   {
     id: 4,
     name: 'İstanbul',
-    country: 'Türkiye',
+    country: 'Türkiyə',
     image: 'https://images.pexels.com/photos/1717859/pexels-photo-1717859.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     rating: 4.6,
     hotels: 300,
@@ -52,7 +52,7 @@ const PopularDestinations: React.FC = () => {
             {t('destinations.title')}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            En çok tercih edilen destinasyonları keşfedin ve unutulmaz anılar biriktirin
+            Ən çox seçilən istiqamətləri kəşf edin və unudulmaz xatirələr yığın
           </p>
         </div>
         
@@ -84,19 +84,19 @@ const PopularDestinations: React.FC = () => {
                 </div>
                 
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  {destination.hotels} otel seçeneği
+                  {destination.hotels} otel seçimi
                 </p>
                 
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">En düşük</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Ən aşağı</span>
                     <div className="font-bold text-lg text-gray-900 dark:text-white">
                       {destination.startingPrice.toLocaleString()} AZN
                     </div>
                   </div>
                   
                   <button className="group/btn flex items-center space-x-1 text-orange-500 hover:text-orange-600 font-medium text-sm transition-colors duration-200">
-                    <span>Keşfet</span>
+                    <span>Kəşf et</span>
                     <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
                   </button>
                 </div>

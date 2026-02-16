@@ -5,23 +5,23 @@ import { useLanguage } from '../contexts/LanguageContext';
 const benefits = [
   {
     icon: <Calendar className="w-8 h-8" />,
-    title: 'En İyi Fiyat Garantisi',
-    description: 'Erken rezervasyonla en uygun fiyatları yakalayın'
+    title: 'Ən Yaxşı Qiymət Zəmanəti',
+    description: 'Erkən rezervasiya ilə ən uyğun qiymətləri əldə edin'
   },
   {
     icon: <Award className="w-8 h-8" />,
-    title: 'Ücretsiz İptal',
-    description: '7 gün öncesine kadar ücretsiz iptal hakkı'
+    title: 'Pulsuz Ləğv',
+    description: '7 gün əvvəlinə qədər pulsuz ləğv hüququ'
   },
   {
     icon: <Shield className="w-8 h-8" />,
-    title: 'Güvenli Ödeme',
-    description: '256-bit SSL şifreleme ile güvenli ödeme'
+    title: 'Təhlükəsiz Ödəniş',
+    description: '256-bit SSL şifrələmə ilə təhlükəsiz ödəniş'
   },
   {
     icon: <Users className="w-8 h-8" />,
-    title: '7/24 Destek',
-    description: 'Uzman ekibimiz her zaman yanınızda'
+    title: '7/24 Dəstək',
+    description: 'Peşəkar komandamız həmişə yanınızdadır'
   }
 ];
 
@@ -40,13 +40,13 @@ const EarlyBooking: React.FC = () => {
             </div>
             
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              2024 Yazını Şimdiden
-              <span className="text-orange-500 block">Planla ve Kazan!</span>
+              2026 Yayını İndidən
+              <span className="text-orange-500 block">Planla və Qazan!</span>
             </h2>
             
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-              Erken rezervasyon yaparak hem en iyi otelleri garanti altına alın hem de 
-              bütçenizi koruyun. Hayalinizdeki tatil için şimdi harekete geçin!
+              Erkən rezervasiya edərək həm ən yaxşı otelləri zəmanət altına alın, həm də 
+              büdcənizi qoruyun. Xəyalınızdakı tətil üçün indi hərəkətə keçin!
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
@@ -72,10 +72,10 @@ const EarlyBooking: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                Erken Rezervasyon Yap
+                Erkən Rezervasiya Et
               </button>
               <button className="border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:border-orange-500 dark:hover:border-orange-500 px-8 py-3 rounded-full font-semibold transition-all duration-200">
-                Kampanyaları İncele
+                Kampaniyalara Bax
               </button>
             </div>
           </div>
@@ -85,7 +85,7 @@ const EarlyBooking: React.FC = () => {
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               <img 
                 src="https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
-                alt="Erken Rezervasyon"
+                alt="Erkən Rezervasiya"
                 className="w-full h-96 lg:h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -99,7 +99,7 @@ const EarlyBooking: React.FC = () => {
                 </div>
                 <div>
                   <div className="font-bold text-gray-900 dark:text-white text-lg">%35</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Erken Rezervasyon İndirimi</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Erkən Rezervasiya Endirimi</div>
                 </div>
               </div>
             </div>
@@ -107,8 +107,8 @@ const EarlyBooking: React.FC = () => {
             {/* Stats */}
             <div className="absolute top-6 right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">150K+</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Mutlu Müşteri</div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">5000+</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Məmnun Müştəri</div>
               </div>
             </div>
           </div>

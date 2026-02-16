@@ -35,7 +35,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
         {/* Header */}
         <div className="flex items-center justify-between p-6 pb-4">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Üye Girişi
+            Üzv Girişi
           </h2>
           <button
             onClick={onClose}
@@ -47,7 +47,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-6">
-          {/* Email Input */}
           <div>
             <div className="relative">
               <input
@@ -55,14 +54,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="E-Posta Adresi"
+                placeholder="E-poçt Ünvanı"
                 className="w-full px-4 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
                 required
               />
             </div>
           </div>
 
-          {/* Password Input */}
           <div>
             <div className="relative">
               <input
@@ -70,7 +68,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                placeholder="Şifre"
+                placeholder="Şifrə"
                 className="w-full px-4 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg pr-12"
                 required
               />
@@ -84,32 +82,28 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
             </div>
           </div>
 
-          {/* Forgot Password */}
           <div className="text-left">
             <button
               type="button"
               className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
             >
-              Şifreni mi unuttun?
+              Şifrənizi unutmusunuz?
             </button>
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 px-6 rounded-2xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center space-x-2"
           >
-            <span>Giriş Yap</span>
+            <span>Daxil Ol</span>
             <ArrowRight className="w-5 h-5" />
           </button>
 
-          {/* Social Login Text */}
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
-              Şifresiz giriş yapabilmek için Google veya Facebook hesabınız ile bağlanabilirsiniz.
+              Şifrəsiz giriş etmək üçün Google və ya Facebook hesabınız ilə bağlana bilərsiniz.
             </p>
             
-            {/* Terms */}
             <div className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
               <label className="flex items-start space-x-2">
                 <input
@@ -118,16 +112,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                   required
                 />
                 <span>
-                  <a href="#" className="text-blue-500 hover:underline">Kullanım Şartları</a> ve{' '}
-                  <a href="#" className="text-blue-500 hover:underline">Gizlilik bildirimini</a> kabul ediyorum.{' '}
-                  <a href="#" className="text-blue-500 hover:underline">Kişisel Verilerin Korunması</a> ve{' '}
-                  <a href="#" className="text-blue-500 hover:underline">Gizlilik Politikasını</a> okudum.
+                  <a href="#" className="text-blue-500 hover:underline">İstifadə Şərtləri</a> və{' '}
+                  <a href="#" className="text-blue-500 hover:underline">Məxfilik bildirişini</a> qəbul edirəm.{' '}
+                  <a href="#" className="text-blue-500 hover:underline">Şəxsi Məlumatların Qorunması</a> və{' '}
+                  <a href="#" className="text-blue-500 hover:underline">Məxfilik Siyasətini</a> oxudum.
                 </span>
               </label>
             </div>
           </div>
 
-          {/* Social Login Buttons */}
           <div className="space-y-3">
             <button 
               type="button"
@@ -139,7 +132,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              Google ile oturum açın
+              Google ilə daxil olun
             </button>
             
             <button 
@@ -149,20 +142,19 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
               <svg className="w-5 h-5 mr-3" fill="#1877F2" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
-              Facebook ile oturum açın
+              Facebook ilə daxil olun
             </button>
           </div>
 
-          {/* Register Link */}
           <div className="text-center pt-4">
             <span className="text-gray-600 dark:text-gray-400">
-              Hesabın Yok mu?{' '}
+              Hesabınız yoxdur?{' '}
             </span>
             <button
               type="button"
               className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
             >
-              Üye Ol
+              Qeydiyyatdan Keç
             </button>
           </div>
         </form>
