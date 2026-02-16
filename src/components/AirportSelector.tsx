@@ -128,16 +128,27 @@ const AirportSelector: React.FC<AirportSelectorProps> = ({ label, placeholder, v
             )}
             {grouped.map((group) => (
               <div key={group.country}>
-                {/* Country row */}
-                <div className="flex items-center justify-between px-4 py-2.5 bg-blue-50/60">
+                {/* Country row - clickable to select all */}
+                <button
+                  onClick={() => {
+                    onSelect({
+                      code: '',
+                      name: `${group.country} - Bütün hava limanları`,
+                      city: 'Bütün şəhərlər',
+                      country: group.country,
+                    });
+                    setIsOpen(false);
+                  }}
+                  className="w-full flex items-center justify-between px-4 py-2.5 bg-blue-50/60 hover:bg-blue-100/80 transition-colors cursor-pointer"
+                >
                   <div className="flex items-center gap-2">
                     <Globe className="w-4 h-4 text-blue-600" />
                     <span className="font-semibold text-gray-900 text-sm">{group.country}</span>
                   </div>
                   <span className="text-xs text-blue-600 font-medium">
-                    {totalAirports(group) === 1 ? '1 airport' : `${totalAirports(group)} airports`}
+                    {totalAirports(group) === 1 ? '1 hava limanı' : `Hamısı (${totalAirports(group)})`}
                   </span>
-                </div>
+                </button>
 
                 {group.cities.map((cityGroup) => (
                   <div key={cityGroup.city}>
