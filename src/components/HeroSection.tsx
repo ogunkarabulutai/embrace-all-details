@@ -201,7 +201,7 @@ const HeroSection: React.FC = () => {
   const [returnDepartTimeRange, setReturnDepartTimeRange] = useState<[number, number]>([0, 1439]);
   const [returnArriveTimeRange, setReturnArriveTimeRange] = useState<[number, number]>([0, 1439]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
-  const [stopsFilter, setStopsFilter] = useState<'all' | 'direct'>('all');
+  const [stopsFilter, setStopsFilter] = useState<'all' | 'oneStop'>('all');
 
   // Tour country searchable dropdown state
   const [tourCountry, setTourCountry] = useState('');
@@ -308,7 +308,7 @@ const HeroSection: React.FC = () => {
   const filteredByTime = searchResults.filter((r) => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
-    if (stopsFilter === 'direct' && !r.isDirect) return false;
+    if (stopsFilter === 'oneStop' && r.stops !== 1) return false;
     return dep >= departTimeRange[0] && dep <= departTimeRange[1] &&
            arr >= arriveTimeRange[0] && arr <= arriveTimeRange[1] &&
            r.price >= priceRange[0] && r.price <= priceRange[1];
@@ -317,7 +317,7 @@ const HeroSection: React.FC = () => {
   const filteredReturnFlights = searchResults.filter((r) => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
-    if (stopsFilter === 'direct' && !r.isDirect) return false;
+    if (stopsFilter === 'oneStop' && r.stops !== 1) return false;
     return dep >= returnDepartTimeRange[0] && dep <= returnDepartTimeRange[1] &&
            arr >= returnArriveTimeRange[0] && arr <= returnArriveTimeRange[1] &&
            r.price >= priceRange[0] && r.price <= priceRange[1];
@@ -830,7 +830,7 @@ const HeroSection: React.FC = () => {
                           <span>{t('filter.allFlights')}</span>
                         </label>
                         <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
-                          <input type="radio" name="stopsFilter" checked={stopsFilter === 'direct'} onChange={() => setStopsFilter('direct')} className="text-blue-600 border-gray-300" />
+                          <input type="radio" name="stopsFilter" checked={stopsFilter === 'oneStop'} onChange={() => setStopsFilter('oneStop')} className="text-blue-600 border-gray-300" />
                           <span>{t('filter.oneStop')}</span>
                         </label>
                       </div>
@@ -1089,7 +1089,7 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? '' : `${result.stops} Ötürmə`}</span>
+                                      <span className="text-sm text-gray-600">{`${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                         {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
@@ -1214,7 +1214,7 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? '' : `${result.stops} Ötürmə`}</span>
+                                      <span className="text-sm text-gray-600">{`${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                         {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
@@ -1299,7 +1299,7 @@ const HeroSection: React.FC = () => {
                                       </div>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <span className="text-sm text-gray-600">{result.isDirect ? '' : `${result.stops} Ötürmə`}</span>
+                                      <span className="text-sm text-gray-600">{`${result.stops} Ötürmə`}</span>
                                       <span className="text-xs font-medium px-2 py-0.5 rounded bg-green-100 text-green-700 border border-green-200">
                                         {result.cabinClass === 'business' ? 'Biznes' : result.cabinClass === 'first' ? 'Birinci' : result.cabinClass === 'premium' ? 'Premium' : 'Ekonom'}
                                       </span>
