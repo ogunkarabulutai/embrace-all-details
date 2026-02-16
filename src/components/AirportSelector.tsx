@@ -152,16 +152,28 @@ const AirportSelector: React.FC<AirportSelectorProps> = ({ label, placeholder, v
 
                 {group.cities.map((cityGroup) => (
                   <div key={cityGroup.city}>
-                    {/* City row */}
-                    <div className="flex items-center justify-between pl-8 pr-4 py-2 border-b border-gray-50">
+                    {/* City row - clickable to select all airports in city */}
+                    <button
+                      onClick={() => {
+                        const codes = cityGroup.airports.map(a => a.code).join(',');
+                        onSelect({
+                          code: codes,
+                          name: `${cityGroup.city} - Bütün hava limanları`,
+                          city: cityGroup.city,
+                          country: group.country,
+                        });
+                        setIsOpen(false);
+                      }}
+                      className="w-full flex items-center justify-between pl-8 pr-4 py-2 border-b border-gray-50 hover:bg-blue-50 transition-colors cursor-pointer"
+                    >
                       <div className="flex items-center gap-2">
                         <MapPin className="w-3.5 h-3.5 text-gray-400" />
                         <span className="text-sm font-medium text-gray-700">{cityGroup.city}</span>
                       </div>
-                      <span className="text-xs text-gray-400">
-                        {cityGroup.airports.length === 1 ? '1 airport' : `${cityGroup.airports.length} airports`}
+                      <span className="text-xs text-blue-600 font-medium">
+                        {cityGroup.airports.length === 1 ? '1 hava limanı' : `Hamısı (${cityGroup.airports.length})`}
                       </span>
-                    </div>
+                    </button>
 
                     {/* Airport rows */}
                     {cityGroup.airports.map((airport) => (
