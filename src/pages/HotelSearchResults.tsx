@@ -326,20 +326,6 @@ const HotelSearchResults: React.FC = () => {
               </FilterSection>
 
 
-              {/* In the Room Filter */}
-              <FilterSection title="Otaqda" icon={<span>🛏️</span>} defaultOpen={false}>
-                <div className="space-y-2">
-                  {allRoomFeatures.map(feature => (
-                    <label key={feature} className="flex items-center gap-2 cursor-pointer group">
-                      <input type="checkbox" checked={filterRoomFeatures.includes(feature)} onChange={() => toggleFilter(filterRoomFeatures, feature, setFilterRoomFeatures)}
-                        className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
-                        {roomFeatureIcon(feature)} {feature}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </FilterSection>
 
               {/* Districts Filter */}
               <FilterSection title="İlçə" icon={<MapPin className="w-4 h-4" />} defaultOpen={false}>
@@ -426,14 +412,6 @@ const HotelSearchResults: React.FC = () => {
                             </span>
                           </div>
 
-                          {/* Room Features */}
-                          <div className="flex flex-wrap gap-1.5 mt-3">
-                            {hotel.roomFeatures.map(feature => (
-                              <span key={feature} className="inline-flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md">
-                                {roomFeatureIcon(feature)} {feature}
-                              </span>
-                            ))}
-                          </div>
                         </div>
 
                         {/* Price & Book */}
