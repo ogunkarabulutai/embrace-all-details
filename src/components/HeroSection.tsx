@@ -1034,12 +1034,12 @@ const HeroSection: React.FC = () => {
                       if (tripType !== 'roundtrip') {
                         return (
                           <div key={airline} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-                            <div className="flex items-center justify-between px-5 py-3" style={{ backgroundColor: airlineColor }}>
-                              <div className="flex items-center space-x-3">
-                                <div className="w-8 h-8 rounded bg-white/20 flex items-center justify-center text-white text-xs font-bold">{airlinePrefix}</div>
-                                <span className="text-white font-semibold text-sm">{airline}</span>
+                            <div className="flex items-center justify-between px-4 py-2 bg-gray-600">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-6 h-6 rounded bg-white/20 flex items-center justify-center text-white text-[10px] font-bold">{airlinePrefix}</div>
+                                <span className="text-white font-semibold text-xs">{airline}</span>
                               </div>
-                              <span className="text-white font-bold text-base">{formatPrice(lowestPrice)} AZN+</span>
+                              <span className="text-white font-bold text-sm">{formatPrice(lowestPrice)} AZN+</span>
                             </div>
                             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
                               <div>
@@ -1047,8 +1047,8 @@ const HeroSection: React.FC = () => {
                                 <div className="text-xs text-gray-500">{sortedFlights[0]?.fromCode} → {sortedFlights[0]?.toCode}</div>
                               </div>
                               <div className="flex items-center space-x-2">
-                                <span className="text-xs font-medium px-3 py-1 rounded-full border" style={{ borderColor: airlineColor, color: airlineColor }}>{airline}</span>
-                                <div className="w-8 h-8 rounded flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
+                                <span className="text-xs font-medium px-3 py-1 rounded-full border border-gray-400 text-gray-600">{airline}</span>
+                                <div className="w-6 h-6 rounded bg-gray-600 flex items-center justify-center text-white text-[10px] font-bold">{airlinePrefix}</div>
                               </div>
                             </div>
                             <div className="divide-y divide-gray-100">
@@ -1074,7 +1074,7 @@ const HeroSection: React.FC = () => {
                                       <span className="text-sm font-semibold text-gray-700">{result.flightCode}</span>
                                     </div>
                                     <div className="flex items-center space-x-3">
-                                      <div className="px-4 py-2 rounded-xl text-white font-bold text-base" style={{ backgroundColor: airlineColor }}>
+                                      <div className="px-3 py-1.5 rounded-lg bg-gray-600 text-white font-bold text-sm">
                                         {formatPrice(result.price)} AZN
                                       </div>
                                       <button onClick={(e) => { e.stopPropagation(); toggleDetail(result.id); }}
@@ -1087,7 +1087,7 @@ const HeroSection: React.FC = () => {
                                     <div className="bg-gray-50 border-t border-gray-100">
                                       <div className="mx-5 my-4 bg-white rounded-xl border border-gray-200 p-5">
                                         <div className="flex items-center space-x-2 mb-3">
-                                          <div className="w-7 h-7 rounded flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: airlineColor }}>{airlinePrefix}</div>
+                                          <div className="w-6 h-6 rounded bg-gray-600 flex items-center justify-center text-white text-[9px] font-bold">{airlinePrefix}</div>
                                           <span className="text-sm font-semibold text-gray-900">Uçuş {result.flightCode}</span>
                                         </div>
                                         <span className="text-xs font-medium text-green-600 mb-4 block">
@@ -1138,22 +1138,22 @@ const HeroSection: React.FC = () => {
                       return (
                         <div key={airline} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
                           {/* Header Bar */}
-                          <div className="flex items-center justify-between px-5 py-3" style={{ backgroundColor: airlineColor }}>
+                          <div className="flex items-center justify-between px-4 py-2 bg-gray-600">
                             <div className="flex items-center space-x-4">
                               <div className="flex items-center space-x-2">
-                                <span className="text-white/70 text-xs">Gediş:</span>
-                                <div className="w-6 h-6 rounded bg-white/20 flex items-center justify-center text-white text-[10px] font-bold">{airlinePrefix}</div>
-                                <span className="text-white font-semibold text-sm">{airline}</span>
+                                <span className="text-white/70 text-[10px]">Gediş:</span>
+                                <div className="w-5 h-5 rounded bg-white/20 flex items-center justify-center text-white text-[9px] font-bold">{airlinePrefix}</div>
+                                <span className="text-white font-semibold text-xs">{airline}</span>
                               </div>
                               <span className="text-white/50">/</span>
                               <div className="flex items-center space-x-2">
-                                <span className="text-white/70 text-xs">Qayıdış:</span>
-                                <div className="w-6 h-6 rounded bg-white/20 flex items-center justify-center text-white text-[10px] font-bold">{airlinePrefix}</div>
-                                <span className="text-white font-semibold text-sm">{airline}</span>
+                                <span className="text-white/70 text-[10px]">Qayıdış:</span>
+                                <div className="w-5 h-5 rounded bg-white/20 flex items-center justify-center text-white text-[9px] font-bold">{airlinePrefix}</div>
+                                <span className="text-white font-semibold text-xs">{airline}</span>
                               </div>
                             </div>
                             <div className="flex items-center">
-                              <div className="bg-white text-gray-900 font-bold text-lg px-4 py-1 rounded-lg">{formatPrice(combinedPrice)} AZN</div>
+                              <div className="bg-white text-gray-900 font-bold text-sm px-3 py-1 rounded-lg">{formatPrice(combinedPrice)} AZN</div>
                             </div>
                           </div>
 
