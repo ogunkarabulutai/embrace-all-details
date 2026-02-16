@@ -141,13 +141,13 @@ const Footer: React.FC = () => {
               © 2026 TourAgent. Bütün hüquqlar qorunur. &nbsp;|&nbsp; VÖEN: 2007383881
             </div>
             <div className="mt-4 md:mt-0 flex flex-wrap space-x-6 text-sm text-gray-400">
-              <Link to="/policies" className="hover:text-orange-500 transition-colors duration-200">
+              <Link to="/refund-policy" className="hover:text-orange-500 transition-colors duration-200">
                 Geri Qaytarma Siyasəti
               </Link>
-              <Link to="/policies" onClick={() => setTimeout(() => document.querySelector('[data-testid="policy-tab-privacy"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })), 100)} className="hover:text-orange-500 transition-colors duration-200">
+              <Link to="/privacy-policy" className="hover:text-orange-500 transition-colors duration-200">
                 Məxfilik Siyasəti
               </Link>
-              <Link to="/policies" onClick={() => setTimeout(() => document.querySelector('[data-testid="policy-tab-terms"]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })), 100)} className="hover:text-orange-500 transition-colors duration-200">
+              <Link to="/terms-conditions" className="hover:text-orange-500 transition-colors duration-200">
                 Şərtlər və Qaydalar
               </Link>
             </div>
