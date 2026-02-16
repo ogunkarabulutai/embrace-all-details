@@ -5,33 +5,33 @@ import { useLanguage } from '../contexts/LanguageContext';
 const reviews = [
   {
     id: 1,
-    name: 'Elif Kaya',
-    location: 'İstanbul',
+    name: 'Leyla Əliyeva',
+    location: 'Bakı',
     avatar: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
     rating: 5,
-    review: 'TourAgent ile yaptığım Antalya tatili mükemmeldi! Hem rezervasyon süreci çok kolay hem de önerilen otel beklentilerimin çok üstündeydi. Kesinlikle tekrar tercih edeceğim.',
+    review: 'TourAgent ilə etdiyim Antalya tətili əla idi! Həm rezervasiya prosesi çox asan oldu, həm də tövsiyə olunan otel gözləntilərimizi aşdı. Mütləq yenidən seçəcəyəm.',
     hotel: 'Maxx Royal Belek Golf Resort',
-    date: '2 hafta önce'
+    date: '2 həftə əvvəl'
   },
   {
     id: 2,
-    name: 'Ahmet Özdemir',
-    location: 'Ankara',
+    name: 'Əhməd Məmmədov',
+    location: 'Gəncə',
     avatar: 'https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
     rating: 5,
-    review: 'Ailecek gittiğimiz Bodrum tatilinde her detay mükemmeldi. Çocuklar çok eğlendi, biz de dinlendik. Fiyat-performans açısından harika bir tercih oldu.',
+    review: 'Ailəliklə getdiyimiz Bodrum tətilində hər detal mükəmməl idi. Uşaqlar çox əyləndi, biz də dincəldik. Qiymət-keyfiyyət baxımından əla seçim oldu.',
     hotel: 'Voyage Belek Golf & Spa',
-    date: '1 ay önce'
+    date: '1 ay əvvəl'
   },
   {
     id: 3,
-    name: 'Zeynep Acar',
-    location: 'İzmir',
+    name: 'Zeynəb Həsənova',
+    location: 'Sumqayıt',
     avatar: 'https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&crop=face',
     rating: 5,
-    review: 'Balayımızı planlarken çok endişeliydik ama TourAgent ekibi tüm süreçte bize destek oldu. Romantik ve unutulmaz bir tatil geçirdik. Teşekkürler!',
+    review: 'Bal ayımızı planlaşdırarkən çox narahat idik, amma TourAgent komandası bütün prosesdə bizə dəstək oldu. Romantik və unudulmaz bir tətil keçirdik. Təşəkkürlər!',
     hotel: 'Titanic Mardan Palace',
-    date: '3 hafta önce'
+    date: '3 həftə əvvəl'
   }
 ];
 
@@ -61,7 +61,7 @@ const Reviews: React.FC = () => {
             </div>
             <div className="text-left">
               <div className="text-2xl font-bold text-gray-900 dark:text-white">25,000+</div>
-              <div className="text-gray-600 dark:text-gray-400">Mutlu Müşteri Yorumu</div>
+              <div className="text-gray-600 dark:text-gray-400">Məmnun Müştəri Rəyi</div>
             </div>
           </div>
         </div>
@@ -73,24 +73,20 @@ const Reviews: React.FC = () => {
               className="group bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 hover:bg-white dark:hover:bg-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-transparent hover:border-orange-200 dark:hover:border-orange-800"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Quote Icon */}
               <div className="mb-4">
                 <Quote className="w-8 h-8 text-orange-500 opacity-60" />
               </div>
               
-              {/* Review Text */}
               <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                 "{review.review}"
               </p>
               
-              {/* Rating */}
               <div className="flex items-center space-x-1 mb-4">
                 {[...Array(review.rating)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
               
-              {/* User Info */}
               <div className="flex items-center space-x-4">
                 <img 
                   src={review.avatar}
@@ -107,7 +103,6 @@ const Reviews: React.FC = () => {
                 </div>
               </div>
               
-              {/* Hotel & Date */}
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   <div className="font-medium text-gray-900 dark:text-white mb-1">
@@ -124,19 +119,19 @@ const Reviews: React.FC = () => {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <div className="text-3xl font-bold text-orange-500 mb-2">99%</div>
-            <div className="text-gray-600 dark:text-gray-400 text-sm">Müşteri Memnuniyeti</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Müştəri Məmnuniyyəti</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-orange-500 mb-2">24/7</div>
-            <div className="text-gray-600 dark:text-gray-400 text-sm">Müşteri Desteği</div>
+            <div className="text-3xl font-bold text-orange-500 mb-2">7/24</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Müştəri Dəstəyi</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-orange-500 mb-2">500K+</div>
-            <div className="text-gray-600 dark:text-gray-400 text-sm">Başarılı Rezervasyon</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">Uğurlu Rezervasiya</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-orange-500 mb-2">15+</div>
-            <div className="text-gray-600 dark:text-gray-400 text-sm">Yıl Tecrübe</div>
+            <div className="text-3xl font-bold text-orange-500 mb-2">3+</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm">İllik Təcrübə</div>
           </div>
         </div>
       </div>
