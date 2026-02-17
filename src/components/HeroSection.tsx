@@ -541,7 +541,7 @@ const HeroSection: React.FC = () => {
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Çıxış Şəhəri / Departure Town</label>
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <input type="text" placeholder="Şəhər seçin" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium" />
+                      <input type="text" id="tour-depart-city" placeholder="Şəhər seçin" defaultValue="Bakı" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium" />
                     </div>
                     {/* State */}
                     <div className="relative" ref={tourCountryRef}>
@@ -571,7 +571,7 @@ const HeroSection: React.FC = () => {
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Aviaşirkət / Airlines</label>
                       <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                      <select id="tour-airline" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
                         <option value="">Hamısı</option>
                         {airlineData.map(a => <option key={a.name} value={a.name}>{a.name}</option>)}
                       </select>
@@ -580,7 +580,7 @@ const HeroSection: React.FC = () => {
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Qonaqlar / Guests</label>
                       <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                      <select id="tour-guests" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
                         {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} Qonaq</option>)}
                       </select>
                     </div>
@@ -592,19 +592,19 @@ const HeroSection: React.FC = () => {
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gediş / Departure From</label>
                       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <input type="date" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
+                      <input type="date" id="tour-depart-from" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
                     </div>
                     {/* Departure To */}
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gediş Son / Departure To</label>
                       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <input type="date" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
+                      <input type="date" id="tour-depart-to" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium cursor-pointer" />
                     </div>
                     {/* Nights From */}
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gecə (Min) / Nights From</label>
                       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                      <select id="tour-nights-min" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
                         {Array.from({length: 14}, (_, i) => i + 1).map(n => <option key={n} value={n}>{n} gecə</option>)}
                       </select>
                     </div>
@@ -612,13 +612,35 @@ const HeroSection: React.FC = () => {
                     <div className="relative">
                       <label className="absolute left-10 top-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wide z-10">Gecə (Max) / Nights To</label>
                       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                      <select className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
+                      <select id="tour-nights-max" defaultValue="14" className="w-full pl-10 pr-4 pt-7 pb-2 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-medium appearance-none">
                         {Array.from({length: 14}, (_, i) => i + 1).map(n => <option key={n} value={n}>{n} gecə</option>)}
                       </select>
                     </div>
                     {/* Search Button */}
                     <div>
-                      <button className="w-full py-4 bg-green-500 hover:bg-green-600 text-white rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center">
+                      <button
+                        onClick={() => {
+                          const countryLabel = tourCountryFilter || '';
+                          const airline = (document.getElementById('tour-airline') as HTMLSelectElement)?.value || '';
+                          const guests = (document.getElementById('tour-guests') as HTMLSelectElement)?.value || '2';
+                          const departFrom = (document.getElementById('tour-depart-from') as HTMLInputElement)?.value || '';
+                          const departTo = (document.getElementById('tour-depart-to') as HTMLInputElement)?.value || '';
+                          const nightsMin = (document.getElementById('tour-nights-min') as HTMLSelectElement)?.value || '1';
+                          const nightsMax = (document.getElementById('tour-nights-max') as HTMLSelectElement)?.value || '14';
+                          const departCity = (document.getElementById('tour-depart-city') as HTMLInputElement)?.value || '';
+                          const params = new URLSearchParams();
+                          if (countryLabel) params.set('country', countryLabel);
+                          if (airline) params.set('airline', airline);
+                          params.set('guests', guests);
+                          if (departFrom) params.set('departFrom', departFrom);
+                          if (departTo) params.set('departTo', departTo);
+                          params.set('nightsMin', nightsMin);
+                          params.set('nightsMax', nightsMax);
+                          if (departCity) params.set('departCity', departCity);
+                          navigate(`/tour-results?${params.toString()}`);
+                        }}
+                        className="w-full py-4 bg-green-500 hover:bg-green-600 text-white rounded-2xl font-bold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                      >
                         <span>Tur Axtar</span>
                         <ArrowRight className="w-5 h-5 ml-2" />
                       </button>
