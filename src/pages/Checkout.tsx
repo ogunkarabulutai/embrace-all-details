@@ -310,7 +310,7 @@ const Checkout: React.FC = () => {
                         value={passenger.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-                        placeholder="ornek@email.com"
+                        placeholder={t('checkout.emailPlaceholder')}
                         data-testid="input-email"
                       />
                     </div>
