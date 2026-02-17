@@ -427,7 +427,7 @@ const HotelSearchResults: React.FC = () => {
                             </p>
                           </div>
                           <button
-                            onClick={() => navigate('/checkout')}
+                            onClick={() => navigate('/checkout', { state: { hotel: { ...hotel, checkIn: searchCheckIn, checkOut: searchCheckOut, nights: searchNights, adults: searchAdults, children: searchChildren } } })}
                             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-lg">
                             Rezerv et
                           </button>
