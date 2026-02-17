@@ -187,6 +187,7 @@ const TourSearchResults: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [expandedFlightId, setExpandedFlightId] = useState<number | null>(null);
 
   const searchCountry = searchParams.get('country') || '';
   const searchDepartCity = searchParams.get('departCity') || '';
@@ -471,7 +472,16 @@ const TourSearchResults: React.FC = () => {
                                   <span className="text-gray-500 text-xs font-medium">
                                     {tour.departDate.slice(5).replace('-', '.')} {tour.arrivalTime}
                                   </span>
-                                  <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); setExpandedFlightId(expandedFlightId === tour.id ? null : tour.id); }}
+                                    className="ml-auto p-1 rounded hover:bg-gray-100 transition-colors"
+                                    title="Alternativ uçuşlar"
+                                  >
+                                    {expandedFlightId === tour.id
+                                      ? <ChevronUp className="w-4 h-4 text-gray-500" />
+                                      : <ChevronDown className="w-4 h-4 text-gray-500" />}
+                                  </button>
                                 </div>
                                 {/* Return flight */}
                                 <div className="flex items-center gap-2 text-sm text-gray-800">
@@ -486,9 +496,36 @@ const TourSearchResults: React.FC = () => {
                                   <span className="text-gray-500 text-xs font-medium">
                                     {tour.returnDate.slice(5).replace('-', '.')} {tour.returnArrivalTime}
                                   </span>
-                                  <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
                                 </div>
+
+                                {/* Alternative flights panel */}
+                                {expandedFlightId === tour.id && (
+                                  <div className="mt-3 border-t border-gray-100 pt-3 space-y-2">
+                                    <p className="text-xs font-semibold text-gray-500 mb-2">Alternativ uçuşlar</p>
+                                    {[
+                                      { no: tour.flightNo + 'A', dep: tour.departTime, arr: tour.arrivalTime, price: 0, label: 'Seçilmiş' },
+                                      { no: tour.flightNo.split(' ')[0] + ' ' + (parseInt(tour.flightNo.split(' ')[1] || '0') + 2), dep: '12:30', arr: tour.arrivalTime.split(':')[0] + ':' + (parseInt(tour.arrivalTime.split(':')[1] || '0') + 30).toString().padStart(2,'0') || '14:00', price: 50, label: '' },
+                                      { no: tour.flightNo.split(' ')[0] + ' ' + (parseInt(tour.flightNo.split(' ')[1] || '0') + 4), dep: '17:00', arr: '19:30', price: 80, label: '' },
+                                    ].map((alt, idx) => (
+                                      <div key={idx} className={`flex items-center gap-2 text-xs px-3 py-2 rounded-lg cursor-pointer transition-colors ${idx === 0 ? 'bg-orange-50 border border-orange-200' : 'bg-gray-50 hover:bg-orange-50 border border-transparent hover:border-orange-200'}`}>
+                                        <Plane className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
+                                        <span className="font-bold text-gray-700 w-16">{alt.no}</span>
+                                        <span className="font-bold text-gray-900">{tour.departCode}</span>
+                                        <span className="text-gray-500">{tour.departDate.slice(5).replace('-','.')} {alt.dep}</span>
+                                        <span className="text-gray-400">-</span>
+                                        <span className="font-bold text-gray-900">{tour.destCode}</span>
+                                        <span className="text-gray-500">{tour.departDate.slice(5).replace('-','.')} {alt.arr}</span>
+                                        <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                        {idx === 0
+                                          ? <span className="text-orange-600 font-semibold text-xs">✓ Seçilmiş</span>
+                                          : <span className="text-green-600 font-semibold text-xs">+{alt.price} AZN</span>}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
                               </div>
+
 
 
                               {/* Flight detail cards */}
