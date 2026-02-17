@@ -581,25 +581,26 @@ const TourSearchResults: React.FC = () => {
                                   <div className="flex items-center gap-2 mb-3">
                                     <Plane className="w-4 h-4 text-orange-500" />
                                     <span className="font-bold text-orange-500 text-sm">{tour.airline}</span>
-                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                    <span className="text-gray-500 text-xs font-semibold">{tour.flightNo}</span>
+                                    <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
                                   </div>
                                   <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-gray-900 text-sm">{tour.departCity.slice(0, 3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.departCode}</span>
                                     <div className="flex-1 flex items-center gap-1">
                                       <div className="flex-1 h-px bg-gray-300" />
                                       <Plane className="w-4 h-4 text-orange-400" />
                                       <div className="flex-1 h-px bg-gray-300" />
                                     </div>
-                                    <span className="font-bold text-gray-900 text-sm">{tour.city.slice(0, 3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.destCode}</span>
                                   </div>
                                   <div className="flex justify-between text-xs text-gray-500 mb-3">
                                     <div>
                                       <div className="font-medium text-gray-700">{tour.departCity}</div>
-                                      <div>{formatDate(tour.departDate)}</div>
+                                      <div>{tour.departDate.slice(5).replace('-', '.')} <span className="font-bold text-gray-800">{tour.departTime}</span></div>
                                     </div>
                                     <div className="text-right">
                                       <div className="font-medium text-gray-700">{tour.city}</div>
-                                      <div>{formatDate(tour.departDate)}</div>
+                                      <div>{tour.departDate.slice(5).replace('-', '.')} <span className="font-bold text-gray-800">{tour.arrivalTime}</span></div>
                                     </div>
                                   </div>
                                   <div className="border border-gray-200 rounded px-3 py-1.5 flex items-center justify-between text-xs text-gray-600">
@@ -613,25 +614,26 @@ const TourSearchResults: React.FC = () => {
                                   <div className="flex items-center gap-2 mb-3">
                                     <Plane className="w-4 h-4 text-orange-500" />
                                     <span className="font-bold text-orange-500 text-sm">{tour.airline}</span>
-                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                    <span className="text-gray-500 text-xs font-semibold">{tour.returnFlightNo}</span>
+                                    <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
                                   </div>
                                   <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-gray-900 text-sm">{tour.city.slice(0, 3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.destCode}</span>
                                     <div className="flex-1 flex items-center gap-1">
                                       <div className="flex-1 h-px bg-gray-300" />
                                       <Plane className="w-4 h-4 text-orange-400" />
                                       <div className="flex-1 h-px bg-gray-300" />
                                     </div>
-                                    <span className="font-bold text-gray-900 text-sm">{tour.departCity.slice(0, 3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.departCode}</span>
                                   </div>
                                   <div className="flex justify-between text-xs text-gray-500 mb-3">
                                     <div>
                                       <div className="font-medium text-gray-700">{tour.city}</div>
-                                      <div>{formatDate(tour.returnDate)}</div>
+                                      <div>{tour.returnDate.slice(5).replace('-', '.')} <span className="font-bold text-gray-800">{tour.returnDepartTime}</span></div>
                                     </div>
                                     <div className="text-right">
                                       <div className="font-medium text-gray-700">{tour.departCity}</div>
-                                      <div>{formatDate(tour.returnDate)}</div>
+                                      <div>{tour.returnDate.slice(5).replace('-', '.')} <span className="font-bold text-gray-800">{tour.returnArrivalTime}</span></div>
                                     </div>
                                   </div>
                                   <div className="border border-gray-200 rounded px-3 py-1.5 flex items-center justify-between text-xs text-gray-600">
@@ -639,6 +641,7 @@ const TourSearchResults: React.FC = () => {
                                     <ChevronDown className="w-3 h-3" />
                                   </div>
                                 </div>
+
                               </div>
 
                               {/* Transfer & Insurance */}
