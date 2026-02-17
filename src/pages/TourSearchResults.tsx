@@ -427,87 +427,67 @@ const TourSearchResults: React.FC = () => {
 
                               {/* Flight detail cards */}
                               <div className="grid grid-cols-2 gap-3 mb-3">
-                                {/* Outbound flight card */}
-                                <div className="bg-[#eef0f5] rounded-xl p-4">
-                                  {/* Card header */}
-                                  <div className="flex items-center gap-2 mb-4">
+                                {/* Outbound */}
+                                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                                  <div className="flex items-center gap-2 mb-3">
                                     <Plane className="w-4 h-4 text-orange-500" />
-                                    <span className="font-bold text-orange-500 text-sm">{tour.airline.slice(0,2).toUpperCase()}{tour.id}OUT</span>
-                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold tracking-wide">ECONOMY</span>
+                                    <span className="font-bold text-orange-500 text-sm">{tour.airline}</span>
+                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
                                   </div>
-                                  {/* Route */}
                                   <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-extrabold text-gray-900 text-base">{tour.departCity.slice(0,3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.departCity.slice(0, 3).toUpperCase()}</span>
                                     <div className="flex-1 flex items-center gap-1">
                                       <div className="flex-1 h-px bg-gray-300" />
-                                      <Plane className="w-5 h-5 text-orange-400" />
+                                      <Plane className="w-4 h-4 text-orange-400" />
                                       <div className="flex-1 h-px bg-gray-300" />
                                     </div>
-                                    <span className="font-extrabold text-gray-900 text-base">{tour.city.slice(0,3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.city.slice(0, 3).toUpperCase()}</span>
                                   </div>
-                                  {/* City names + dates */}
-                                  <div className="flex justify-between text-xs text-gray-500 mb-4">
+                                  <div className="flex justify-between text-xs text-gray-500 mb-3">
                                     <div>
-                                      <div className="font-medium text-gray-700 text-sm">{tour.departCity}</div>
-                                      <div>{formatDate(tour.departDate)}, 09:05</div>
+                                      <div className="font-medium text-gray-700">{tour.departCity}</div>
+                                      <div>{formatDate(tour.departDate)}</div>
                                     </div>
                                     <div className="text-right">
-                                      <div className="font-medium text-gray-700 text-sm">{tour.city}</div>
-                                      <div>{formatDate(tour.departDate)}, 13:00</div>
+                                      <div className="font-medium text-gray-700">{tour.city}</div>
+                                      <div>{formatDate(tour.departDate)}</div>
                                     </div>
                                   </div>
-                                  {/* Baggage rows */}
-                                  <div className="space-y-2">
-                                    <div className="bg-white rounded-lg px-3 py-2 flex items-center justify-between text-sm text-gray-600 border border-gray-200">
-                                      <span>1PC 0.00 AZN</span>
-                                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                                    </div>
-                                    <div className="bg-white rounded-lg px-3 py-2 flex items-center justify-between text-sm text-gray-600 border border-gray-200">
-                                      <span>1PC 0.00 AZN</span>
-                                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                                    </div>
+                                  <div className="border border-gray-200 rounded px-3 py-1.5 flex items-center justify-between text-xs text-gray-600">
+                                    <span>1PC 0.00 AZN</span>
+                                    <ChevronDown className="w-3 h-3" />
                                   </div>
                                 </div>
 
-                                {/* Return flight card */}
-                                <div className="bg-[#eef0f5] rounded-xl p-4">
-                                  {/* Card header */}
-                                  <div className="flex items-center gap-2 mb-4">
+                                {/* Return */}
+                                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                                  <div className="flex items-center gap-2 mb-3">
                                     <Plane className="w-4 h-4 text-orange-500" />
-                                    <span className="font-bold text-orange-500 text-sm">{tour.airline.slice(0,2).toUpperCase()}{tour.id}RET</span>
-                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold tracking-wide">ECONOMY</span>
+                                    <span className="font-bold text-orange-500 text-sm">{tour.airline}</span>
+                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
                                   </div>
-                                  {/* Route */}
                                   <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-extrabold text-gray-900 text-base">{tour.city.slice(0,3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.city.slice(0, 3).toUpperCase()}</span>
                                     <div className="flex-1 flex items-center gap-1">
                                       <div className="flex-1 h-px bg-gray-300" />
-                                      <Plane className="w-5 h-5 text-orange-400" />
+                                      <Plane className="w-4 h-4 text-orange-400" />
                                       <div className="flex-1 h-px bg-gray-300" />
                                     </div>
-                                    <span className="font-extrabold text-gray-900 text-base">{tour.departCity.slice(0,3).toUpperCase()}</span>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.departCity.slice(0, 3).toUpperCase()}</span>
                                   </div>
-                                  {/* City names + dates */}
-                                  <div className="flex justify-between text-xs text-gray-500 mb-4">
+                                  <div className="flex justify-between text-xs text-gray-500 mb-3">
                                     <div>
-                                      <div className="font-medium text-gray-700 text-sm">{tour.city}</div>
-                                      <div>{formatDate(tour.returnDate)}, 14:00</div>
+                                      <div className="font-medium text-gray-700">{tour.city}</div>
+                                      <div>{formatDate(tour.returnDate)}</div>
                                     </div>
                                     <div className="text-right">
-                                      <div className="font-medium text-gray-700 text-sm">{tour.departCity}</div>
-                                      <div>{formatDate(tour.returnDate)}, 19:15</div>
+                                      <div className="font-medium text-gray-700">{tour.departCity}</div>
+                                      <div>{formatDate(tour.returnDate)}</div>
                                     </div>
                                   </div>
-                                  {/* Baggage rows */}
-                                  <div className="space-y-2">
-                                    <div className="bg-white rounded-lg px-3 py-2 flex items-center justify-between text-sm text-gray-600 border border-gray-200">
-                                      <span>1PC 0.00 AZN</span>
-                                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                                    </div>
-                                    <div className="bg-white rounded-lg px-3 py-2 flex items-center justify-between text-sm text-gray-600 border border-gray-200">
-                                      <span>1PC 0.00 AZN</span>
-                                      <ChevronDown className="w-4 h-4 text-gray-400" />
-                                    </div>
+                                  <div className="border border-gray-200 rounded px-3 py-1.5 flex items-center justify-between text-xs text-gray-600">
+                                    <span>1PC 0.00 AZN</span>
+                                    <ChevronDown className="w-3 h-3" />
                                   </div>
                                 </div>
                               </div>
