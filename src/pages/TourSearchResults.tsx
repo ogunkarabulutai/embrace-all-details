@@ -367,48 +367,159 @@ const TourSearchResults: React.FC = () => {
 
                         {/* Expanded Detail Panel */}
                         {isExpanded && (
-                          <div className="hidden md:block bg-gray-50 border-t border-gray-200">
-                            <div className="max-w-3xl mx-auto py-6 px-8">
-                              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                                <h4 className="text-orange-600 font-semibold text-sm mb-4">Details</h4>
-                                <h3 className="text-lg font-bold text-gray-900 mb-3">{tour.name} ({tour.airline})</h3>
-                                <div className="flex items-center gap-2 mb-2">
-                                  <Home className="w-4 h-4 text-gray-400" />
-                                  <span className="font-semibold text-gray-800">{tour.hotel}</span>
-                                  <div className="flex items-center gap-0.5">
-                                    {Array.from({ length: tour.hotelStars }).map((_, i) => (
-                                      <Star key={i} className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
-                                    ))}
+                          <div className="hidden md:block bg-[#f0f2f5] border-t border-gray-200">
+                            <div className="max-w-3xl mx-auto py-5 px-6">
+
+                              {/* Header */}
+                              <div className="flex items-center justify-between mb-3">
+                                <span className="text-orange-500 font-semibold text-sm">Detallar</span>
+                                <button onClick={(e) => { e.stopPropagation(); setExpandedId(null); }} className="text-gray-400 hover:text-gray-600 text-lg leading-none">✕</button>
+                              </div>
+
+                              {/* Hotel block */}
+                              <div className="bg-[#e8eaed] rounded-lg px-4 py-3 mb-3">
+                                <div className="flex items-center gap-2 mb-0.5">
+                                  <span className="font-bold text-gray-900 text-base">{tour.hotel}</span>
+                                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold">{tour.hotelStars}</span>
+                                </div>
+                                <div className="text-sm text-gray-500">{tour.country}, {tour.city}</div>
+                              </div>
+
+                              {/* Info rows */}
+                              <div className="bg-white rounded-lg px-4 py-3 mb-3 space-y-2">
+                                <div className="flex items-center gap-2 text-sm text-gray-700">
+                                  <Calendar className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                                  <span>{formatDate(tour.departDate)} — {formatDate(tour.returnDate)} ({tour.nights} Gecə)</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-700">
+                                  <Home className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                                  <span>{tour.details}</span>
+                                </div>
+                                <div className="flex items-center gap-4 text-sm text-gray-700">
+                                  <div className="flex items-center gap-2">
+                                    <Utensils className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                                    <span>{tour.meals.split(' ').map(w => w[0]).join('')}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <Users className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                                    <span>{tour.capacity}</span>
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                                  <MapPin className="w-4 h-4" /> {tour.country} - {tour.city}
+                              </div>
+
+                              {/* Flight summary row */}
+                              <div className="bg-white rounded-lg px-4 py-2.5 mb-3">
+                                <div className="flex items-center gap-2 text-sm text-gray-800 mb-1.5">
+                                  <Plane className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                                  <span className="font-semibold">{tour.airline}</span>
+                                  <span className="text-gray-400 text-xs">{tour.departCity} → {tour.city}</span>
+                                  <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  <ChevronDown className="w-4 h-4 text-gray-400" />
                                 </div>
-                                <div className="flex items-center gap-6 text-sm text-gray-700 mb-2">
-                                  <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-gray-400" /><span>{formatDate(tour.departDate)} — {formatDate(tour.returnDate)} ({tour.nights} days)</span></div>
-                                  <div className="flex items-center gap-2"><Home className="w-4 h-4 text-gray-400" /><span>{tour.details}</span></div>
+                                <div className="flex items-center gap-2 text-sm text-gray-800">
+                                  <Plane className="w-4 h-4 text-gray-500 flex-shrink-0 rotate-180" />
+                                  <span className="font-semibold">{tour.airline}</span>
+                                  <span className="text-gray-400 text-xs">{tour.city} → {tour.departCity}</span>
+                                  <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  <ChevronDown className="w-4 h-4 text-gray-400" />
                                 </div>
-                                <div className="flex items-center gap-6 text-sm text-gray-700 mb-5">
-                                  <div className="flex items-center gap-2"><Utensils className="w-4 h-4 text-gray-400" /><span>{tour.meals}</span></div>
-                                  <div className="flex items-center gap-2"><Plane className="w-4 h-4 text-gray-400" /><span>{tour.airline}</span></div>
-                                  <span className="text-gray-400">From: {tour.departCity}</span>
-                                </div>
-                                <div className="border-t border-gray-100 pt-4">
-                                  <div className="flex items-center justify-between mb-4">
-                                    <div className="text-sm text-gray-500">
-                                      Amount to Pay: <span className="font-bold text-gray-900">{tour.price * searchGuests} AZN</span>
-                                      <span className="ml-4 text-orange-600 font-semibold">Total: {tour.price * searchGuests} AZN</span>
+                              </div>
+
+                              {/* Flight detail cards */}
+                              <div className="grid grid-cols-2 gap-3 mb-3">
+                                {/* Outbound */}
+                                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <Plane className="w-4 h-4 text-orange-500" />
+                                    <span className="font-bold text-orange-500 text-sm">{tour.airline}</span>
+                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-bold text-gray-900 text-sm">{tour.departCity.slice(0, 3).toUpperCase()}</span>
+                                    <div className="flex-1 flex items-center gap-1">
+                                      <div className="flex-1 h-px bg-gray-300" />
+                                      <Plane className="w-4 h-4 text-orange-400" />
+                                      <div className="flex-1 h-px bg-gray-300" />
+                                    </div>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.city.slice(0, 3).toUpperCase()}</span>
+                                  </div>
+                                  <div className="flex justify-between text-xs text-gray-500 mb-3">
+                                    <div>
+                                      <div className="font-medium text-gray-700">{tour.departCity}</div>
+                                      <div>{formatDate(tour.departDate)}</div>
+                                    </div>
+                                    <div className="text-right">
+                                      <div className="font-medium text-gray-700">{tour.city}</div>
+                                      <div>{formatDate(tour.departDate)}</div>
                                     </div>
                                   </div>
-                                  <div className="flex justify-center">
-                                    <button
-                                      onClick={(e) => { e.stopPropagation(); navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } }); }}
-                                      className="inline-flex items-center gap-2 px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-sm transition-colors shadow-sm"
-                                    >
-                                      <ShoppingCart className="w-4 h-4" /> {tour.price * searchGuests} AZN
-                                    </button>
+                                  <div className="border border-gray-200 rounded px-3 py-1.5 flex items-center justify-between text-xs text-gray-600">
+                                    <span>1PC 0.00 AZN</span>
+                                    <ChevronDown className="w-3 h-3" />
                                   </div>
                                 </div>
+
+                                {/* Return */}
+                                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <Plane className="w-4 h-4 text-orange-500" />
+                                    <span className="font-bold text-orange-500 text-sm">{tour.airline}</span>
+                                    <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-bold text-gray-900 text-sm">{tour.city.slice(0, 3).toUpperCase()}</span>
+                                    <div className="flex-1 flex items-center gap-1">
+                                      <div className="flex-1 h-px bg-gray-300" />
+                                      <Plane className="w-4 h-4 text-orange-400" />
+                                      <div className="flex-1 h-px bg-gray-300" />
+                                    </div>
+                                    <span className="font-bold text-gray-900 text-sm">{tour.departCity.slice(0, 3).toUpperCase()}</span>
+                                  </div>
+                                  <div className="flex justify-between text-xs text-gray-500 mb-3">
+                                    <div>
+                                      <div className="font-medium text-gray-700">{tour.city}</div>
+                                      <div>{formatDate(tour.returnDate)}</div>
+                                    </div>
+                                    <div className="text-right">
+                                      <div className="font-medium text-gray-700">{tour.departCity}</div>
+                                      <div>{formatDate(tour.returnDate)}</div>
+                                    </div>
+                                  </div>
+                                  <div className="border border-gray-200 rounded px-3 py-1.5 flex items-center justify-between text-xs text-gray-600">
+                                    <span>1PC 0.00 AZN</span>
+                                    <ChevronDown className="w-3 h-3" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Transfer & Insurance */}
+                              <div className="bg-white rounded-lg px-4 py-3 mb-3 space-y-2">
+                                <div className="flex items-center gap-2 text-sm text-gray-700">
+                                  <span className="text-orange-500">🚗</span>
+                                  <span>Transfer: <span className="font-semibold">Qrup</span> Hava limanı - Otel - Hava limanı</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-400">
+                                  <span>☑️</span>
+                                  <span>Tibbi Sığorta {formatDate(tour.departDate)} - {formatDate(tour.returnDate)}</span>
+                                </div>
+                              </div>
+
+                              <div className="border-t border-gray-200 pt-3 mb-4 flex items-center justify-between">
+                                <span className="text-sm font-semibold text-gray-700">{tour.airline}</span>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-bold text-orange-500">Cəmi: {tour.price * searchGuests} AZN</span>
+                                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                                </div>
+                              </div>
+
+                              {/* Book button */}
+                              <div className="flex justify-center">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } }); }}
+                                  className="inline-flex items-center gap-2 px-10 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-sm transition-colors shadow-sm"
+                                >
+                                  <ShoppingCart className="w-4 h-4" /> {tour.price * searchGuests} AZN
+                                </button>
                               </div>
                             </div>
                           </div>
