@@ -26,6 +26,14 @@ interface TourResult {
   rooms: number;
   capacity: string;
   details: string;
+  flightNo: string;
+  returnFlightNo: string;
+  departCode: string;
+  destCode: string;
+  departTime: string;
+  arrivalTime: string;
+  returnDepartTime: string;
+  returnArrivalTime: string;
 }
 
 const allTours: TourResult[] = [
@@ -36,7 +44,11 @@ const allTours: TourResult[] = [
     airline: 'AZAL', departCity: 'Bakı', price: 1250, originalPrice: 1600,
     reviewScore: 9.4, reviewCount: 2847, reviewLabel: 'Əla', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta'],
-    rooms: 1, capacity: '2 Böyük', details: 'Dəniz mənzərəli, balkonlu'
+    rooms: 1, capacity: '2 Böyük', details: 'Dəniz mənzərəli, balkonlu',
+    flightNo: 'J2 101', returnFlightNo: 'J2 102',
+    departCode: 'GYD', destCode: 'AYT',
+    departTime: '08:00', arrivalTime: '09:30',
+    returnDepartTime: '11:00', returnArrivalTime: '13:00'
   },
   {
     id: 2, name: 'İstanbul Mədəniyyət Turu', country: 'Türkiyə', city: 'İstanbul', hotel: 'Four Seasons Bosphorus',
@@ -45,7 +57,11 @@ const allTours: TourResult[] = [
     airline: 'Turkish Airlines', departCity: 'Bakı', price: 890, originalPrice: 1150,
     reviewScore: 9.6, reviewCount: 1245, reviewLabel: 'Əla', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi'],
-    rooms: 1, capacity: '2 Böyük', details: 'Boğaz mənzərəli, SPA daxil'
+    rooms: 1, capacity: '2 Böyük', details: 'Boğaz mənzərəli, SPA daxil',
+    flightNo: 'TK 394', returnFlightNo: 'TK 395',
+    departCode: 'GYD', destCode: 'IST',
+    departTime: '07:30', arrivalTime: '09:15',
+    returnDepartTime: '10:00', returnArrivalTime: '13:45'
   },
   {
     id: 3, name: 'Dubai Lüks Turu', country: 'BƏƏ', city: 'Dubai', hotel: 'Atlantis The Palm',
@@ -54,7 +70,11 @@ const allTours: TourResult[] = [
     airline: 'Emirates', departCity: 'Bakı', price: 1680, originalPrice: 2100,
     reviewScore: 9.1, reviewCount: 5678, reviewLabel: 'Əla', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Ekskursiya'],
-    rooms: 1, capacity: '2 Böyük + 1 Uşaq', details: 'Su parkı daxil, premium otaq'
+    rooms: 1, capacity: '2 Böyük + 1 Uşaq', details: 'Su parkı daxil, premium otaq',
+    flightNo: 'EK 135', returnFlightNo: 'EK 136',
+    departCode: 'GYD', destCode: 'DXB',
+    departTime: '09:00', arrivalTime: '12:30',
+    returnDepartTime: '14:00', returnArrivalTime: '18:00'
   },
   {
     id: 4, name: 'Misir Piramidalar Turu', country: 'Misir', city: 'Qahirə', hotel: 'Marriott Mena House',
@@ -63,7 +83,11 @@ const allTours: TourResult[] = [
     airline: 'AZAL', departCity: 'Bakı', price: 1420, originalPrice: 1800,
     reviewScore: 8.8, reviewCount: 1432, reviewLabel: 'Çox yaxşı', freeCancellation: false,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi', 'Ekskursiya'],
-    rooms: 1, capacity: '2 Böyük', details: 'Piramida mənzərəli, bələdçi daxil'
+    rooms: 1, capacity: '2 Böyük', details: 'Piramida mənzərəli, bələdçi daxil',
+    flightNo: 'J2 543', returnFlightNo: 'J2 544',
+    departCode: 'GYD', destCode: 'CAI',
+    departTime: '06:45', arrivalTime: '09:00',
+    returnDepartTime: '11:30', returnArrivalTime: '16:15'
   },
   {
     id: 5, name: 'Bodrum Sahil Turu', country: 'Türkiyə', city: 'Bodrum', hotel: 'Mandarin Oriental Bodrum',
@@ -72,7 +96,11 @@ const allTours: TourResult[] = [
     airline: 'Pegasus', departCity: 'Bakı', price: 1350, originalPrice: 1750,
     reviewScore: 9.3, reviewCount: 756, reviewLabel: 'Əla', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta'],
-    rooms: 1, capacity: '2 Böyük', details: 'Özəl çimərlik, villa tipli'
+    rooms: 1, capacity: '2 Böyük', details: 'Özəl çimərlik, villa tipli',
+    flightNo: 'PC 702', returnFlightNo: 'PC 703',
+    departCode: 'GYD', destCode: 'BJV',
+    departTime: '10:20', arrivalTime: '12:05',
+    returnDepartTime: '13:00', returnArrivalTime: '17:45'
   },
   {
     id: 6, name: 'Gürcüstan Doğa Turu', country: 'Gürcüstan', city: 'Tbilisi', hotel: 'Rooms Hotel Tbilisi',
@@ -81,7 +109,11 @@ const allTours: TourResult[] = [
     airline: 'Buta Airways', departCity: 'Bakı', price: 520, originalPrice: 680,
     reviewScore: 8.9, reviewCount: 876, reviewLabel: 'Çox yaxşı', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi'],
-    rooms: 1, capacity: '2 Böyük', details: 'Şəhər mərkəzi, səhər yeməyi daxil'
+    rooms: 1, capacity: '2 Böyük', details: 'Şəhər mərkəzi, səhər yeməyi daxil',
+    flightNo: 'UA 211', returnFlightNo: 'UA 212',
+    departCode: 'GYD', destCode: 'TBS',
+    departTime: '09:50', arrivalTime: '10:40',
+    returnDepartTime: '11:30', returnArrivalTime: '13:20'
   },
   {
     id: 7, name: 'Belek Golf & Spa', country: 'Türkiyə', city: 'Antalya', hotel: 'Voyage Belek Golf & Spa',
@@ -90,7 +122,11 @@ const allTours: TourResult[] = [
     airline: 'AZAL', departCity: 'Bakı', price: 1780, originalPrice: 2300,
     reviewScore: 8.8, reviewCount: 2103, reviewLabel: 'Çox yaxşı', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Spa'],
-    rooms: 2, capacity: '4 Böyük + 2 Uşaq', details: 'Golf sahəsi, SPA mərkəzi daxil'
+    rooms: 2, capacity: '4 Böyük + 2 Uşaq', details: 'Golf sahəsi, SPA mərkəzi daxil',
+    flightNo: 'J2 303', returnFlightNo: 'J2 304',
+    departCode: 'GYD', destCode: 'AYT',
+    departTime: '07:00', arrivalTime: '08:30',
+    returnDepartTime: '10:00', returnArrivalTime: '14:00'
   },
   {
     id: 8, name: 'Tayland Egzotik Turu', country: 'Tayland', city: 'Phuket', hotel: 'Banyan Tree Phuket',
@@ -99,7 +135,11 @@ const allTours: TourResult[] = [
     airline: 'Qatar Airways', departCity: 'Bakı', price: 2450, originalPrice: 3100,
     reviewScore: 9.2, reviewCount: 543, reviewLabel: 'Əla', freeCancellation: false,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Ekskursiya'],
-    rooms: 1, capacity: '2 Böyük', details: 'Villa tipli, hovuz daxil'
+    rooms: 1, capacity: '2 Böyük', details: 'Villa tipli, hovuz daxil',
+    flightNo: 'QR 447', returnFlightNo: 'QR 448',
+    departCode: 'GYD', destCode: 'HKT',
+    departTime: '03:30', arrivalTime: '14:00',
+    returnDepartTime: '16:00', returnArrivalTime: '23:45'
   },
   {
     id: 9, name: 'Lara Premium Tur', country: 'Türkiyə', city: 'Antalya', hotel: 'Titanic Mardan Palace',
@@ -108,7 +148,11 @@ const allTours: TourResult[] = [
     airline: 'Turkish Airlines', departCity: 'Bakı', price: 1550, originalPrice: 2000,
     reviewScore: 9.1, reviewCount: 3421, reviewLabel: 'Əla', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta'],
-    rooms: 1, capacity: '2 Böyük + 1 Uşaq', details: 'Premium otaq, dəniz mənzərəsi'
+    rooms: 1, capacity: '2 Böyük + 1 Uşaq', details: 'Premium otaq, dəniz mənzərəsi',
+    flightNo: 'TK 792', returnFlightNo: 'TK 793',
+    departCode: 'GYD', destCode: 'AYT',
+    departTime: '06:30', arrivalTime: '08:00',
+    returnDepartTime: '09:30', returnArrivalTime: '13:00'
   },
   {
     id: 10, name: 'Maldiv Balayı Turu', country: 'Maldiv', city: 'Malé', hotel: 'Soneva Fushi Resort',
@@ -117,9 +161,14 @@ const allTours: TourResult[] = [
     airline: 'Emirates', departCity: 'Bakı', price: 3200, originalPrice: 4000,
     reviewScore: 9.7, reviewCount: 321, reviewLabel: 'Əla', freeCancellation: true,
     includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Spa', 'Ekskursiya'],
-    rooms: 1, capacity: '2 Böyük', details: 'Su üstü villa, tam təchiz olunmuş'
+    rooms: 1, capacity: '2 Böyük', details: 'Su üstü villa, tam təchiz olunmuş',
+    flightNo: 'EK 613', returnFlightNo: 'EK 614',
+    departCode: 'GYD', destCode: 'MLE',
+    departTime: '05:00', arrivalTime: '15:30',
+    returnDepartTime: '17:00', returnArrivalTime: '23:59'
   },
 ];
+
 
 const FilterSection: React.FC<{ title: string; icon: React.ReactNode; children: React.ReactNode; defaultOpen?: boolean }> = ({ title, icon, children, defaultOpen = true }) => {
   const [open, setOpen] = useState(defaultOpen);
@@ -409,21 +458,38 @@ const TourSearchResults: React.FC = () => {
 
                               {/* Flight summary row */}
                               <div className="bg-white rounded-lg px-4 py-2.5 mb-3">
+                                {/* Outbound flight */}
                                 <div className="flex items-center gap-2 text-sm text-gray-800 mb-1.5">
-                                  <Plane className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                                  <span className="font-semibold">{tour.airline}</span>
-                                  <span className="text-gray-400 text-xs">{tour.departCity} → {tour.city}</span>
+                                  <Plane className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                                  <span className="font-bold text-gray-700">{tour.flightNo}</span>
+                                  <span className="font-bold text-gray-900">{tour.departCode}</span>
+                                  <span className="text-gray-500 text-xs font-medium">
+                                    {tour.departDate.slice(5).replace('-', '.')} {tour.departTime}
+                                  </span>
+                                  <span className="text-gray-400">-</span>
+                                  <span className="font-bold text-gray-900">{tour.destCode}</span>
+                                  <span className="text-gray-500 text-xs font-medium">
+                                    {tour.departDate.slice(5).replace('-', '.')} {tour.arrivalTime}
+                                  </span>
                                   <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
-                                  <ChevronDown className="w-4 h-4 text-gray-400" />
                                 </div>
+                                {/* Return flight */}
                                 <div className="flex items-center gap-2 text-sm text-gray-800">
-                                  <Plane className="w-4 h-4 text-gray-500 flex-shrink-0 rotate-180" />
-                                  <span className="font-semibold">{tour.airline}</span>
-                                  <span className="text-gray-400 text-xs">{tour.city} → {tour.departCity}</span>
+                                  <Plane className="w-4 h-4 text-orange-400 flex-shrink-0 rotate-180" />
+                                  <span className="font-bold text-gray-700">{tour.returnFlightNo}</span>
+                                  <span className="font-bold text-gray-900">{tour.destCode}</span>
+                                  <span className="text-gray-500 text-xs font-medium">
+                                    {tour.returnDate.slice(5).replace('-', '.')} {tour.returnDepartTime}
+                                  </span>
+                                  <span className="text-gray-400">-</span>
+                                  <span className="font-bold text-gray-900">{tour.departCode}</span>
+                                  <span className="text-gray-500 text-xs font-medium">
+                                    {tour.returnDate.slice(5).replace('-', '.')} {tour.returnArrivalTime}
+                                  </span>
                                   <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
-                                  <ChevronDown className="w-4 h-4 text-gray-400" />
                                 </div>
                               </div>
+
 
                               {/* Flight detail cards */}
                               <div className="grid grid-cols-2 gap-3 mb-3">
