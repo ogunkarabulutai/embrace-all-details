@@ -319,7 +319,7 @@ const HeroSection: React.FC = () => {
   const [returnDepartTimeRange, setReturnDepartTimeRange] = useState<[number, number]>([0, 1439]);
   const [returnArriveTimeRange, setReturnArriveTimeRange] = useState<[number, number]>([0, 1439]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
-  const [stopsFilter, setStopsFilter] = useState<'all' | 'oneStop'>('all');
+  const [stopsFilter, setStopsFilter] = useState<'all' | 'direct' | 'oneStop'>('all');
 
   // Tour country searchable dropdown state
   const [tourCountry, setTourCountry] = useState('');
@@ -426,6 +426,7 @@ const HeroSection: React.FC = () => {
   const filteredByTime = searchResults.filter((r) => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
+    if (stopsFilter === 'direct' && r.stops !== 0) return false;
     if (stopsFilter === 'oneStop' && r.stops !== 1) return false;
     return dep >= departTimeRange[0] && dep <= departTimeRange[1] &&
            arr >= arriveTimeRange[0] && arr <= arriveTimeRange[1] &&
@@ -435,6 +436,7 @@ const HeroSection: React.FC = () => {
   const filteredReturnFlights = searchResults.filter((r) => {
     const dep = timeToMinutes(r.departTime);
     const arr = timeToMinutes(r.arriveTime);
+    if (stopsFilter === 'direct' && r.stops !== 0) return false;
     if (stopsFilter === 'oneStop' && r.stops !== 1) return false;
     return dep >= returnDepartTimeRange[0] && dep <= returnDepartTimeRange[1] &&
            arr >= returnArriveTimeRange[0] && arr <= returnArriveTimeRange[1] &&
@@ -948,6 +950,10 @@ const HeroSection: React.FC = () => {
                         <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
                           <input type="radio" name="stopsFilter" checked={stopsFilter === 'all'} onChange={() => setStopsFilter('all')} className="text-blue-600 border-gray-300" />
                           <span>{t('filter.allFlights')}</span>
+                        </label>
+                        <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
+                          <input type="radio" name="stopsFilter" checked={stopsFilter === 'direct'} onChange={() => setStopsFilter('direct')} className="text-blue-600 border-gray-300" />
+                          <span>{t('filter.directFlight')}</span>
                         </label>
                         <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
                           <input type="radio" name="stopsFilter" checked={stopsFilter === 'oneStop'} onChange={() => setStopsFilter('oneStop')} className="text-blue-600 border-gray-300" />
