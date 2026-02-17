@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Star, MapPin, Utensils, ChevronDown, ChevronUp, ArrowLeft, Plane, Calendar, Clock, Users, Shield, Sun } from 'lucide-react';
+import { Star, MapPin, Utensils, ChevronDown, ChevronUp, ArrowLeft, Plane, Calendar, Clock, Users, Shield, Sun, Home, ShoppingCart } from 'lucide-react';
 
 interface TourResult {
   id: number;
@@ -137,6 +137,7 @@ const FilterSection: React.FC<{ title: string; icon: React.ReactNode; children: 
 const TourSearchResults: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const searchCountry = searchParams.get('country') || '';
   const searchDepartCity = searchParams.get('departCity') || '';
@@ -199,7 +200,7 @@ const TourSearchResults: React.FC = () => {
 
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr);
-    return d.toLocaleDateString('az-AZ', { day: 'numeric', month: 'short' });
+    return d.toLocaleDateString('az-AZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
   return (
@@ -315,139 +316,154 @@ const TourSearchResults: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div>
                 {/* Table Header */}
-                <div className="hidden md:grid grid-cols-[140px_120px_1fr_1fr_140px_140px_100px] gap-3 px-4 py-2 bg-gray-100 rounded-xl text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                  <span>Check-in tarixi</span>
-                  <span>Aviaşirkət</span>
-                  <span>Otel adı</span>
-                  <span>Detallar</span>
-                  <span>Otaq & tutum</span>
-                  <span>Qiymət</span>
-                  <span></span>
+                <div className="hidden md:grid grid-cols-[130px_110px_1fr_80px_180px_110px] gap-2 px-5 py-3 bg-gray-100 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <span className="flex items-center gap-1">Check-in date <ChevronDown className="w-3 h-3" /></span>
+                  <span className="flex items-center gap-1">Airline <ChevronDown className="w-3 h-3" /></span>
+                  <span className="flex items-center gap-1">Hotel name <ChevronDown className="w-3 h-3" /></span>
+                  <span className="flex items-center gap-1">Details <ChevronDown className="w-3 h-3" /></span>
+                  <span className="flex items-center gap-1">Rooms & capacity <ChevronDown className="w-3 h-3" /></span>
+                  <span className="flex items-center justify-end gap-1">Price <ChevronDown className="w-3 h-3" /></span>
                 </div>
 
-                {filteredTours.map(tour => (
-                  <div key={tour.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-200 group">
-                    {/* Desktop: table row */}
-                    <div className="hidden md:grid grid-cols-[140px_120px_1fr_1fr_140px_140px_100px] gap-3 items-center px-4 py-3">
-                      {/* Check-in date */}
-                      <div className="flex items-center gap-1.5 text-sm text-gray-800">
-                        <Calendar className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                        <div>
-                          <div className="font-semibold">{formatDate(tour.departDate)}</div>
-                          <div className="text-xs text-gray-400">{tour.nights} gecə</div>
+                <div className="divide-y divide-gray-100">
+                  {filteredTours.map(tour => {
+                    const isExpanded = expandedId === tour.id;
+                    return (
+                      <div key={tour.id}>
+                        {/* Desktop Row */}
+                        <div
+                          onClick={() => setExpandedId(isExpanded ? null : tour.id)}
+                          className={`hidden md:grid grid-cols-[130px_110px_1fr_80px_180px_110px] gap-2 items-center px-5 py-3.5 cursor-pointer transition-colors hover:bg-orange-50/50 ${isExpanded ? 'bg-orange-50/60' : 'bg-white'}`}
+                        >
+                          <div className="text-sm">
+                            <div className="font-semibold text-gray-900">{formatDate(tour.departDate)}</div>
+                            <div className="text-gray-400 text-xs">{formatDate(tour.returnDate)}</div>
+                          </div>
+                          <div className="text-sm">
+                            <div className="font-medium text-gray-900">{tour.airline}</div>
+                            <div className="text-xs text-gray-400">From {tour.departCity}</div>
+                          </div>
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">{tour.hotelStars}</span>
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold text-gray-900 truncate">{tour.hotel}</p>
+                              <p className="text-xs text-gray-400 truncate">{tour.country} - {tour.city}</p>
+                            </div>
+                          </div>
+                          <div className="text-sm">
+                            <div className="font-medium text-gray-900">{tour.meals.split(' ').map(w => w[0]).join('')}</div>
+                            <div className="text-xs text-gray-400">{tour.nights} days</div>
+                          </div>
+                          <div className="text-sm">
+                            <div className="font-medium text-gray-900 truncate">{tour.details}</div>
+                            <div className="text-xs text-gray-400">{tour.capacity}</div>
+                          </div>
+                          <div className="flex justify-end">
+                            <span className="inline-flex items-center px-4 py-1.5 border-2 border-orange-500 text-orange-600 rounded-full text-sm font-bold">{tour.price} AZN</span>
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Airline */}
-                      <div className="flex items-center gap-1.5 text-sm">
-                        <Plane className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                        <span className="font-medium text-gray-800 truncate">{tour.airline}</span>
-                      </div>
+                        {/* Expanded Detail Panel */}
+                        {isExpanded && (
+                          <div className="hidden md:block bg-gray-50 border-t border-gray-200">
+                            <div className="max-w-3xl mx-auto py-6 px-8">
+                              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                                <h4 className="text-orange-600 font-semibold text-sm mb-4">Details</h4>
+                                <h3 className="text-lg font-bold text-gray-900 mb-3">{tour.name} ({tour.airline})</h3>
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Home className="w-4 h-4 text-gray-400" />
+                                  <span className="font-semibold text-gray-800">{tour.hotel}</span>
+                                  <div className="flex items-center gap-0.5">
+                                    {Array.from({ length: tour.hotelStars }).map((_, i) => (
+                                      <Star key={i} className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+                                    ))}
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                  <MapPin className="w-4 h-4" /> {tour.country} - {tour.city}
+                                </div>
+                                <div className="flex items-center gap-6 text-sm text-gray-700 mb-2">
+                                  <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-gray-400" /><span>{formatDate(tour.departDate)} — {formatDate(tour.returnDate)} ({tour.nights} days)</span></div>
+                                  <div className="flex items-center gap-2"><Home className="w-4 h-4 text-gray-400" /><span>{tour.details}</span></div>
+                                </div>
+                                <div className="flex items-center gap-6 text-sm text-gray-700 mb-5">
+                                  <div className="flex items-center gap-2"><Utensils className="w-4 h-4 text-gray-400" /><span>{tour.meals}</span></div>
+                                  <div className="flex items-center gap-2"><Plane className="w-4 h-4 text-gray-400" /><span>{tour.airline}</span></div>
+                                  <span className="text-gray-400">From: {tour.departCity}</span>
+                                </div>
+                                <div className="flex flex-wrap gap-2 mb-5">
+                                  {tour.includes.map(inc => (
+                                    <span key={inc} className="text-xs bg-green-50 text-green-700 px-2.5 py-1 rounded-full font-medium border border-green-100">✓ {inc}</span>
+                                  ))}
+                                  {tour.freeCancellation && (
+                                    <span className="text-xs bg-green-50 text-green-700 px-2.5 py-1 rounded-full font-medium border border-green-100 flex items-center gap-1"><Shield className="w-3 h-3" /> Pulsuz ləğv</span>
+                                  )}
+                                </div>
+                                <div className="border-t border-gray-100 pt-4">
+                                  <div className="flex items-center justify-between mb-4">
+                                    <div className="text-sm text-gray-500">
+                                      Amount to Pay: <span className="font-bold text-gray-900">{tour.price * searchGuests} AZN</span>
+                                      <span className="ml-4 text-orange-600 font-semibold">Total: {tour.price * searchGuests} AZN</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex justify-center">
+                                    <button
+                                      onClick={(e) => { e.stopPropagation(); navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } }); }}
+                                      className="inline-flex items-center gap-2 px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-sm transition-colors shadow-sm"
+                                    >
+                                      <ShoppingCart className="w-4 h-4" /> {tour.price * searchGuests} AZN
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
-                      {/* Hotel name */}
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1 mb-0.5">
-                          {Array.from({ length: tour.hotelStars }).map((_, i) => (
-                            <Star key={i} className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                          ))}
-                        </div>
-                        <p className="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">{tour.hotel}</p>
-                        <p className="text-xs text-gray-400 truncate">{tour.city}, {tour.country}</p>
-                      </div>
-
-                      {/* Details */}
-                      <div className="min-w-0">
-                        <p className="text-sm text-gray-700 truncate">{tour.details}</p>
-                        <div className="flex items-center gap-1 mt-0.5">
-                          <span className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-medium">{tour.meals}</span>
-                          {tour.freeCancellation && (
-                            <span className="text-xs bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium flex items-center gap-0.5">
-                              <Shield className="w-3 h-3" /> Pulsuz ləğv
-                            </span>
+                        {/* Mobile card */}
+                        <div className="md:hidden p-4 space-y-3 bg-white" onClick={() => setExpandedId(isExpanded ? null : tour.id)}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="w-6 h-6 rounded-full bg-orange-500 text-white text-xs font-bold flex items-center justify-center">{tour.hotelStars}</span>
+                              <h3 className="text-sm font-bold text-gray-900">{tour.hotel}</h3>
+                            </div>
+                            <span className="inline-flex items-center px-3 py-1 border-2 border-orange-500 text-orange-600 rounded-full text-xs font-bold">{tour.price} AZN</span>
+                          </div>
+                          <p className="text-xs text-gray-400">{tour.country} - {tour.city}</p>
+                          <div className="flex items-center gap-3 text-xs text-gray-500">
+                            <span>{formatDate(tour.departDate)}</span><span>·</span>
+                            <span>{tour.airline}</span><span>·</span>
+                            <span>{tour.meals.split(' ').map(w => w[0]).join('')}</span><span>·</span>
+                            <span>{tour.nights} days</span>
+                          </div>
+                          {isExpanded && (
+                            <div className="pt-3 border-t border-gray-100 space-y-3" onClick={e => e.stopPropagation()}>
+                              <div className="text-sm text-gray-700 space-y-1">
+                                <div className="flex items-center gap-2"><Utensils className="w-3.5 h-3.5 text-gray-400" /> {tour.meals}</div>
+                                <div className="flex items-center gap-2"><Plane className="w-3.5 h-3.5 text-gray-400" /> {tour.airline} · From {tour.departCity}</div>
+                                <div className="flex items-center gap-2"><Home className="w-3.5 h-3.5 text-gray-400" /> {tour.details}</div>
+                                <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-gray-400" /> {tour.capacity}</div>
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {tour.includes.map(inc => (
+                                  <span key={inc} className="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">✓ {inc}</span>
+                                ))}
+                              </div>
+                              <button
+                                onClick={() => navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } })}
+                                className="w-full flex items-center justify-center gap-2 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold text-sm transition-colors"
+                              >
+                                <ShoppingCart className="w-4 h-4" /> {tour.price * searchGuests} AZN
+                              </button>
+                            </div>
                           )}
                         </div>
                       </div>
-
-                      {/* Rooms & capacity */}
-                      <div className="text-sm">
-                        <div className="font-medium text-gray-800 flex items-center gap-1">
-                          <Users className="w-3.5 h-3.5 text-gray-400" />
-                          {tour.rooms} otaq
-                        </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{tour.capacity}</p>
-                      </div>
-
-                      {/* Price */}
-                      <div>
-                        <span className="text-xs text-gray-400 line-through block">{tour.originalPrice} AZN</span>
-                        <span className="text-lg font-bold text-gray-900">{tour.price} AZN</span>
-                        <span className="text-xs text-green-600 font-medium block">
-                          -{Math.round((1 - tour.price / tour.originalPrice) * 100)}%
-                        </span>
-                      </div>
-
-                      {/* Book button */}
-                      <button
-                        onClick={() => navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } })}
-                        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold text-sm transition-colors">
-                        Rezerv et
-                      </button>
-                    </div>
-
-                    {/* Mobile: card layout */}
-                    <div className="md:hidden p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: tour.hotelStars }).map((_, i) => (
-                            <Star key={i} className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                          ))}
-                        </div>
-                        <span className={`${getReviewColor(tour.reviewScore)} text-white px-2 py-1 rounded text-xs font-bold`}>
-                          {tour.reviewScore}
-                        </span>
-                      </div>
-                      <h3 className="text-base font-bold text-gray-900">{tour.hotel}</h3>
-                      <p className="text-xs text-gray-500">{tour.city}, {tour.country}</p>
-
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Calendar className="w-4 h-4 text-blue-500" />
-                          {formatDate(tour.departDate)} · {tour.nights} gecə
-                        </div>
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Plane className="w-4 h-4 text-orange-500" />
-                          {tour.airline}
-                        </div>
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Users className="w-4 h-4 text-gray-400" />
-                          {tour.rooms} otaq · {tour.capacity}
-                        </div>
-                        <div className="text-xs text-gray-500">{tour.details}</div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-medium">{tour.meals}</span>
-                        {tour.freeCancellation && (
-                          <span className="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded font-medium">Pulsuz ləğv</span>
-                        )}
-                      </div>
-
-                      <div className="flex items-end justify-between pt-2 border-t border-gray-100">
-                        <div>
-                          <span className="text-xs text-gray-400 line-through">{tour.originalPrice} AZN</span>
-                          <span className="text-xl font-bold text-gray-900 ml-2">{tour.price} AZN</span>
-                        </div>
-                        <button
-                          onClick={() => navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } })}
-                          className="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold text-sm transition-colors">
-                          Rezerv et
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
