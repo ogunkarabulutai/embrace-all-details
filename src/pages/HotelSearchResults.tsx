@@ -410,9 +410,13 @@ const HotelSearchResults: React.FC = () => {
                             <span className="inline-flex items-center gap-1 text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full font-medium">
                               <Utensils className="w-3 h-3" /> {hotel.meals}
                             </span>
-                            {hotel.freeCancellation && (
+                            {hotel.freeCancellation ? (
                               <span className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2.5 py-1 rounded-full font-medium">
                                 <Shield className="w-3 h-3" /> Pulsuz Ləğv
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-xs bg-red-50 text-red-600 px-2.5 py-1 rounded-full font-medium">
+                                <X className="w-3 h-3" /> Ləğv olunmur
                               </span>
                             )}
                           </div>
