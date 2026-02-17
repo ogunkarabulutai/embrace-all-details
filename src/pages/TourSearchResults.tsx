@@ -23,6 +23,9 @@ interface TourResult {
   reviewLabel: string;
   freeCancellation: boolean;
   includes: string[];
+  rooms: number;
+  capacity: string;
+  details: string;
 }
 
 const allTours: TourResult[] = [
@@ -32,7 +35,8 @@ const allTours: TourResult[] = [
     meals: 'Ultra All Inclusive', nights: 7, departDate: '2026-07-15', returnDate: '2026-07-22',
     airline: 'AZAL', departCity: 'Bakı', price: 1250, originalPrice: 1600,
     reviewScore: 9.4, reviewCount: 2847, reviewLabel: 'Əla', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta'],
+    rooms: 1, capacity: '2 Böyük', details: 'Dəniz mənzərəli, balkonlu'
   },
   {
     id: 2, name: 'İstanbul Mədəniyyət Turu', country: 'Türkiyə', city: 'İstanbul', hotel: 'Four Seasons Bosphorus',
@@ -40,7 +44,8 @@ const allTours: TourResult[] = [
     meals: 'Bed & Breakfast', nights: 4, departDate: '2026-06-10', returnDate: '2026-06-14',
     airline: 'Turkish Airlines', departCity: 'Bakı', price: 890, originalPrice: 1150,
     reviewScore: 9.6, reviewCount: 1245, reviewLabel: 'Əla', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi'],
+    rooms: 1, capacity: '2 Böyük', details: 'Boğaz mənzərəli, SPA daxil'
   },
   {
     id: 3, name: 'Dubai Lüks Turu', country: 'BƏƏ', city: 'Dubai', hotel: 'Atlantis The Palm',
@@ -48,7 +53,8 @@ const allTours: TourResult[] = [
     meals: 'Half Board', nights: 5, departDate: '2026-03-20', returnDate: '2026-03-25',
     airline: 'Emirates', departCity: 'Bakı', price: 1680, originalPrice: 2100,
     reviewScore: 9.1, reviewCount: 5678, reviewLabel: 'Əla', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Ekskursiya']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Ekskursiya'],
+    rooms: 1, capacity: '2 Böyük + 1 Uşaq', details: 'Su parkı daxil, premium otaq'
   },
   {
     id: 4, name: 'Misir Piramidalar Turu', country: 'Misir', city: 'Qahirə', hotel: 'Marriott Mena House',
@@ -56,7 +62,8 @@ const allTours: TourResult[] = [
     meals: 'Full Board', nights: 6, departDate: '2026-04-05', returnDate: '2026-04-11',
     airline: 'AZAL', departCity: 'Bakı', price: 1420, originalPrice: 1800,
     reviewScore: 8.8, reviewCount: 1432, reviewLabel: 'Çox yaxşı', freeCancellation: false,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi', 'Ekskursiya']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi', 'Ekskursiya'],
+    rooms: 1, capacity: '2 Böyük', details: 'Piramida mənzərəli, bələdçi daxil'
   },
   {
     id: 5, name: 'Bodrum Sahil Turu', country: 'Türkiyə', city: 'Bodrum', hotel: 'Mandarin Oriental Bodrum',
@@ -64,7 +71,8 @@ const allTours: TourResult[] = [
     meals: 'All Inclusive', nights: 7, departDate: '2026-08-01', returnDate: '2026-08-08',
     airline: 'Pegasus', departCity: 'Bakı', price: 1350, originalPrice: 1750,
     reviewScore: 9.3, reviewCount: 756, reviewLabel: 'Əla', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta'],
+    rooms: 1, capacity: '2 Böyük', details: 'Özəl çimərlik, villa tipli'
   },
   {
     id: 6, name: 'Gürcüstan Doğa Turu', country: 'Gürcüstan', city: 'Tbilisi', hotel: 'Rooms Hotel Tbilisi',
@@ -72,7 +80,8 @@ const allTours: TourResult[] = [
     meals: 'Bed & Breakfast', nights: 3, departDate: '2026-05-15', returnDate: '2026-05-18',
     airline: 'Buta Airways', departCity: 'Bakı', price: 520, originalPrice: 680,
     reviewScore: 8.9, reviewCount: 876, reviewLabel: 'Çox yaxşı', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Bələdçi'],
+    rooms: 1, capacity: '2 Böyük', details: 'Şəhər mərkəzi, səhər yeməyi daxil'
   },
   {
     id: 7, name: 'Belek Golf & Spa', country: 'Türkiyə', city: 'Antalya', hotel: 'Voyage Belek Golf & Spa',
@@ -80,7 +89,8 @@ const allTours: TourResult[] = [
     meals: 'All Inclusive', nights: 10, departDate: '2026-07-01', returnDate: '2026-07-11',
     airline: 'AZAL', departCity: 'Bakı', price: 1780, originalPrice: 2300,
     reviewScore: 8.8, reviewCount: 2103, reviewLabel: 'Çox yaxşı', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Spa']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Spa'],
+    rooms: 2, capacity: '4 Böyük + 2 Uşaq', details: 'Golf sahəsi, SPA mərkəzi daxil'
   },
   {
     id: 8, name: 'Tayland Egzotik Turu', country: 'Tayland', city: 'Phuket', hotel: 'Banyan Tree Phuket',
@@ -88,7 +98,8 @@ const allTours: TourResult[] = [
     meals: 'Half Board', nights: 10, departDate: '2026-02-10', returnDate: '2026-02-20',
     airline: 'Qatar Airways', departCity: 'Bakı', price: 2450, originalPrice: 3100,
     reviewScore: 9.2, reviewCount: 543, reviewLabel: 'Əla', freeCancellation: false,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Ekskursiya']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Ekskursiya'],
+    rooms: 1, capacity: '2 Böyük', details: 'Villa tipli, hovuz daxil'
   },
   {
     id: 9, name: 'Lara Premium Tur', country: 'Türkiyə', city: 'Antalya', hotel: 'Titanic Mardan Palace',
@@ -96,7 +107,8 @@ const allTours: TourResult[] = [
     meals: 'Ultra All Inclusive', nights: 7, departDate: '2026-06-20', returnDate: '2026-06-27',
     airline: 'Turkish Airlines', departCity: 'Bakı', price: 1550, originalPrice: 2000,
     reviewScore: 9.1, reviewCount: 3421, reviewLabel: 'Əla', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta'],
+    rooms: 1, capacity: '2 Böyük + 1 Uşaq', details: 'Premium otaq, dəniz mənzərəsi'
   },
   {
     id: 10, name: 'Maldiv Balayı Turu', country: 'Maldiv', city: 'Malé', hotel: 'Soneva Fushi Resort',
@@ -104,7 +116,8 @@ const allTours: TourResult[] = [
     meals: 'Full Board', nights: 7, departDate: '2026-03-01', returnDate: '2026-03-08',
     airline: 'Emirates', departCity: 'Bakı', price: 3200, originalPrice: 4000,
     reviewScore: 9.7, reviewCount: 321, reviewLabel: 'Əla', freeCancellation: true,
-    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Spa', 'Ekskursiya']
+    includes: ['Uçuş', 'Transfer', 'Otel', 'Sığorta', 'Spa', 'Ekskursiya'],
+    rooms: 1, capacity: '2 Böyük', details: 'Su üstü villa, tam təchiz olunmuş'
   },
 ];
 
@@ -302,96 +315,135 @@ const TourSearchResults: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3">
+                {/* Table Header */}
+                <div className="hidden md:grid grid-cols-[140px_120px_1fr_1fr_140px_140px_100px] gap-3 px-4 py-2 bg-gray-100 rounded-xl text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                  <span>Check-in tarixi</span>
+                  <span>Aviaşirkət</span>
+                  <span>Otel adı</span>
+                  <span>Detallar</span>
+                  <span>Otaq & tutum</span>
+                  <span>Qiymət</span>
+                  <span></span>
+                </div>
+
                 {filteredTours.map(tour => (
-                  <div key={tour.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
-                    <div className="flex flex-col md:flex-row">
-                      {/* Image */}
-                      <div className="md:w-72 lg:w-80 flex-shrink-0 relative overflow-hidden">
-                        <img src={tour.image} alt={tour.name}
-                          className="w-full h-52 md:h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        {tour.freeCancellation && (
-                          <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-md">
-                            <Shield className="w-3 h-3" /> Pulsuz Ləğv
-                          </div>
-                        )}
-                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-xs font-semibold">
-                          {tour.nights} gecə
+                  <div key={tour.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-200 group">
+                    {/* Desktop: table row */}
+                    <div className="hidden md:grid grid-cols-[140px_120px_1fr_1fr_140px_140px_100px] gap-3 items-center px-4 py-3">
+                      {/* Check-in date */}
+                      <div className="flex items-center gap-1.5 text-sm text-gray-800">
+                        <Calendar className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                        <div>
+                          <div className="font-semibold">{formatDate(tour.departDate)}</div>
+                          <div className="text-xs text-gray-400">{tour.nights} gecə</div>
                         </div>
                       </div>
 
+                      {/* Airline */}
+                      <div className="flex items-center gap-1.5 text-sm">
+                        <Plane className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                        <span className="font-medium text-gray-800 truncate">{tour.airline}</span>
+                      </div>
+
+                      {/* Hotel name */}
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1 mb-0.5">
+                          {Array.from({ length: tour.hotelStars }).map((_, i) => (
+                            <Star key={i} className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                          ))}
+                        </div>
+                        <p className="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">{tour.hotel}</p>
+                        <p className="text-xs text-gray-400 truncate">{tour.city}, {tour.country}</p>
+                      </div>
+
                       {/* Details */}
-                      <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
+                      <div className="min-w-0">
+                        <p className="text-sm text-gray-700 truncate">{tour.details}</p>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <span className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-medium">{tour.meals}</span>
+                          {tour.freeCancellation && (
+                            <span className="text-xs bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium flex items-center gap-0.5">
+                              <Shield className="w-3 h-3" /> Pulsuz ləğv
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Rooms & capacity */}
+                      <div className="text-sm">
+                        <div className="font-medium text-gray-800 flex items-center gap-1">
+                          <Users className="w-3.5 h-3.5 text-gray-400" />
+                          {tour.rooms} otaq
+                        </div>
+                        <p className="text-xs text-gray-500 mt-0.5">{tour.capacity}</p>
+                      </div>
+
+                      {/* Price */}
+                      <div>
+                        <span className="text-xs text-gray-400 line-through block">{tour.originalPrice} AZN</span>
+                        <span className="text-lg font-bold text-gray-900">{tour.price} AZN</span>
+                        <span className="text-xs text-green-600 font-medium block">
+                          -{Math.round((1 - tour.price / tour.originalPrice) * 100)}%
+                        </span>
+                      </div>
+
+                      {/* Book button */}
+                      <button
+                        onClick={() => navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } })}
+                        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold text-sm transition-colors">
+                        Rezerv et
+                      </button>
+                    </div>
+
+                    {/* Mobile: card layout */}
+                    <div className="md:hidden p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1">
+                          {Array.from({ length: tour.hotelStars }).map((_, i) => (
+                            <Star key={i} className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                          ))}
+                        </div>
+                        <span className={`${getReviewColor(tour.reviewScore)} text-white px-2 py-1 rounded text-xs font-bold`}>
+                          {tour.reviewScore}
+                        </span>
+                      </div>
+                      <h3 className="text-base font-bold text-gray-900">{tour.hotel}</h3>
+                      <p className="text-xs text-gray-500">{tour.city}, {tour.country}</p>
+
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="flex items-center gap-1.5 text-gray-600">
+                          <Calendar className="w-4 h-4 text-blue-500" />
+                          {formatDate(tour.departDate)} · {tour.nights} gecə
+                        </div>
+                        <div className="flex items-center gap-1.5 text-gray-600">
+                          <Plane className="w-4 h-4 text-orange-500" />
+                          {tour.airline}
+                        </div>
+                        <div className="flex items-center gap-1.5 text-gray-600">
+                          <Users className="w-4 h-4 text-gray-400" />
+                          {tour.rooms} otaq · {tour.capacity}
+                        </div>
+                        <div className="text-xs text-gray-500">{tour.details}</div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-medium">{tour.meals}</span>
+                        {tour.freeCancellation && (
+                          <span className="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded font-medium">Pulsuz ləğv</span>
+                        )}
+                      </div>
+
+                      <div className="flex items-end justify-between pt-2 border-t border-gray-100">
                         <div>
-                          <div className="flex items-start justify-between gap-3 mb-2">
-                            <div>
-                              <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">{tour.name}</h3>
-                              <p className="text-sm text-gray-500 flex items-center gap-1 mt-1">
-                                <MapPin className="w-3.5 h-3.5" /> {tour.city}, {tour.country}
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                              <div className="text-right">
-                                <span className="text-xs text-gray-500 block">{tour.reviewLabel}</span>
-                                <span className="text-xs text-gray-400">{tour.reviewCount} rəy</span>
-                              </div>
-                              <span className={`${getReviewColor(tour.reviewScore)} text-white px-2.5 py-1.5 rounded-lg text-sm font-bold min-w-[42px] text-center`}>
-                                {tour.reviewScore}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Hotel info */}
-                          <div className="flex items-center gap-2 mt-2">
-                            <div className="flex items-center gap-0.5">
-                              {Array.from({ length: tour.hotelStars }).map((_, i) => (
-                                <Star key={i} className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
-                              ))}
-                            </div>
-                            <span className="text-sm text-gray-600">{tour.hotel}</span>
-                          </div>
-
-                          {/* Tags */}
-                          <div className="flex flex-wrap gap-2 mt-3">
-                            <span className="inline-flex items-center gap-1 text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full font-medium">
-                              <Utensils className="w-3 h-3" /> {tour.meals}
-                            </span>
-                            <span className="inline-flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2.5 py-1 rounded-full font-medium">
-                              <Plane className="w-3 h-3" /> {tour.airline}
-                            </span>
-                            <span className="inline-flex items-center gap-1 text-xs bg-gray-50 text-gray-700 px-2.5 py-1 rounded-full font-medium">
-                              <Calendar className="w-3 h-3" /> {formatDate(tour.departDate)} — {formatDate(tour.returnDate)}
-                            </span>
-                          </div>
-
-                          {/* Includes */}
-                          <div className="flex flex-wrap gap-1.5 mt-3">
-                            {tour.includes.map(inc => (
-                              <span key={inc} className="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded font-medium">
-                                ✓ {inc}
-                              </span>
-                            ))}
-                          </div>
+                          <span className="text-xs text-gray-400 line-through">{tour.originalPrice} AZN</span>
+                          <span className="text-xl font-bold text-gray-900 ml-2">{tour.price} AZN</span>
                         </div>
-
-                        {/* Price & Book */}
-                        <div className="flex items-end justify-between mt-4 pt-3 border-t border-gray-100">
-                          <div>
-                            <p className="text-xs text-gray-400">Nəfər başına</p>
-                            <div className="flex items-baseline gap-2">
-                              <span className="text-sm text-gray-400 line-through">{tour.originalPrice} AZN</span>
-                              <span className="text-2xl font-bold text-gray-900">{tour.price} AZN</span>
-                            </div>
-                            <p className="text-xs text-green-600 font-medium">
-                              {Math.round((1 - tour.price / tour.originalPrice) * 100)}% endirim
-                            </p>
-                          </div>
-                          <button
-                            onClick={() => navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } })}
-                            className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-lg">
-                            Rezerv et
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => navigate('/checkout', { state: { hotel: { id: tour.id, name: `${tour.name} — ${tour.hotel}`, city: tour.city, district: tour.city, country: tour.country, stars: tour.hotelStars, price: tour.price * searchGuests, originalPrice: tour.originalPrice * searchGuests, image: tour.image, meals: tour.meals, reviewScore: tour.reviewScore, reviewCount: tour.reviewCount, reviewLabel: tour.reviewLabel, freeCancellation: tour.freeCancellation, checkIn: tour.departDate, checkOut: tour.returnDate, nights: tour.nights, adults: searchGuests, children: 0 } } })}
+                          className="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold text-sm transition-colors">
+                          Rezerv et
+                        </button>
                       </div>
                     </div>
                   </div>
