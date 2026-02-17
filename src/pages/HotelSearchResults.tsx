@@ -159,6 +159,7 @@ const HotelSearchResults: React.FC = () => {
   const [filterRoomFeatures, setFilterRoomFeatures] = useState<string[]>([]);
   const [filterDistricts, setFilterDistricts] = useState<string[]>([]);
   const [filterReviewMin, setFilterReviewMin] = useState(0);
+  const [filterFreeCancellation, setFilterFreeCancellation] = useState(false);
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'rating' | 'stars'>('rating');
 
   // Pre-filter by search params
@@ -189,6 +190,7 @@ const HotelSearchResults: React.FC = () => {
       if (filterRoomFeatures.length > 0 && !filterRoomFeatures.every(f => h.roomFeatures.includes(f))) return false;
       if (filterDistricts.length > 0 && !filterDistricts.includes(h.district)) return false;
       if (filterReviewMin > 0 && h.reviewScore < filterReviewMin) return false;
+      if (filterFreeCancellation && !h.freeCancellation) return false;
       return true;
     });
 
@@ -200,7 +202,7 @@ const HotelSearchResults: React.FC = () => {
       case 'stars': results.sort((a, b) => b.stars - a.stars); break;
     }
     return results;
-  }, [searchFilteredHotels, filterHotelName, filterMeals, filterStars, filterPriceMin, filterPriceMax, filterBeds, filterRoomFeatures, filterDistricts, filterReviewMin, sortBy]);
+  }, [searchFilteredHotels, filterHotelName, filterMeals, filterStars, filterPriceMin, filterPriceMax, filterBeds, filterRoomFeatures, filterDistricts, filterReviewMin, filterFreeCancellation, sortBy]);
 
   const toggleFilter = (arr: string[], val: string, setter: React.Dispatch<React.SetStateAction<string[]>>) => {
     setter(arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val]);
@@ -271,7 +273,7 @@ const HotelSearchResults: React.FC = () => {
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sticky top-24">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-lg font-bold text-gray-900">Filterlər</h3>
-                <button onClick={() => { setFilterHotelName(''); setFilterMeals([]); setFilterStars([]); setFilterPriceMin(0); setFilterPriceMax(2000); setFilterBeds([]); setFilterRoomFeatures([]); setFilterDistricts([]); setFilterReviewMin(0); }}
+                <button onClick={() => { setFilterHotelName(''); setFilterMeals([]); setFilterStars([]); setFilterPriceMin(0); setFilterPriceMax(2000); setFilterBeds([]); setFilterRoomFeatures([]); setFilterDistricts([]); setFilterReviewMin(0); setFilterFreeCancellation(false); }}
                   className="text-xs text-blue-600 hover:text-blue-800 font-medium">Sıfırla</button>
               </div>
 
@@ -350,6 +352,15 @@ const HotelSearchResults: React.FC = () => {
                     </button>
                   ))}
                 </div>
+              </FilterSection>
+
+              {/* Free Cancellation Filter */}
+              <FilterSection title="Pulsuz Ləğv" icon={<Shield className="w-4 h-4" />} defaultOpen={true}>
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <input type="checkbox" checked={filterFreeCancellation} onChange={() => setFilterFreeCancellation(!filterFreeCancellation)}
+                    className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                  <span className="text-sm text-gray-700 group-hover:text-blue-600 transition-colors">Yalnız pulsuz ləğv</span>
+                </label>
               </FilterSection>
             </div>
           </div>
