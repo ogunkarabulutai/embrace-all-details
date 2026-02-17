@@ -500,30 +500,76 @@ const TourSearchResults: React.FC = () => {
                                 </div>
 
                                 {/* Alternative flights panel */}
-                                {expandedFlightId === tour.id && (
-                                  <div className="mt-3 border-t border-gray-100 pt-3 space-y-2">
-                                    <p className="text-xs font-semibold text-gray-500 mb-2">Alternativ uçuşlar</p>
-                                    {[
-                                      { no: tour.flightNo + 'A', dep: tour.departTime, arr: tour.arrivalTime, price: 0, label: 'Seçilmiş' },
-                                      { no: tour.flightNo.split(' ')[0] + ' ' + (parseInt(tour.flightNo.split(' ')[1] || '0') + 2), dep: '12:30', arr: tour.arrivalTime.split(':')[0] + ':' + (parseInt(tour.arrivalTime.split(':')[1] || '0') + 30).toString().padStart(2,'0') || '14:00', price: 50, label: '' },
-                                      { no: tour.flightNo.split(' ')[0] + ' ' + (parseInt(tour.flightNo.split(' ')[1] || '0') + 4), dep: '17:00', arr: '19:30', price: 80, label: '' },
-                                    ].map((alt, idx) => (
-                                      <div key={idx} className={`flex items-center gap-2 text-xs px-3 py-2 rounded-lg cursor-pointer transition-colors ${idx === 0 ? 'bg-orange-50 border border-orange-200' : 'bg-gray-50 hover:bg-orange-50 border border-transparent hover:border-orange-200'}`}>
-                                        <Plane className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
-                                        <span className="font-bold text-gray-700 w-16">{alt.no}</span>
-                                        <span className="font-bold text-gray-900">{tour.departCode}</span>
-                                        <span className="text-gray-500">{tour.departDate.slice(5).replace('-','.')} {alt.dep}</span>
-                                        <span className="text-gray-400">-</span>
-                                        <span className="font-bold text-gray-900">{tour.destCode}</span>
-                                        <span className="text-gray-500">{tour.departDate.slice(5).replace('-','.')} {alt.arr}</span>
-                                        <span className="ml-auto text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold">ECONOMY</span>
-                                        {idx === 0
-                                          ? <span className="text-orange-600 font-semibold text-xs">✓ Seçilmiş</span>
-                                          : <span className="text-green-600 font-semibold text-xs">+{alt.price} AZN</span>}
+                                {expandedFlightId === tour.id && (() => {
+                                  const prefix = tour.flightNo.split(' ')[0];
+                                  const baseNo = parseInt(tour.flightNo.split(' ')[1] || '0');
+                                  const retPrefix = tour.returnFlightNo.split(' ')[0];
+                                  const retBaseNo = parseInt(tour.returnFlightNo.split(' ')[1] || '0');
+                                  const alternatives = [
+                                    {
+                                      outNo: tour.flightNo, outDep: tour.departTime, outArr: tour.arrivalTime,
+                                      retNo: tour.returnFlightNo, retDep: tour.returnDepartTime, retArr: tour.returnArrivalTime,
+                                      price: 0, selected: true
+                                    },
+                                    {
+                                      outNo: `${prefix} ${baseNo + 2}`, outDep: '12:30', outArr: '14:15',
+                                      retNo: `${retPrefix} ${retBaseNo + 2}`, retDep: '16:00', retArr: '18:45',
+                                      price: 59, selected: false
+                                    },
+                                    {
+                                      outNo: `${prefix} ${baseNo + 4}`, outDep: '17:00', outArr: '18:50',
+                                      retNo: `${retPrefix} ${retBaseNo + 4}`, retDep: '20:30', retArr: '23:15',
+                                      price: 120, selected: false
+                                    },
+                                  ];
+                                  return (
+                                    <div className="mt-3 border-t border-gray-100 pt-2">
+                                      <p className="text-xs font-semibold text-gray-400 mb-2 px-1">Alternativ uçuşlar</p>
+                                      <div className="space-y-1">
+                                        {alternatives.map((alt, idx) => (
+                                          <div
+                                            key={idx}
+                                            className={`relative flex cursor-pointer rounded-lg px-3 py-2 transition-colors ${alt.selected ? 'bg-blue-50' : 'bg-white hover:bg-gray-50 border-b border-gray-100'}`}
+                                          >
+                                            {/* Flight rows */}
+                                            <div className="flex-1 space-y-1.5">
+                                              {/* Outbound */}
+                                              <div className="flex items-center gap-2 text-xs">
+                                                <Plane className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
+                                                <span className="font-bold text-gray-600 w-16 shrink-0">{alt.outNo}</span>
+                                                <span className="font-bold text-gray-900">{tour.departCode}</span>
+                                                <span className="text-gray-500">{tour.departDate.slice(5).replace('-','.')} <b>{alt.outDep}</b></span>
+                                                <span className="text-gray-400">-</span>
+                                                <span className="font-bold text-gray-900">{tour.destCode}</span>
+                                                <span className="text-gray-500">{tour.departDate.slice(5).replace('-','.')} <b>{alt.outArr}</b></span>
+                                                <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold ml-1">ECONOMY</span>
+                                              </div>
+                                              {/* Return */}
+                                              <div className="flex items-center gap-2 text-xs">
+                                                <Plane className="w-3.5 h-3.5 text-orange-400 flex-shrink-0 rotate-180" />
+                                                <span className="font-bold text-gray-600 w-16 shrink-0">{alt.retNo}</span>
+                                                <span className="font-bold text-gray-900">{tour.destCode}</span>
+                                                <span className="text-gray-500">{tour.returnDate.slice(5).replace('-','.')} <b>{alt.retDep}</b></span>
+                                                <span className="text-gray-400">-</span>
+                                                <span className="font-bold text-gray-900">{tour.departCode}</span>
+                                                <span className="text-gray-500">{tour.returnDate.slice(5).replace('-','.')} <b>{alt.retArr}</b></span>
+                                                <span className="text-xs bg-orange-500 text-white px-2 py-0.5 rounded font-semibold ml-1">ECONOMY</span>
+                                              </div>
+                                            </div>
+                                            {/* Price diff */}
+                                            <div className="flex items-center justify-end w-24 shrink-0 pl-3">
+                                              {alt.selected
+                                                ? <span className="text-blue-600 font-semibold text-xs">✓ Seçilmiş</span>
+                                                : <span className="text-orange-600 font-semibold text-sm">+{alt.price} AZN</span>
+                                              }
+                                            </div>
+                                          </div>
+                                        ))}
                                       </div>
-                                    ))}
-                                  </div>
-                                )}
+                                    </div>
+                                  );
+                                })()}
+
                               </div>
 
 
