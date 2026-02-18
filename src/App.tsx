@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './contexts/AuthContext';
+
+const queryClient = new QueryClient();
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -94,9 +97,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 
