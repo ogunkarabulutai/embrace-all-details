@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'login' }) => {
   const [mode, setMode] = useState<'login' | 'register'>(initialMode);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [agreedTerms, setAgreedTerms] = useState(false);
   const [formData, setFormData] = useState({
@@ -42,6 +44,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
       } else {
         toast({ title: 'Uğurlu giriş', description: 'Xoş gəldiniz!' });
         onClose();
+        navigate('/account');
       }
     } else {
       if (!formData.fullName.trim()) {
@@ -53,11 +56,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
       if (error) {
         toast({ title: 'Qeydiyyat xətası', description: error.message, variant: 'destructive' });
       } else {
-        toast({
-          title: 'Qeydiyyat uğurlu oldu',
-          description: 'E-poçtunuzu yoxlayın və hesabınızı təsdiqləyin.',
-        });
+        toast({ title: 'Xoş gəldiniz!', description: 'Hesabınız yaradıldı.' });
         onClose();
+        navigate('/account');
       }
     }
     setLoading(false);
