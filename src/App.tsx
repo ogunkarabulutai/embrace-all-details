@@ -25,6 +25,7 @@ import Checkout from './pages/Checkout';
 import HotelSearchResults from './pages/HotelSearchResults';
 import ServiceDetail from './pages/ServiceDetail';
 import TourSearchResults from './pages/TourSearchResults';
+import Account from './pages/Account';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -74,6 +75,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/hotel-results" element={<HotelSearchResults />} />
             <Route path="/tour-results" element={<TourSearchResults />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
           
           <Footer />
