@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
+
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import PopularDestinations from './components/PopularDestinations';
@@ -25,8 +27,9 @@ import Checkout from './pages/Checkout';
 import HotelSearchResults from './pages/HotelSearchResults';
 import ServiceDetail from './pages/ServiceDetail';
 import TourSearchResults from './pages/TourSearchResults';
+import Account from './pages/Account';
 
-function App() {
+function AppContent() {
   const [darkMode, setDarkMode] = useState(false);
   const [authModal, setAuthModal] = useState<{ isOpen: boolean; mode: 'login' | 'register' }>({
     isOpen: false,
@@ -74,6 +77,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/hotel-results" element={<HotelSearchResults />} />
             <Route path="/tour-results" element={<TourSearchResults />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
           
           <Footer />
@@ -85,6 +89,14 @@ function App() {
         </div>
       </div>
     </Router>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
