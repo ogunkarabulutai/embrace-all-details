@@ -3,7 +3,6 @@ import { Search, MapPin, Calendar, Users, Moon, Sun, Menu, X, HelpCircle, User, 
 import { Link } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '../contexts/LanguageContext';
-import CustomerPanel from './CustomerPanel';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -14,7 +13,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [showCustomerPanel, setShowCustomerPanel] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
   const { t } = useLanguage();
 
   return (
@@ -117,14 +116,39 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth })
               )}
             </div>
 
-            {/* Account Button → opens Customer Panel */}
-            <button
-              onClick={() => setShowCustomerPanel(true)}
-              className="flex items-center space-x-2 p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-            >
-              <User className="w-5 h-5" />
-              <span className="hidden md:inline">Hesabım</span>
-            </button>
+            {/* Account Button */}
+            <div className="relative">
+              <button
+                onClick={() => setShowAccount(!showAccount)}
+                className="flex items-center space-x-2 p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+              >
+                <User className="w-5 h-5" />
+                <span className="hidden md:inline">Hesabım</span>
+              </button>
+              
+              {showAccount && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-2 z-50">
+                  <button
+                    onClick={() => {
+                      setShowAccount(false);
+                      onOpenAuth('login');
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 text-gray-900 dark:text-white"
+                  >
+                    Daxil ol
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowAccount(false);
+                      onOpenAuth('register');
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 text-gray-900 dark:text-white"
+                  >
+                    Qeydiyyat
+                  </button>
+                </div>
+              )}
+            </div>
             
             <button
               onClick={toggleDarkMode}
@@ -185,16 +209,16 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode, onOpenAuth })
         </div>
       )}
 
-      {/* Click outside to close help dropdown */}
-      {showHelp && (
+      {/* Click outside to close dropdowns */}
+      {(showHelp || showAccount) && (
         <div
           className="fixed inset-0 z-40"
-          onClick={() => setShowHelp(false)}
+          onClick={() => {
+            setShowHelp(false);
+            setShowAccount(false);
+          }}
         />
       )}
-
-      {/* Customer Panel */}
-      <CustomerPanel isOpen={showCustomerPanel} onClose={() => setShowCustomerPanel(false)} />
     </header>
   );
 };
